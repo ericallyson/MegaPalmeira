@@ -5,6 +5,7 @@ use App\Domain\Bolao\Data\ApostaData;
 use App\Domain\Bolao\Enums\BetStatus;
 use App\Domain\Bolao\Exceptions\ApostasEncerradas;
 use App\Domain\Bolao\Exceptions\LimiteDeCartelasExcedido;
+use App\Domain\Bolao\Services\RateioService;
 use App\Models\Round;
 
 function registrarAposta(Round $round, array $numeros, string $phone = '82991234589', string $nome = 'Rafael Silva')
@@ -38,7 +39,7 @@ test('aposta não conta no pote antes de paga', function () {
 
     registrarAposta($round, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 
-    expect(app(App\Domain\Bolao\Services\RateioService::class)->poteCents($round))->toBe(0);
+    expect(app(RateioService::class)->poteCents($round))->toBe(0);
 });
 
 test('reaproveita o apostador pelo telefone normalizado', function () {

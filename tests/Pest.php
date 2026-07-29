@@ -1,8 +1,14 @@
 <?php
 
+use App\Domain\Bolao\Actions\PublicarSorteio;
+use App\Domain\Bolao\Data\SorteioData;
+use App\Models\Draw;
+use App\Models\Round;
+use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-pest()->extend(Tests\TestCase::class)
+pest()->extend(TestCase::class)
     ->use(RefreshDatabase::class)
     ->in('Feature');
 
@@ -11,15 +17,15 @@ pest()->extend(Tests\TestCase::class)
  *
  * @param  list<int>  $dezenas
  */
-function publicarSorteio(App\Models\Round $round, array $dezenas, ?int $concurso = null): App\Models\Draw
+function publicarSorteio(Round $round, array $dezenas, ?int $concurso = null): Draw
 {
     $ultimo = $round->draws()->max('contest_number') ?? 2800;
 
-    return app(App\Domain\Bolao\Actions\PublicarSorteio::class)->handle(
+    return app(PublicarSorteio::class)->handle(
         $round,
-        new App\Domain\Bolao\Data\SorteioData(
+        new SorteioData(
             contestNumber: $concurso ?? $ultimo + 1,
-            drawnOn: Carbon\CarbonImmutable::now(),
+            drawnOn: CarbonImmutable::now(),
             numbers: $dezenas,
         ),
     );

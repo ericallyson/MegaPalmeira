@@ -13,6 +13,7 @@ use App\Models\Bet;
 use App\Models\Draw;
 use App\Models\Round;
 use App\Models\User;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class EncerrarRodada
@@ -30,10 +31,10 @@ class EncerrarRodada
      */
     public function handle(Round $round, ?Draw $closingDraw = null, ?User $actor = null): RateioResultado
     {
-        return DB::transaction(function () use ($round, $closingDraw): RateioResultado {
+        return DB::transaction(function () use ($round): RateioResultado {
             $ordered = $this->ranking->orderedBets($round);
 
-            /** @var \Illuminate\Support\Collection<int, Bet> $mainWinners */
+            /** @var Collection<int, Bet> $mainWinners */
             $mainWinners = $ordered->filter(fn (Bet $bet): bool => $bet->hits_count === 10)->values();
 
             $payMain = true;

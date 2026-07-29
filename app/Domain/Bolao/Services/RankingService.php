@@ -8,7 +8,6 @@ use App\Models\Bet;
 use App\Models\Round;
 use App\Support\PhoneMask;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 class RankingService
 {

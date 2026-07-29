@@ -3,7 +3,7 @@
 use App\Rules\ValidBetNumbers;
 use Illuminate\Support\Facades\Validator;
 
-function validateNumbers(mixed $numbers): \Illuminate\Validation\Validator
+function validateNumbers(mixed $numbers): Illuminate\Validation\Validator
 {
     return Validator::make(['numbers' => $numbers], ['numbers' => ['required', new ValidBetNumbers]]);
 }
