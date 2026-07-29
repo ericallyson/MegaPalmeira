@@ -1,0 +1,44 @@
+@import '@fontsource-variable/archivo';
+@import '@fontsource-variable/instrument-sans';
+@import '@fontsource-variable/martian-mono';
+@import 'tailwindcss';
+
+@source '../**/*.blade.php';
+@source '../js/**/*.vue';
+@source '../js/**/*.ts';
+
+@theme {
+    /* Paleta — a noite do sorteio */
+    --color-tinta: #0d1330;
+    --color-noite: #182352;
+    --color-vidro: #97a4ce;
+    --color-aceso: #ffc24b;
+    --color-brasa: #ff8a3d;
+    --color-jade: #35d0a5;
+    --color-papel: #f6f4ef;
+    /* Vermelho de erro: único tom fora da paleta, nunca decorativo */
+    --color-erro: #e5484d;
+
+    --font-display: 'Archivo Variable', sans-serif;
+    --font-sans: 'Instrument Sans Variable', sans-serif;
+    --font-mono: 'Martian Mono Variable', monospace;
+
+    /* Escala tipográfica fechada: 12 / 14 / 16 / 20 / 28 / 40 / 72 */
+    --text-12: 0.75rem;
+    --text-14: 0.875rem;
+    --text-16: 1rem;
+    --text-20: 1.25rem;
+    --text-28: 1.75rem;
+    --text-40: 2.5rem;
+    --text-72: 4.5rem;
+}
+
+@layer base {
+    body {
+        @apply bg-tinta font-sans text-papel antialiased;
+    }
+}
+
+@utility font-tabular {
+    font-variant-numeric: tabular-nums;
+}
