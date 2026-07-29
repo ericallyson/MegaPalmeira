@@ -14,6 +14,13 @@ return [
     |
     */
 
+    'mercado_pago' => [
+        'base_url' => env('MP_BASE_URL', 'https://api.mercadopago.com'),
+        'access_token' => env('MP_ACCESS_TOKEN'),
+        'webhook_secret' => env('MP_WEBHOOK_SECRET'),
+        'notification_url' => env('MP_NOTIFICATION_URL'),
+    ],
+
     'postmark' => [
         'key' => env('POSTMARK_API_KEY'),
     ],
