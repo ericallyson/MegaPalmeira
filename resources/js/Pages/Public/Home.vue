@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import Ball from '@/Components/Ball.vue';
 import { brl, dataCurta, dataHora } from '@/lib/format';
 
@@ -149,6 +149,16 @@ const contagem = computed(() => {
 
             <section v-else class="mt-8 rounded-lg bg-noite p-6 print:hidden">
                 <p class="text-20 text-vidro">Nenhuma cartela ainda. Seja o primeiro.</p>
+            </section>
+
+            <!-- chamada para apostar -->
+            <section v-if="rodada.status === 'open'" class="mt-6 print:hidden">
+                <Link
+                    href="/apostar"
+                    class="block rounded-lg bg-aceso px-6 py-4 text-center font-display text-20 font-black uppercase tracking-tight text-tinta"
+                >
+                    Fazer minha aposta · {{ brl(rodada.valorCartelaCents) }}
+                </Link>
             </section>
 
             <!-- ganhadores (rodada encerrada) -->

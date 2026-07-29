@@ -29,6 +29,7 @@ const busca = ref(props.filtros.busca ?? '');
 const filtroDezena = ref(props.filtros.dezena ?? '');
 const motivos = ref<Record<string, string>>({});
 const abertaParaBaixa = ref<string | null>(null);
+const abertaParaEstorno = ref<string | null>(null);
 
 function filtrar() {
     router.get(
@@ -43,6 +44,14 @@ function darBaixa(uuid: string) {
         `/admin/apostas/${uuid}/baixa`,
         { motivo: motivos.value[uuid] ?? '' },
         { onSuccess: () => (abertaParaBaixa.value = null) },
+    );
+}
+
+function marcarEstorno(uuid: string) {
+    router.post(
+        `/admin/apostas/${uuid}/cancelar`,
+        { motivo: motivos.value[uuid] ?? '', estorno: true },
+        { onSuccess: () => (abertaParaEstorno.value = null) },
     );
 }
 </script>
@@ -132,6 +141,37 @@ function darBaixa(uuid: string) {
                                 >
                                     Dar baixa
                                 </button>
+                                <button
+                                    v-if="aposta.status === 'paid_late'"
+                                    type="button"
+                                    class="text-14 text-brasa underline"
+                                    @click="abertaParaEstorno = abertaParaEstorno === aposta.uuid ? null : aposta.uuid"
+                                >
+                                    Marcar estorno
+                                </button>
+                            </td>
+                        </tr>
+                        <tr v-if="abertaParaEstorno === aposta.uuid" class="border-b border-vidro/10 bg-tinta/40">
+                            <td colspan="6" class="px-3 py-3">
+                                <label class="block text-12 uppercase text-vidro" :for="`estorno-${aposta.uuid}`">
+                                    Motivo do estorno (obrigatório)
+                                </label>
+                                <div class="mt-1 flex gap-2">
+                                    <input
+                                        :id="`estorno-${aposta.uuid}`"
+                                        v-model="motivos[aposta.uuid]"
+                                        type="text"
+                                        placeholder="Ex.: PIX devolvido em 30/07"
+                                        class="w-full max-w-md rounded border border-vidro/30 bg-noite px-3 py-2 text-14 focus:border-aceso focus:outline-none"
+                                    />
+                                    <button
+                                        type="button"
+                                        class="rounded bg-brasa px-4 py-2 font-display text-14 font-bold uppercase text-tinta"
+                                        @click="marcarEstorno(aposta.uuid)"
+                                    >
+                                        Confirmar estorno
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         <tr v-if="abertaParaBaixa === aposta.uuid" class="border-b border-vidro/10 bg-tinta/40">

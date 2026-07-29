@@ -7,8 +7,11 @@ use App\Domain\Bolao\Events\RodadaEncerrada;
 use App\Domain\Bolao\Events\SorteioPublicado;
 use App\Listeners\InvalidarCacheDaRodada;
 use App\Models\User;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,5 +29,7 @@ class AppServiceProvider extends ServiceProvider
             [SorteioPublicado::class, RankingAtualizado::class, RodadaEncerrada::class],
             InvalidarCacheDaRodada::class,
         );
+
+        RateLimiter::for('apostas', fn (Request $request) => Limit::perMinute(5)->by($request->ip()));
     }
 }

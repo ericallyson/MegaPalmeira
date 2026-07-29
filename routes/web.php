@@ -5,14 +5,29 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DrawController;
 use App\Http\Controllers\Admin\RoundController;
 use App\Http\Controllers\Admin\TwoFactorSetupController;
+use App\Http\Controllers\Public\BettorController;
 use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Webhooks\MercadoPagoWebhookController;
 use App\Http\Middleware\EnsureTwoFactorIsEnabled;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 
-Route::post('/webhooks/mercadopago', \App\Http\Controllers\Webhooks\MercadoPagoWebhookController::class)
+Route::post('/webhooks/mercadopago', MercadoPagoWebhookController::class)
     ->name('webhooks.mercadopago');
+
+Route::get('/apostar', [App\Http\Controllers\Public\BetController::class, 'create'])->name('apostas.create');
+Route::post('/apostas', [App\Http\Controllers\Public\BetController::class, 'store'])
+    ->middleware('throttle:apostas')
+    ->name('apostas.store');
+Route::get('/apostas/{bet:uuid}', [App\Http\Controllers\Public\BetController::class, 'checkout'])->name('apostas.checkout');
+Route::get('/apostas/{bet:uuid}/status', [App\Http\Controllers\Public\BetController::class, 'status'])->name('apostas.status');
+Route::post('/apostas/{bet:uuid}/qr', [App\Http\Controllers\Public\BetController::class, 'regenerarQr'])
+    ->middleware('throttle:apostas')
+    ->name('apostas.qr');
+Route::get('/minhas-cartelas/{bettor:uuid}', BettorController::class)
+    ->middleware('signed')
+    ->name('apostador.cartelas');
 
 Route::middleware(['auth', 'can:administrar-bolao'])
     ->prefix('admin')

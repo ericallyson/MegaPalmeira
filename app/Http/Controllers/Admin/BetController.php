@@ -70,12 +70,17 @@ class BetController extends Controller
 
     public function cancelar(MotivoRequest $request, Bet $bet, CancelarAposta $cancelar): RedirectResponse
     {
+        $to = $request->boolean('estorno') ? BetStatus::Refunded : BetStatus::Canceled;
+
         try {
-            $cancelar->handle($bet, $request->string('motivo')->toString(), $request->user());
+            $cancelar->handle($bet, $request->string('motivo')->toString(), $request->user(), $to);
         } catch (BolaoException $e) {
             return back()->with('erro', $e->getMessage());
         }
 
-        return back()->with('sucesso', 'Aposta cancelada.');
+        return back()->with(
+            'sucesso',
+            $to === BetStatus::Refunded ? 'Estorno registrado.' : 'Aposta cancelada.',
+        );
     }
 }

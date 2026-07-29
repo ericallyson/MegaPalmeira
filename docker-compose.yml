@@ -14,6 +14,36 @@ services:
       redis:
         condition: service_healthy
 
+  queue:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+    container_name: megapalmeira_queue
+    command: ["php", "artisan", "queue:work", "redis", "--queue=payments,apuracao,notifications,default", "--tries=3", "--sleep=2"]
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+    container_name: megapalmeira_scheduler
+    command: ["php", "artisan", "schedule:work"]
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
   mysql:
     image: mysql:8.0
     container_name: megapalmeira_mysql
