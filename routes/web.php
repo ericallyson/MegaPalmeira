@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 
+Route::post('/webhooks/mercadopago', \App\Http\Controllers\Webhooks\MercadoPagoWebhookController::class)
+    ->name('webhooks.mercadopago');
+
 Route::middleware(['auth', 'can:administrar-bolao'])
     ->prefix('admin')
     ->name('admin.')
