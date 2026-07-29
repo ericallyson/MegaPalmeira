@@ -5,10 +5,11 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DrawController;
 use App\Http\Controllers\Admin\RoundController;
 use App\Http\Controllers\Admin\TwoFactorSetupController;
+use App\Http\Controllers\Public\HomeController;
 use App\Http\Middleware\EnsureTwoFactorIsEnabled;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn () => redirect('/admin'))->name('home');
+Route::get('/', HomeController::class)->name('home');
 
 Route::middleware(['auth', 'can:administrar-bolao'])
     ->prefix('admin')

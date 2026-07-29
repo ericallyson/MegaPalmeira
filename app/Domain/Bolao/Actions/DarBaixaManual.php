@@ -4,6 +4,7 @@ namespace App\Domain\Bolao\Actions;
 
 use App\Domain\Bolao\Enums\BetStatus;
 use App\Domain\Bolao\Enums\PaidMethod;
+use App\Domain\Bolao\Events\RankingAtualizado;
 use App\Domain\Bolao\Exceptions\MotivoObrigatorio;
 use App\Domain\Bolao\Services\ApuracaoService;
 use App\Models\Bet;
@@ -42,6 +43,8 @@ class DarBaixaManual
             // A cartela pode ter entrado depois de sorteios já publicados:
             // reapura só ela contra o histórico da rodada.
             $this->apuracao->apurarAposta($bet);
+
+            RankingAtualizado::dispatch($bet->round()->firstOrFail());
 
             return $bet->refresh();
         });

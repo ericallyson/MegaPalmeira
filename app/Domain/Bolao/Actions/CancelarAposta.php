@@ -3,6 +3,7 @@
 namespace App\Domain\Bolao\Actions;
 
 use App\Domain\Bolao\Enums\BetStatus;
+use App\Domain\Bolao\Events\RankingAtualizado;
 use App\Domain\Bolao\Exceptions\MotivoObrigatorio;
 use App\Models\Bet;
 use App\Models\User;
@@ -32,6 +33,8 @@ class CancelarAposta
                 'actor_type' => 'user',
                 'actor_id' => $actor->id,
             ]);
+
+            RankingAtualizado::dispatch($bet->round()->firstOrFail());
 
             return $bet->refresh();
         });
