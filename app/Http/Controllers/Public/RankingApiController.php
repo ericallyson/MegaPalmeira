@@ -6,16 +6,15 @@ use App\Domain\Bolao\Enums\RoundStatus;
 use App\Domain\Bolao\Services\SnapshotService;
 use App\Http\Controllers\Controller;
 use App\Models\Round;
-use Inertia\Inertia;
-use Inertia\Response;
+use Illuminate\Http\JsonResponse;
 
-class HomeController extends Controller
+class RankingApiController extends Controller
 {
     /**
-     * A home é o acompanhamento da rodada atual: aberta ou em andamento;
-     * na falta delas, a última encerrada.
+     * Fallback de polling quando o WebSocket não conecta:
+     * o placar nunca fica mudo.
      */
-    public function __invoke(SnapshotService $snapshot): Response
+    public function __invoke(SnapshotService $snapshot): JsonResponse
     {
         $round = Round::query()
             ->whereIn('status', [RoundStatus::Open, RoundStatus::Running])
@@ -27,14 +26,9 @@ class HomeController extends Controller
                 ->first();
 
         if ($round === null) {
-            return Inertia::render('Public/Home', [
-                'rodada' => null,
-                'sorteios' => [],
-                'ranking' => [],
-                'ganhadores' => [],
-            ]);
+            return response()->json(['rodada' => null]);
         }
 
-        return Inertia::render('Public/Home', $snapshot->publicSnapshot($round));
+        return response()->json($snapshot->publicSnapshot($round));
     }
 }

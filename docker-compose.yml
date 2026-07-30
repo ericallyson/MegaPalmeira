@@ -44,6 +44,21 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
+  reverb:
+    build:
+      context: .
+      dockerfile: docker/app.Dockerfile
+    container_name: megapalmeira_reverb
+    command: ["php", "artisan", "reverb:start", "--host=0.0.0.0", "--port=8080"]
+    ports:
+      - "8081:8080"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
   mysql:
     image: mysql:8.0
     container_name: megapalmeira_mysql

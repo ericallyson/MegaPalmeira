@@ -28,6 +28,8 @@ Route::post('/apostas/{bet:uuid}/qr', [App\Http\Controllers\Public\BetController
 Route::get('/minhas-cartelas/{bettor:uuid}', BettorController::class)
     ->middleware('signed')
     ->name('apostador.cartelas');
+Route::get('/api/rodada-atual/ranking', \App\Http\Controllers\Public\RankingApiController::class)
+    ->name('api.ranking');
 
 Route::middleware(['auth', 'can:administrar-bolao'])
     ->prefix('admin')
