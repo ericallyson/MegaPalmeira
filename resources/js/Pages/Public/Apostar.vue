@@ -149,7 +149,11 @@ function pagar() {
                     <p v-if="form.errors.aceite_maioridade" class="mt-1 text-12 text-erro">{{ form.errors.aceite_maioridade }}</p>
                     <label class="mt-2 flex items-start gap-2 text-14">
                         <input v-model="form.aceite_regulamento" type="checkbox" class="mt-1 accent-aceso" />
-                        <span>Li e aceito o regulamento (versão {{ rodada.versaoRegulamento }}).</span>
+                        <span>
+                            Li e aceito o
+                            <Link href="/regulamento" class="text-aceso underline" target="_blank">regulamento</Link>
+                            (versão {{ rodada.versaoRegulamento }}).
+                        </span>
                     </label>
                     <p v-if="form.errors.aceite_regulamento" class="mt-1 text-12 text-erro">{{ form.errors.aceite_regulamento }}</p>
                 </section>

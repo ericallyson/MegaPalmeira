@@ -3,7 +3,6 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import Ball from '@/Components/Ball.vue';
 import InstallPrompt from '@/Components/InstallPrompt.vue';
-import { getEcho, socketConectado } from '@/lib/echo';
 import { brl, dataCurta, dataHora } from '@/lib/format';
 
 type RankingItem = {
@@ -156,22 +155,30 @@ async function pollFallback() {
     }
 }
 
-onMounted(() => {
+let sairDoCanal: (() => void) | null = null;
+
+onMounted(async () => {
     if (!props.rodada) return;
 
     const canal = `rodada.${props.rodada.uuid}`;
 
+    // pusher-js é pesado: carrega depois da primeira pintura
+    let conectado: (() => boolean) | null = null;
+
     try {
+        const { getEcho, socketConectado } = await import('@/lib/echo');
+        conectado = socketConectado;
         getEcho()
             .channel(canal)
             .listen('.sorteio.publicado', (payload: Snapshot) => acendimento(payload));
+        sairDoCanal = () => getEcho().leaveChannel(canal);
     } catch {
         // Echo indisponível: cai direto para o polling
     }
 
     timeouts.push(
         setTimeout(() => {
-            if (!socketConectado() && pollTimer === null) {
+            if (!(conectado?.() ?? false) && pollTimer === null) {
                 pollTimer = setInterval(pollFallback, 15000);
             }
         }, 5000),
@@ -181,12 +188,10 @@ onMounted(() => {
 onUnmounted(() => {
     timeouts.forEach(clearTimeout);
     if (pollTimer) clearInterval(pollTimer);
-    if (props.rodada) {
-        try {
-            getEcho().leaveChannel(`rodada.${props.rodada.uuid}`);
-        } catch {
-            // já desconectado
-        }
+    try {
+        sairDoCanal?.();
+    } catch {
+        // já desconectado
     }
 });
 

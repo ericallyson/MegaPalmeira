@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\RoundController;
 use App\Http\Controllers\Admin\TwoFactorSetupController;
 use App\Http\Controllers\Public\BettorController;
 use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\RankingApiController;
+use App\Http\Controllers\Public\RegulamentoController;
 use App\Http\Controllers\Webhooks\MercadoPagoWebhookController;
 use App\Http\Middleware\EnsureTwoFactorIsEnabled;
 use Illuminate\Support\Facades\Route;
@@ -28,8 +30,9 @@ Route::post('/apostas/{bet:uuid}/qr', [App\Http\Controllers\Public\BetController
 Route::get('/minhas-cartelas/{bettor:uuid}', BettorController::class)
     ->middleware('signed')
     ->name('apostador.cartelas');
-Route::get('/api/rodada-atual/ranking', \App\Http\Controllers\Public\RankingApiController::class)
+Route::get('/api/rodada-atual/ranking', RankingApiController::class)
     ->name('api.ranking');
+Route::get('/regulamento', RegulamentoController::class)->name('regulamento');
 
 Route::middleware(['auth', 'can:administrar-bolao'])
     ->prefix('admin')

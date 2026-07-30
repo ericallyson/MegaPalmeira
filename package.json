@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build && cp public/build/sw.js public/sw.js",
+        "build": "vite build && vite build --ssr && cp public/build/sw.js public/sw.js",
         "dev": "vite"
     },
     "devDependencies": {

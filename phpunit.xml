@@ -32,6 +32,7 @@
         <env name="DB_URL" value=""/>
         <env name="APP_TIMEZONE" value="America/Maceio"/>
         <env name="APP_LOCALE" value="pt_BR"/>
+        <env name="INERTIA_SSR_ENABLED" value="false"/>
         <env name="MAIL_MAILER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>

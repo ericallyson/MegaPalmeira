@@ -1,11 +1,20 @@
 services:
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: megapalmeira_nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - app
+    restart: unless-stopped
+
   app:
     build:
       context: .
       dockerfile: docker/app.Dockerfile
     container_name: megapalmeira_app
-    ports:
-      - "8000:8000"
     volumes:
       - .:/var/www/html
     depends_on:
@@ -42,6 +51,15 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    restart: unless-stopped
+
+  ssr:
+    image: node:22-alpine
+    container_name: megapalmeira_ssr
+    working_dir: /var/www/html
+    command: ["node", "bootstrap/ssr/ssr.js"]
+    volumes:
+      - .:/var/www/html
     restart: unless-stopped
 
   reverb:
