@@ -8,8 +8,10 @@ const props = withDefaults(
         lit?: boolean;
         size?: 'hero' | 'md' | 'sm';
         contest?: number | null;
+        justLit?: boolean;
+        bloom?: boolean;
     }>(),
-    { lit: false, size: 'md', contest: null },
+    { lit: false, size: 'md', contest: null, justLit: false, bloom: false },
 );
 
 const sizeClass = computed(
@@ -38,6 +40,7 @@ const label = computed(() =>
             lit
                 ? 'border border-aceso bg-aceso font-bold text-tinta shadow-[0_0_0_2px_rgba(255,194,75,0.55),0_0_16px_rgba(255,138,61,0.4)]'
                 : 'border border-vidro/30 bg-noite font-normal text-vidro',
+            { 'animar-anel': justLit, 'animar-bloom': bloom },
         ]"
     >
         {{ dezena(n) }}

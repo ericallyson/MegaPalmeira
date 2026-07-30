@@ -2,6 +2,7 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import Ball from '@/Components/Ball.vue';
+import { getEcho, socketConectado } from '@/lib/echo';
 import { brl, dataCurta, dataHora } from '@/lib/format';
 
 type RankingItem = {
@@ -13,76 +14,221 @@ type RankingItem = {
     hitsCount: number;
 };
 
+type Sorteio = {
+    id: number;
+    concurso: number;
+    data: string;
+    dezenas: number[];
+    corrigidoEm: string | null;
+    motivoCorrecao: string | null;
+};
+
+type Rodada = {
+    uuid: string;
+    nome: string;
+    status: string;
+    statusLabel: string;
+    poteCents: number;
+    premioPrincipalCents: number;
+    valorCartelaCents: number;
+    cartelasPagas: number;
+    encerramentoApostas: string;
+    sorteiosPublicados: number;
+    maxSorteios: number;
+    rolloverCents: number;
+    encerradaEm: string | null;
+};
+
+type Snapshot = {
+    rodada: Rodada;
+    sorteios: Sorteio[];
+    ranking: RankingItem[];
+    ganhadores: Array<{ categoria: string; nome: string; valorCents: number }>;
+    sorteio?: { id: number; concurso: number; data: string; dezenas: number[] };
+};
+
 const props = defineProps<{
-    rodada: {
-        uuid: string;
-        nome: string;
-        status: string;
-        statusLabel: string;
-        poteCents: number;
-        premioPrincipalCents: number;
-        valorCartelaCents: number;
-        cartelasPagas: number;
-        encerramentoApostas: string;
-        sorteiosPublicados: number;
-        maxSorteios: number;
-        rolloverCents: number;
-        encerradaEm: string | null;
-    } | null;
-    sorteios: Array<{
-        id: number;
-        concurso: number;
-        data: string;
-        dezenas: number[];
-        corrigidoEm: string | null;
-        motivoCorrecao: string | null;
-    }>;
+    rodada: Rodada | null;
+    sorteios: Sorteio[];
     ranking: RankingItem[];
     ganhadores: Array<{ categoria: string; nome: string; valorCents: number }>;
 }>();
 
+// Estado vivo: começa com os props e passa a ser alimentado pelo socket.
+const rodada = ref<Rodada | null>(props.rodada);
+const sorteios = ref<Sorteio[]>([...props.sorteios]);
+const ranking = ref<RankingItem[]>(props.ranking.map((r) => ({ ...r, numbers: r.numbers.map((n) => ({ ...n })) })));
+const ganhadores = ref([...props.ganhadores]);
+
 const busca = ref('');
 const buscaCartelas = ref('');
 
-const lider = computed(() => props.ranking[0] ?? null);
+// ---- o acendimento ----
+const aoVivo = ref<{ concurso: number; data: string; dezenas: number[] } | null>(null);
+const recemAcesas = ref<Set<string>>(new Set());
+const subiram = ref<Set<string>>(new Set());
+const cartelaCampea = ref<RankingItem | null>(null);
+const timeouts: Array<ReturnType<typeof setTimeout>> = [];
+
+const reduzMovimento = () =>
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function aplicarSnapshot(payload: Snapshot) {
+    rodada.value = payload.rodada;
+    sorteios.value = payload.sorteios;
+    ranking.value = payload.ranking;
+    ganhadores.value = payload.ganhadores;
+}
+
+function acendimento(payload: Snapshot) {
+    const sorteio = payload.sorteio;
+
+    if (!sorteio || reduzMovimento()) {
+        aplicarSnapshot(payload);
+        return;
+    }
+
+    const posicaoAntiga = new Map(ranking.value.map((r) => [r.betUuid, r.position]));
+    aoVivo.value = { concurso: sorteio.concurso, data: sorteio.data, dezenas: [] };
+
+    sorteio.dezenas.forEach((dezena, i) => {
+        timeouts.push(
+            setTimeout(() => {
+                // 1. a dezena entra no topo com bloom
+                aoVivo.value?.dezenas.push(dezena);
+
+                // 2. todas as cartelas que a contêm acendem ao mesmo tempo
+                for (const item of ranking.value) {
+                    const bola = item.numbers.find(
+                        (n) => n.number === dezena && n.matchedDrawId === null,
+                    );
+                    if (bola) {
+                        bola.matchedDrawId = sorteio.id;
+                        item.hitsCount += 1;
+                        recemAcesas.value.add(`${item.betUuid}:${dezena}`);
+                    }
+                }
+                recemAcesas.value = new Set(recemAcesas.value);
+            }, i * 400),
+        );
+    });
+
+    const aposDezenas = sorteio.dezenas.length * 400 + 700;
+
+    // 3. o ranking re-ordena com FLIP e quem subiu ganha realce
+    timeouts.push(
+        setTimeout(() => {
+            aplicarSnapshot(payload);
+            aoVivo.value = null;
+
+            const sobem = new Set<string>();
+            for (const item of payload.ranking) {
+                const antes = posicaoAntiga.get(item.betUuid);
+                if (antes !== undefined && item.position < antes) sobem.add(item.betUuid);
+            }
+            subiram.value = sobem;
+            timeouts.push(setTimeout(() => (subiram.value = new Set()), 2000));
+            timeouts.push(setTimeout(() => (recemAcesas.value = new Set()), 1300));
+
+            // 4. quem fechou 10 vai para tela cheia por 4s
+            const campea = payload.ranking.find((r) => r.hitsCount === 10);
+            if (campea) {
+                cartelaCampea.value = campea;
+                timeouts.push(setTimeout(() => (cartelaCampea.value = null), 4000));
+            }
+        }, aposDezenas),
+    );
+}
+
+// ---- socket + fallback: o placar nunca fica mudo ----
+let pollTimer: ReturnType<typeof setInterval> | null = null;
+
+async function pollFallback() {
+    try {
+        const resposta = await fetch('/api/rodada-atual/ranking', {
+            headers: { Accept: 'application/json' },
+        });
+        const dados = await resposta.json();
+        if (dados.rodada) aplicarSnapshot(dados);
+    } catch {
+        // sem rede: o próximo tick tenta de novo
+    }
+}
+
+onMounted(() => {
+    if (!props.rodada) return;
+
+    const canal = `rodada.${props.rodada.uuid}`;
+
+    try {
+        getEcho()
+            .channel(canal)
+            .listen('.sorteio.publicado', (payload: Snapshot) => acendimento(payload));
+    } catch {
+        // Echo indisponível: cai direto para o polling
+    }
+
+    timeouts.push(
+        setTimeout(() => {
+            if (!socketConectado() && pollTimer === null) {
+                pollTimer = setInterval(pollFallback, 15000);
+            }
+        }, 5000),
+    );
+});
+
+onUnmounted(() => {
+    timeouts.forEach(clearTimeout);
+    if (pollTimer) clearInterval(pollTimer);
+    if (props.rodada) {
+        try {
+            getEcho().leaveChannel(`rodada.${props.rodada.uuid}`);
+        } catch {
+            // já desconectado
+        }
+    }
+});
+
+// ---- derivados de exibição ----
+const lider = computed(() => ranking.value[0] ?? null);
 const faltam = computed(() => (lider.value ? 10 - lider.value.hitsCount : 10));
 
 const rankingFiltrado = computed(() =>
-    props.ranking.filter((item) =>
+    ranking.value.filter((item) =>
         item.displayName.toLowerCase().includes(busca.value.toLowerCase()),
     ),
 );
 
 const cartelasOrdenadas = computed(() =>
-    [...props.ranking]
+    [...ranking.value]
         .sort((a, b) => a.displayName.localeCompare(b.displayName, 'pt-BR'))
         .filter((item) =>
             item.displayName.toLowerCase().includes(buscaCartelas.value.toLowerCase()),
         ),
 );
 
-const ultimoSorteio = computed(() => props.sorteios[0] ?? null);
-const sorteiosAnteriores = computed(() => props.sorteios.slice(1));
-const correcoes = computed(() => props.sorteios.filter((s) => s.corrigidoEm));
-
-// contador para o encerramento das apostas quando a rodada está aberta
-const agora = ref(Date.now());
-let timer: ReturnType<typeof setInterval> | null = null;
-
-onMounted(() => {
-    timer = setInterval(() => (agora.value = Date.now()), 1000);
-});
-onUnmounted(() => {
-    if (timer) clearInterval(timer);
-});
+const ultimoSorteio = computed(() => sorteios.value[0] ?? null);
+const sorteiosAnteriores = computed(() => sorteios.value.slice(1));
+const correcoes = computed(() => sorteios.value.filter((s) => s.corrigidoEm));
 
 function imprimir() {
     window.print();
 }
 
+// contador para o encerramento das apostas quando a rodada está aberta
+const agora = ref(Date.now());
+let clock: ReturnType<typeof setInterval> | null = null;
+
+onMounted(() => {
+    clock = setInterval(() => (agora.value = Date.now()), 1000);
+});
+onUnmounted(() => {
+    if (clock) clearInterval(clock);
+});
+
 const contagem = computed(() => {
-    if (!props.rodada || props.rodada.status !== 'open') return null;
-    const diff = new Date(props.rodada.encerramentoApostas).getTime() - agora.value;
+    if (!rodada.value || rodada.value.status !== 'open') return null;
+    const diff = new Date(rodada.value.encerramentoApostas).getTime() - agora.value;
     if (diff <= 0) return 'Apostas encerradas';
     const h = Math.floor(diff / 3_600_000);
     const m = Math.floor((diff % 3_600_000) / 60_000);
@@ -94,6 +240,25 @@ const contagem = computed(() => {
 <template>
     <Head :title="rodada ? rodada.nome : 'Bolão Dez'" />
     <div class="min-h-screen bg-tinta text-papel">
+        <!-- 4. cartela campeã em tela cheia -->
+        <div
+            v-if="cartelaCampea"
+            class="fixed inset-0 z-50 flex items-center justify-center bg-tinta/95 px-4"
+            role="alertdialog"
+            aria-label="Cartela campeã"
+        >
+            <div class="text-center">
+                <p class="font-display text-72 font-black uppercase leading-none tracking-tight text-aceso">
+                    Fechou!
+                </p>
+                <p class="mt-4 text-28">{{ cartelaCampea.displayName }}</p>
+                <p class="font-mono text-14 font-tabular text-vidro">{{ cartelaCampea.maskedPhone }}</p>
+                <div class="mt-6 flex flex-wrap justify-center gap-2">
+                    <Ball v-for="n in cartelaCampea.numbers" :key="n.number" :n="n.number" lit size="hero" />
+                </div>
+            </div>
+        </div>
+
         <header class="border-b border-noite print:hidden">
             <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
                 <p class="font-display text-16 font-black uppercase tracking-tight text-aceso">Bolão Dez</p>
@@ -111,6 +276,29 @@ const contagem = computed(() => {
             >
                 Concurso {{ s.concurso }} corrigido em {{ dataHora(s.corrigidoEm!) }}: {{ s.motivoCorrecao }}
             </p>
+
+            <!-- sorteio entrando ao vivo -->
+            <section
+                v-if="aoVivo"
+                class="mt-6 rounded-lg border border-aceso/60 bg-noite p-4 print:hidden"
+                aria-live="polite"
+                aria-label="Sorteio sendo publicado agora"
+            >
+                <p class="text-14 text-vidro">
+                    Saiu o concurso <span class="font-mono font-tabular text-papel">{{ aoVivo.concurso }}</span>…
+                </p>
+                <div class="mt-3 flex min-h-12 flex-wrap gap-2">
+                    <Ball
+                        v-for="n in aoVivo.dezenas"
+                        :key="n"
+                        :n="n"
+                        lit
+                        bloom
+                        size="hero"
+                        :contest="aoVivo.concurso"
+                    />
+                </div>
+            </section>
 
             <!-- hero: quem está mais perto -->
             <section v-if="lider" class="mt-8 print:hidden" aria-labelledby="hero-titulo">
@@ -141,6 +329,7 @@ const contagem = computed(() => {
                             :key="n.number"
                             :n="n.number"
                             :lit="n.matchedDrawId !== null"
+                            :just-lit="recemAcesas.has(`${lider.betUuid}:${n.number}`)"
                             size="hero"
                         />
                     </div>
@@ -205,7 +394,7 @@ const contagem = computed(() => {
             </section>
 
             <!-- últimas dezenas -->
-            <section v-if="ultimoSorteio" class="mt-8 print:hidden" aria-labelledby="dezenas-titulo">
+            <section v-if="ultimoSorteio && !aoVivo" class="mt-8 print:hidden" aria-labelledby="dezenas-titulo">
                 <h2 id="dezenas-titulo" class="text-14 uppercase tracking-wide text-vidro">Últimas dezenas</h2>
                 <div class="mt-3 rounded-lg bg-noite p-4">
                     <p class="text-14 text-vidro">
@@ -251,12 +440,15 @@ const contagem = computed(() => {
                         class="rounded border border-vidro/30 bg-noite px-3 py-1.5 text-14 focus:border-aceso focus:outline-none"
                     />
                 </div>
-                <ol class="mt-3 space-y-2">
+                <TransitionGroup tag="ol" name="fila" class="mt-3 space-y-2">
                     <li
                         v-for="item in rankingFiltrado"
                         :key="item.betUuid"
                         class="rounded-lg bg-noite p-3"
-                        :class="item.hitsCount === 9 ? 'border border-aceso/60' : ''"
+                        :class="{
+                            'border border-aceso/60': item.hitsCount === 9,
+                            'destaque-subiu': subiram.has(item.betUuid),
+                        }"
                     >
                         <div class="flex flex-wrap items-center gap-3">
                             <span class="w-8 font-mono text-14 font-tabular text-vidro">{{ item.position }}º</span>
@@ -278,11 +470,12 @@ const contagem = computed(() => {
                                 :key="n.number"
                                 :n="n.number"
                                 :lit="n.matchedDrawId !== null"
+                                :just-lit="recemAcesas.has(`${item.betUuid}:${n.number}`)"
                                 size="md"
                             />
                         </div>
                     </li>
-                </ol>
+                </TransitionGroup>
             </section>
 
             <!-- todas as cartelas pagas (lista densa, imprimível) -->
@@ -325,8 +518,8 @@ const contagem = computed(() => {
                     Jogo é entretenimento: aposte com responsabilidade e somente se tiver 18 anos ou mais.
                 </p>
                 <p class="mt-2">
-                    Prêmio de 10 pontos: {{ brl(rodada.premioPrincipalCents) }} ({{ rodada.statusLabel.toLowerCase() }}).
-                    Sobras de centavos de qualquer divisão vão para a administração.
+                    <Link href="/regulamento" class="underline">Regulamento</Link>
+                    · Sobras de centavos de qualquer divisão vão para a administração.
                 </p>
             </footer>
         </main>
