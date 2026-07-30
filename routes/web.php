@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\BetController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DrawController;
+use App\Http\Controllers\Admin\PayoutController;
+use App\Http\Controllers\Admin\RelatorioController;
 use App\Http\Controllers\Admin\RoundController;
 use App\Http\Controllers\Admin\TwoFactorSetupController;
 use App\Http\Controllers\Public\BettorController;
@@ -54,6 +56,10 @@ Route::middleware(['auth', 'can:administrar-bolao'])
             Route::post('/rodadas/{round:uuid}/sorteios/previa', [DrawController::class, 'previa'])->name('sorteios.previa');
             Route::post('/rodadas/{round:uuid}/sorteios', [DrawController::class, 'store'])->name('sorteios.store');
             Route::put('/sorteios/{draw}', [DrawController::class, 'corrigir'])->name('sorteios.corrigir');
+
+            Route::get('/rodadas/{round:uuid}/relatorio', [RelatorioController::class, 'show'])->name('rodadas.relatorio');
+            Route::get('/rodadas/{round:uuid}/relatorio.csv', [RelatorioController::class, 'csv'])->name('rodadas.relatorio.csv');
+            Route::post('/payouts/{payout}/pagar', [PayoutController::class, 'pagar'])->name('payouts.pagar');
 
             Route::get('/apostas', [BetController::class, 'index'])->name('apostas.index');
             Route::post('/apostas/{bet:uuid}/baixa', [BetController::class, 'darBaixa'])->name('apostas.baixa');

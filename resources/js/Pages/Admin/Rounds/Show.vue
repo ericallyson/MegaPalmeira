@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Head, router, useForm } from '@inertiajs/vue3';
+import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import axios from 'axios';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { brl, dataCurta, dataHora, dezena } from '@/lib/format';
@@ -42,10 +42,12 @@ const props = defineProps<{
         hitsCount: number;
     }>;
     payouts: Array<{
+        id: number;
         categoria: string;
         nome: string;
         valorCents: number;
         pagoEm: string | null;
+        observacoes: string | null;
     }>;
 }>();
 
@@ -108,6 +110,14 @@ function encerrar() {
 function cancelar() {
     router.post(`/admin/rodadas/${props.rodada.uuid}/cancelar`, { motivo: motivoCancelamento.value });
 }
+
+const obsPagamento = ref<Record<number, string>>({});
+
+function registrarPagamento(payoutId: number) {
+    router.post(`/admin/payouts/${payoutId}/pagar`, {
+        observacoes: obsPagamento.value[payoutId] ?? '',
+    });
+}
 </script>
 
 <template>
@@ -122,6 +132,13 @@ function cancelar() {
                 </p>
             </div>
             <div class="flex flex-wrap gap-2">
+                <Link
+                    v-if="rodada.status === 'closed' || rodada.status === 'canceled'"
+                    :href="`/admin/rodadas/${rodada.uuid}/relatorio`"
+                    class="rounded bg-papel px-4 py-2 font-display text-14 font-bold uppercase text-tinta"
+                >
+                    Relatório de fechamento
+                </Link>
                 <button
                     v-if="rodada.status === 'draft'"
                     type="button"
@@ -198,11 +215,32 @@ function cancelar() {
             <h2 class="font-display text-16 font-bold uppercase text-jade">Prêmios</h2>
             <table class="mt-2 w-full text-left text-14">
                 <tbody>
-                    <tr v-for="(p, i) in payouts" :key="i" class="border-b border-vidro/10 last:border-0">
+                    <tr v-for="p in payouts" :key="p.id" class="border-b border-vidro/10 last:border-0 align-top">
                         <td class="py-2">{{ p.categoria }}</td>
                         <td class="py-2">{{ p.nome }}</td>
                         <td class="py-2 font-mono font-tabular text-jade">{{ brl(p.valorCents) }}</td>
-                        <td class="py-2 text-vidro">{{ p.pagoEm ? 'Pago' : 'A pagar' }}</td>
+                        <td class="py-2">
+                            <span v-if="p.pagoEm" class="text-jade">
+                                Pago em {{ dataHora(p.pagoEm) }}
+                                <span v-if="p.observacoes" class="text-vidro"> · {{ p.observacoes }}</span>
+                            </span>
+                            <div v-else class="flex flex-wrap items-center gap-2">
+                                <input
+                                    v-model="obsPagamento[p.id]"
+                                    type="text"
+                                    placeholder="Observação (ex.: PIX 30/07)"
+                                    :aria-label="`Observação do pagamento de ${p.nome}`"
+                                    class="rounded border border-vidro/30 bg-tinta px-2 py-1 text-12 focus:border-aceso focus:outline-none"
+                                />
+                                <button
+                                    type="button"
+                                    class="rounded bg-jade px-3 py-1 font-display text-12 font-bold uppercase text-tinta"
+                                    @click="registrarPagamento(p.id)"
+                                >
+                                    Registrar pagamento
+                                </button>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>

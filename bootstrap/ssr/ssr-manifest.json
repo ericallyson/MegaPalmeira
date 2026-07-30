@@ -42,11 +42,17 @@
   "resources/js/Pages/Admin/Rounds/Index.vue?vue&type=script&setup=true&lang.ts": [
     "/build/assets/Index-Cvmosh8L.js"
   ],
+  "resources/js/Pages/Admin/Rounds/Relatorio.vue": [
+    "/build/assets/Relatorio-DM5a9_X5.js"
+  ],
+  "resources/js/Pages/Admin/Rounds/Relatorio.vue?vue&type=script&setup=true&lang.ts": [
+    "/build/assets/Relatorio-DM5a9_X5.js"
+  ],
   "resources/js/Pages/Admin/Rounds/Show.vue": [
-    "/build/assets/Show-Brf9kMJs.js"
+    "/build/assets/Show-Bsftkfwb.js"
   ],
   "resources/js/Pages/Admin/Rounds/Show.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Show-Brf9kMJs.js"
+    "/build/assets/Show-Bsftkfwb.js"
   ],
   "resources/js/Pages/Auth/ConfirmPassword.vue": [
     "/build/assets/ConfirmPassword-CcDrr5l8.js"

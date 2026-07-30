@@ -114,10 +114,12 @@ class RoundController extends Controller
                 ->with('bet.bettor')
                 ->get()
                 ->map(fn ($payout): array => [
+                    'id' => $payout->id,
                     'categoria' => $payout->category->label(),
                     'nome' => $payout->bet->bettor->name,
                     'valorCents' => $payout->amount_cents,
                     'pagoEm' => $payout->paid_at?->toIso8601String(),
+                    'observacoes' => $payout->notes,
                 ]),
         ]);
     }

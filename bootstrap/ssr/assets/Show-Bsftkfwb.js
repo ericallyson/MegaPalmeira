@@ -1,6 +1,6 @@
-import { defineComponent, ref, unref, withCtx, createVNode, toDisplayString, openBlock, createBlock, createCommentVNode, withDirectives, vModelText, Fragment, renderList, createTextVNode, useSSRContext } from "vue";
+import { defineComponent, ref, unref, withCtx, createTextVNode, createVNode, toDisplayString, openBlock, createBlock, createCommentVNode, withDirectives, vModelText, Fragment, renderList, useSSRContext } from "vue";
 import { ssrRenderComponent, ssrInterpolate, ssrRenderAttr, ssrRenderList, ssrIncludeBooleanAttr, ssrRenderClass } from "vue/server-renderer";
-import { useForm, Head, router } from "@inertiajs/vue3";
+import { useForm, Head, Link, router } from "@inertiajs/vue3";
 import axios from "axios";
 import { _ as _sfc_main$1 } from "./AdminLayout-aaBQ2MKn.js";
 import { c as dataCurta, a as dataHora, b as brl, d as dezena } from "./format-BNqt_JV5.js";
@@ -58,6 +58,12 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     function cancelar() {
       router.post(`/admin/rodadas/${props.rodada.uuid}/cancelar`, { motivo: motivoCancelamento.value });
     }
+    const obsPagamento = ref({});
+    function registrarPagamento(payoutId) {
+      router.post(`/admin/payouts/${payoutId}/pagar`, {
+        observacoes: obsPagamento.value[payoutId] ?? ""
+      });
+    }
     return (_ctx, _push, _parent, _attrs) => {
       _push(`<!--[-->`);
       _push(ssrRenderComponent(unref(Head), {
@@ -67,6 +73,25 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
             _push2(`<div class="flex flex-wrap items-start justify-between gap-4"${_scopeId}><div${_scopeId}><h1 class="font-display text-28 font-black uppercase tracking-tight"${_scopeId}>${ssrInterpolate(__props.rodada.nome)}</h1><p class="mt-1 text-14 text-vidro"${_scopeId}>${ssrInterpolate(__props.rodada.statusLabel)} · começa em ${ssrInterpolate(unref(dataCurta)(__props.rodada.inicio + "T12:00:00"))} · apostas até ${ssrInterpolate(unref(dataHora)(__props.rodada.encerramentoApostas))}</p></div><div class="flex flex-wrap gap-2"${_scopeId}>`);
+            if (__props.rodada.status === "closed" || __props.rodada.status === "canceled") {
+              _push2(ssrRenderComponent(unref(Link), {
+                href: `/admin/rodadas/${__props.rodada.uuid}/relatorio`,
+                class: "rounded bg-papel px-4 py-2 font-display text-14 font-bold uppercase text-tinta"
+              }, {
+                default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+                  if (_push3) {
+                    _push3(` Relatório de fechamento `);
+                  } else {
+                    return [
+                      createTextVNode(" Relatório de fechamento ")
+                    ];
+                  }
+                }),
+                _: 1
+              }, _parent2, _scopeId));
+            } else {
+              _push2(`<!---->`);
+            }
             if (__props.rodada.status === "draft") {
               _push2(`<button type="button" class="rounded bg-aceso px-4 py-2 font-display text-14 font-bold uppercase text-tinta"${_scopeId}> Abrir apostas </button>`);
             } else {
@@ -97,8 +122,20 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             _push2(`</div><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Cartelas</p><p class="mt-1 font-mono text-20 font-tabular"${_scopeId}>${ssrInterpolate(__props.rodada.apostasPagas)} pagas</p><p class="text-12 text-vidro"${_scopeId}>${ssrInterpolate(__props.rodada.apostasPendentes)} pendentes</p></div><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Divisão</p><p class="mt-1 font-mono text-16 font-tabular"${_scopeId}>${ssrInterpolate(__props.rodada.pctMain)}/${ssrInterpolate(__props.rodada.pctSecond)}/${ssrInterpolate(__props.rodada.pctAdmin)}</p><p class="text-12 text-vidro"${_scopeId}>${ssrInterpolate(__props.rodada.politicaSemVencedor)}</p></div><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Valor da cartela</p><p class="mt-1 font-mono text-20 font-tabular"${_scopeId}>${ssrInterpolate(unref(brl)(__props.rodada.valorCents))}</p></div></div>`);
             if (__props.payouts.length) {
               _push2(`<div class="mt-6 rounded-lg bg-noite p-4"${_scopeId}><h2 class="font-display text-16 font-bold uppercase text-jade"${_scopeId}>Prêmios</h2><table class="mt-2 w-full text-left text-14"${_scopeId}><tbody${_scopeId}><!--[-->`);
-              ssrRenderList(__props.payouts, (p, i) => {
-                _push2(`<tr class="border-b border-vidro/10 last:border-0"${_scopeId}><td class="py-2"${_scopeId}>${ssrInterpolate(p.categoria)}</td><td class="py-2"${_scopeId}>${ssrInterpolate(p.nome)}</td><td class="py-2 font-mono font-tabular text-jade"${_scopeId}>${ssrInterpolate(unref(brl)(p.valorCents))}</td><td class="py-2 text-vidro"${_scopeId}>${ssrInterpolate(p.pagoEm ? "Pago" : "A pagar")}</td></tr>`);
+              ssrRenderList(__props.payouts, (p) => {
+                _push2(`<tr class="border-b border-vidro/10 last:border-0 align-top"${_scopeId}><td class="py-2"${_scopeId}>${ssrInterpolate(p.categoria)}</td><td class="py-2"${_scopeId}>${ssrInterpolate(p.nome)}</td><td class="py-2 font-mono font-tabular text-jade"${_scopeId}>${ssrInterpolate(unref(brl)(p.valorCents))}</td><td class="py-2"${_scopeId}>`);
+                if (p.pagoEm) {
+                  _push2(`<span class="text-jade"${_scopeId}> Pago em ${ssrInterpolate(unref(dataHora)(p.pagoEm))} `);
+                  if (p.observacoes) {
+                    _push2(`<span class="text-vidro"${_scopeId}> · ${ssrInterpolate(p.observacoes)}</span>`);
+                  } else {
+                    _push2(`<!---->`);
+                  }
+                  _push2(`</span>`);
+                } else {
+                  _push2(`<div class="flex flex-wrap items-center gap-2"${_scopeId}><input${ssrRenderAttr("value", obsPagamento.value[p.id])} type="text" placeholder="Observação (ex.: PIX 30/07)"${ssrRenderAttr("aria-label", `Observação do pagamento de ${p.nome}`)} class="rounded border border-vidro/30 bg-tinta px-2 py-1 text-12 focus:border-aceso focus:outline-none"${_scopeId}><button type="button" class="rounded bg-jade px-3 py-1 font-display text-12 font-bold uppercase text-tinta"${_scopeId}> Registrar pagamento </button></div>`);
+                }
+                _push2(`</td></tr>`);
               });
               _push2(`<!--]--></tbody></table></div>`);
             } else {
@@ -203,20 +240,30 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                   createVNode("p", { class: "mt-1 text-14 text-vidro" }, toDisplayString(__props.rodada.statusLabel) + " · começa em " + toDisplayString(unref(dataCurta)(__props.rodada.inicio + "T12:00:00")) + " · apostas até " + toDisplayString(unref(dataHora)(__props.rodada.encerramentoApostas)), 1)
                 ]),
                 createVNode("div", { class: "flex flex-wrap gap-2" }, [
-                  __props.rodada.status === "draft" ? (openBlock(), createBlock("button", {
+                  __props.rodada.status === "closed" || __props.rodada.status === "canceled" ? (openBlock(), createBlock(unref(Link), {
                     key: 0,
+                    href: `/admin/rodadas/${__props.rodada.uuid}/relatorio`,
+                    class: "rounded bg-papel px-4 py-2 font-display text-14 font-bold uppercase text-tinta"
+                  }, {
+                    default: withCtx(() => [
+                      createTextVNode(" Relatório de fechamento ")
+                    ]),
+                    _: 1
+                  }, 8, ["href"])) : createCommentVNode("", true),
+                  __props.rodada.status === "draft" ? (openBlock(), createBlock("button", {
+                    key: 1,
                     type: "button",
                     class: "rounded bg-aceso px-4 py-2 font-display text-14 font-bold uppercase text-tinta",
                     onClick: abrir
                   }, " Abrir apostas ")) : createCommentVNode("", true),
                   __props.rodada.status === "running" ? (openBlock(), createBlock("button", {
-                    key: 1,
+                    key: 2,
                     type: "button",
                     class: "rounded border border-vidro/40 px-4 py-2 font-display text-14 font-bold uppercase text-vidro",
                     onClick: encerrar
                   }, " Encerrar rodada ")) : createCommentVNode("", true),
                   __props.rodada.status !== "closed" && __props.rodada.status !== "canceled" ? (openBlock(), createBlock("button", {
-                    key: 2,
+                    key: 3,
                     type: "button",
                     class: "rounded border border-erro/40 px-4 py-2 font-display text-14 font-bold uppercase text-erro",
                     onClick: ($event) => mostrandoCancelamento.value = !mostrandoCancelamento.value
@@ -276,15 +323,44 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 createVNode("h2", { class: "font-display text-16 font-bold uppercase text-jade" }, "Prêmios"),
                 createVNode("table", { class: "mt-2 w-full text-left text-14" }, [
                   createVNode("tbody", null, [
-                    (openBlock(true), createBlock(Fragment, null, renderList(__props.payouts, (p, i) => {
+                    (openBlock(true), createBlock(Fragment, null, renderList(__props.payouts, (p) => {
                       return openBlock(), createBlock("tr", {
-                        key: i,
-                        class: "border-b border-vidro/10 last:border-0"
+                        key: p.id,
+                        class: "border-b border-vidro/10 last:border-0 align-top"
                       }, [
                         createVNode("td", { class: "py-2" }, toDisplayString(p.categoria), 1),
                         createVNode("td", { class: "py-2" }, toDisplayString(p.nome), 1),
                         createVNode("td", { class: "py-2 font-mono font-tabular text-jade" }, toDisplayString(unref(brl)(p.valorCents)), 1),
-                        createVNode("td", { class: "py-2 text-vidro" }, toDisplayString(p.pagoEm ? "Pago" : "A pagar"), 1)
+                        createVNode("td", { class: "py-2" }, [
+                          p.pagoEm ? (openBlock(), createBlock("span", {
+                            key: 0,
+                            class: "text-jade"
+                          }, [
+                            createTextVNode(" Pago em " + toDisplayString(unref(dataHora)(p.pagoEm)) + " ", 1),
+                            p.observacoes ? (openBlock(), createBlock("span", {
+                              key: 0,
+                              class: "text-vidro"
+                            }, " · " + toDisplayString(p.observacoes), 1)) : createCommentVNode("", true)
+                          ])) : (openBlock(), createBlock("div", {
+                            key: 1,
+                            class: "flex flex-wrap items-center gap-2"
+                          }, [
+                            withDirectives(createVNode("input", {
+                              "onUpdate:modelValue": ($event) => obsPagamento.value[p.id] = $event,
+                              type: "text",
+                              placeholder: "Observação (ex.: PIX 30/07)",
+                              "aria-label": `Observação do pagamento de ${p.nome}`,
+                              class: "rounded border border-vidro/30 bg-tinta px-2 py-1 text-12 focus:border-aceso focus:outline-none"
+                            }, null, 8, ["onUpdate:modelValue", "aria-label"]), [
+                              [vModelText, obsPagamento.value[p.id]]
+                            ]),
+                            createVNode("button", {
+                              type: "button",
+                              class: "rounded bg-jade px-3 py-1 font-display text-12 font-bold uppercase text-tinta",
+                              onClick: ($event) => registrarPagamento(p.id)
+                            }, " Registrar pagamento ", 8, ["onClick"])
+                          ]))
+                        ])
                       ]);
                     }), 128))
                   ])
