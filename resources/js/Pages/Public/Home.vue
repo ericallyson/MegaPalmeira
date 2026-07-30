@@ -2,6 +2,7 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
 import Ball from '@/Components/Ball.vue';
+import InstallPrompt from '@/Components/InstallPrompt.vue';
 import { getEcho, socketConectado } from '@/lib/echo';
 import { brl, dataCurta, dataHora } from '@/lib/format';
 
@@ -215,6 +216,25 @@ function imprimir() {
     window.print();
 }
 
+// offline: o placar avisa que pode estar desatualizado
+const offline = ref(false);
+const marcarOffline = () => (offline.value = true);
+const marcarOnline = () => (offline.value = false);
+
+onMounted(() => {
+    offline.value = !navigator.onLine;
+    window.addEventListener('offline', marcarOffline);
+    window.addEventListener('online', marcarOnline);
+});
+onUnmounted(() => {
+    window.removeEventListener('offline', marcarOffline);
+    window.removeEventListener('online', marcarOnline);
+});
+
+function recarregar() {
+    window.location.reload();
+}
+
 // contador para o encerramento das apostas quando a rodada está aberta
 const agora = ref(Date.now());
 let clock: ReturnType<typeof setInterval> | null = null;
@@ -259,12 +279,23 @@ const contagem = computed(() => {
             </div>
         </div>
 
+        <div
+            v-if="offline"
+            class="border-b border-brasa/50 bg-brasa/10 px-4 py-2 text-center text-14 text-brasa print:hidden"
+            role="alert"
+        >
+            Você está offline — o placar pode estar desatualizado.
+            <button type="button" class="ml-2 underline" @click="recarregar">Recarregar</button>
+        </div>
+
         <header class="border-b border-noite print:hidden">
             <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
                 <p class="font-display text-16 font-black uppercase tracking-tight text-aceso">Bolão Dez</p>
                 <p v-if="rodada" class="text-14 text-vidro">{{ rodada.nome }} · {{ rodada.statusLabel }}</p>
             </div>
         </header>
+
+        <InstallPrompt />
 
         <main v-if="rodada" class="mx-auto max-w-5xl px-4 pb-16">
             <!-- aviso de correção -->
