@@ -25,7 +25,7 @@ class StoreRoundRequest extends FormRequest
             'pct_main' => ['required', 'integer', 'between:0,100'],
             'pct_second' => ['required', 'integer', 'between:0,100'],
             'pct_admin' => ['required', 'integer', 'between:0,100'],
-            'max_draws' => ['required', 'integer', 'between:1,50'],
+            'max_draws' => ['required', 'integer', 'between:0,99'],
             'max_bets_per_person' => ['required', 'integer', 'between:0,100'],
             'min_paid_bets' => ['required', 'integer', 'min:0'],
             'no_winner_policy' => ['required', 'in:highest_score,rollover'],

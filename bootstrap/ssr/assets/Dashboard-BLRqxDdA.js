@@ -19,7 +19,19 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           if (_push2) {
             _push2(`<h1 class="font-display text-28 font-black uppercase tracking-tight"${_scopeId}>Painel</h1>`);
             if (__props.rodada) {
-              _push2(`<!--[--><div class="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4"${_scopeId}><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Pote atual</p><p class="mt-1 font-mono text-28 font-tabular text-jade"${_scopeId}>${ssrInterpolate(unref(brl)(__props.rodada.poteCents))}</p></div><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Prêmio de 10 pontos</p><p class="mt-1 font-mono text-28 font-tabular text-aceso"${_scopeId}>${ssrInterpolate(unref(brl)(__props.rodada.premioPrincipalCents))}</p></div><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Cartelas pagas</p><p class="mt-1 font-mono text-28 font-tabular"${_scopeId}>${ssrInterpolate(__props.rodada.apostasPagas)}</p><p class="text-12 text-vidro"${_scopeId}>${ssrInterpolate(__props.rodada.apostasPendentes)} aguardando pagamento</p></div><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Sorteios</p><p class="mt-1 font-mono text-28 font-tabular"${_scopeId}>${ssrInterpolate(__props.rodada.sorteios)}/${ssrInterpolate(__props.rodada.maxSorteios)}</p></div></div>`);
+              _push2(`<!--[--><div class="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4"${_scopeId}><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Pote atual</p><p class="mt-1 font-mono text-28 font-tabular text-jade"${_scopeId}>${ssrInterpolate(unref(brl)(__props.rodada.poteCents))}</p></div><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Prêmio de 10 pontos</p><p class="mt-1 font-mono text-28 font-tabular text-aceso"${_scopeId}>${ssrInterpolate(unref(brl)(__props.rodada.premioPrincipalCents))}</p></div><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Cartelas pagas</p><p class="mt-1 font-mono text-28 font-tabular"${_scopeId}>${ssrInterpolate(__props.rodada.apostasPagas)}</p><p class="text-12 text-vidro"${_scopeId}>${ssrInterpolate(__props.rodada.apostasPendentes)} aguardando pagamento</p></div><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Sorteios</p><p class="mt-1 font-mono text-28 font-tabular"${_scopeId}>${ssrInterpolate(__props.rodada.sorteios)}`);
+              if (__props.rodada.maxSorteios > 0) {
+                _push2(`<!--[-->/${ssrInterpolate(__props.rodada.maxSorteios)}<!--]-->`);
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(`</p>`);
+              if (__props.rodada.maxSorteios === 0) {
+                _push2(`<p class="text-12 text-vidro"${_scopeId}>até alguém ganhar</p>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(`</div></div>`);
               if (__props.rodada.apostasForaDoPrazo > 0) {
                 _push2(`<p class="mt-4 rounded border border-brasa/50 bg-brasa/10 px-3 py-2 text-14 text-brasa" role="alert"${_scopeId}>${ssrInterpolate(__props.rodada.apostasForaDoPrazo)} aposta(s) paga(s) fora do prazo aguardando estorno. `);
                 _push2(ssrRenderComponent(unref(Link), {
@@ -103,7 +115,16 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                   ]),
                   createVNode("div", { class: "rounded-lg bg-noite p-4" }, [
                     createVNode("p", { class: "text-12 uppercase text-vidro" }, "Sorteios"),
-                    createVNode("p", { class: "mt-1 font-mono text-28 font-tabular" }, toDisplayString(__props.rodada.sorteios) + "/" + toDisplayString(__props.rodada.maxSorteios), 1)
+                    createVNode("p", { class: "mt-1 font-mono text-28 font-tabular" }, [
+                      createTextVNode(toDisplayString(__props.rodada.sorteios), 1),
+                      __props.rodada.maxSorteios > 0 ? (openBlock(), createBlock(Fragment, { key: 0 }, [
+                        createTextVNode("/" + toDisplayString(__props.rodada.maxSorteios), 1)
+                      ], 64)) : createCommentVNode("", true)
+                    ]),
+                    __props.rodada.maxSorteios === 0 ? (openBlock(), createBlock("p", {
+                      key: 0,
+                      class: "text-12 text-vidro"
+                    }, "até alguém ganhar")) : createCommentVNode("", true)
                   ])
                 ]),
                 __props.rodada.apostasForaDoPrazo > 0 ? (openBlock(), createBlock("p", {

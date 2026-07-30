@@ -23,7 +23,7 @@ test('cria rodada com defaults corretos', function () {
         ->and($round->pct_main)->toBe(70)
         ->and($round->pct_second)->toBe(15)
         ->and($round->pct_admin)->toBe(15)
-        ->and($round->max_draws)->toBe(15)
+        ->and($round->max_draws)->toBe(0)
         ->and($round->max_bets_per_person)->toBe(5)
         ->and($round->no_winner_policy)->toBe(NoWinnerPolicy::HighestScore)
         ->and($round->rollover_in_cents)->toBe(0)

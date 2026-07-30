@@ -44,7 +44,10 @@ defineProps<{
                 </div>
                 <div class="rounded-lg bg-noite p-4">
                     <p class="text-12 uppercase text-vidro">Sorteios</p>
-                    <p class="mt-1 font-mono text-28 font-tabular">{{ rodada.sorteios }}/{{ rodada.maxSorteios }}</p>
+                    <p class="mt-1 font-mono text-28 font-tabular">
+                        {{ rodada.sorteios }}<template v-if="rodada.maxSorteios > 0">/{{ rodada.maxSorteios }}</template>
+                    </p>
+                    <p v-if="rodada.maxSorteios === 0" class="text-12 text-vidro">até alguém ganhar</p>
                 </div>
             </div>
 

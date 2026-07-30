@@ -17,7 +17,7 @@ const props = defineProps<{
 const pctMain = props.rodada?.pctMain ?? 70;
 const pctSecond = props.rodada?.pctSecond ?? 15;
 const pctAdmin = props.rodada?.pctAdmin ?? 15;
-const maxSorteios = props.rodada?.maxSorteios ?? 15;
+const maxSorteios = props.rodada?.maxSorteios ?? 0;
 const maxCartelas = props.rodada?.maxCartelasPorPessoa ?? 5;
 const acumula = props.rodada?.politicaSemVencedor === 'rollover';
 </script>
@@ -78,7 +78,11 @@ const acumula = props.rodada?.politicaSemVencedor === 'rollover';
                         <li>
                             <strong>Sobras de centavos de qualquer divisão são somadas à parcela da administração.</strong>
                         </li>
-                        <li>
+                        <li v-if="maxSorteios === 0">
+                            A rodada não tem limite de concursos: <strong>seguem valendo sorteios até alguém
+                            fazer 10 pontos</strong>.
+                        </li>
+                        <li v-else>
                             Se ninguém fizer 10 pontos em até {{ maxSorteios }} concursos,
                             <template v-if="acumula">
                                 o prêmio principal acumula para a rodada seguinte e a rodada atual paga apenas o 2º

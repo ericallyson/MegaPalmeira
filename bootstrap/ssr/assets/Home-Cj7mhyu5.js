@@ -316,7 +316,19 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         if (rodada.value.status === "open") {
           _push(`<!--[--><p class="text-12 uppercase text-vidro">Apostas encerram em</p><p class="mt-1 font-mono text-20 font-tabular text-brasa">${ssrInterpolate(contagem.value)}</p><!--]-->`);
         } else {
-          _push(`<!--[--><p class="text-12 uppercase text-vidro">Sorteios</p><p class="mt-1 font-mono text-20 font-tabular">${ssrInterpolate(rodada.value.sorteiosPublicados)}/${ssrInterpolate(rodada.value.maxSorteios)}</p><!--]-->`);
+          _push(`<!--[--><p class="text-12 uppercase text-vidro">Sorteios</p><p class="mt-1 font-mono text-20 font-tabular">${ssrInterpolate(rodada.value.sorteiosPublicados)}`);
+          if (rodada.value.maxSorteios > 0) {
+            _push(`<!--[-->/${ssrInterpolate(rodada.value.maxSorteios)}<!--]-->`);
+          } else {
+            _push(`<!---->`);
+          }
+          _push(`</p>`);
+          if (rodada.value.maxSorteios === 0) {
+            _push(`<p class="text-12 text-vidro">até alguém ganhar</p>`);
+          } else {
+            _push(`<!---->`);
+          }
+          _push(`<!--]-->`);
         }
         _push(`</div></section>`);
         if (ultimoSorteio.value && !aoVivo.value) {

@@ -11,7 +11,7 @@ const form = useForm({
     pct_main: 70,
     pct_second: 15,
     pct_admin: 15,
-    max_draws: 15,
+    max_draws: 0,
     max_bets_per_person: 5,
     min_paid_bets: 10,
     no_winner_policy: 'highest_score',
@@ -148,10 +148,11 @@ function salvar() {
                         id="max_draws"
                         v-model.number="form.max_draws"
                         type="number"
-                        min="1"
-                        max="50"
+                        min="0"
+                        max="99"
                         class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"
                     />
+                    <p class="mt-1 text-12 text-vidro">0 = sem limite: joga até alguém ganhar</p>
                 </div>
                 <div>
                     <label class="block text-14 text-vidro" for="max_bets_per_person">Cartelas por pessoa</label>
@@ -175,8 +176,8 @@ function salvar() {
                 </div>
             </div>
 
-            <div>
-                <label class="block text-14 text-vidro" for="no_winner_policy">Se ninguém fechar 10 pontos</label>
+            <div v-if="form.max_draws > 0">
+                <label class="block text-14 text-vidro" for="no_winner_policy">Se ninguém fechar 10 pontos até o limite</label>
                 <select
                     id="no_winner_policy"
                     v-model="form.no_winner_policy"

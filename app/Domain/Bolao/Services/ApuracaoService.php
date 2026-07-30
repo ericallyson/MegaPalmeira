@@ -85,7 +85,7 @@ class ApuracaoService
         )->count();
 
         $seraEncerrada = $chegamADez > 0
-            || $round->draws()->count() + 1 >= $round->max_draws;
+            || ($round->max_draws > 0 && $round->draws()->count() + 1 >= $round->max_draws);
 
         $poteCents = $rateio->poteCents($round);
         $premioPrincipal = intdiv($poteCents * $round->pct_main, 100);

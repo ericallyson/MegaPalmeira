@@ -28,6 +28,26 @@ test('rodada encerra no sorteio em que alguém atinge 10 pontos e recusa novos s
     publicarSorteio($round, [21, 22, 23, 24, 25, 26]);
 })->throws(RodadaNaoAceitaSorteios::class);
 
+test('sem limite de sorteios (default), a rodada segue aberta até alguém fechar 10', function () {
+    $round = Round::factory()->emAndamento()->create(['max_draws' => 0]);
+    Bet::factory()->paga()->comNumeros([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])->for($round)->create();
+
+    // 20 sorteios sem ninguém fechar: nada encerra
+    $dezenas = [[11, 12, 13, 14, 15, 16], [17, 18, 19, 20, 21, 22], [23, 24, 25, 26, 27, 28]];
+    for ($i = 0; $i < 20; $i++) {
+        publicarSorteio($round, $dezenas[$i % 3], concurso: 3000 + $i);
+    }
+
+    expect($round->refresh()->status)->toBe(RoundStatus::Running)
+        ->and($round->draws()->count())->toBe(20);
+
+    // aí alguém fecha: encerra na hora
+    publicarSorteio($round, [1, 2, 3, 4, 5, 6], concurso: 3100);
+    publicarSorteio($round, [7, 8, 9, 10, 59, 60], concurso: 3101);
+
+    expect($round->refresh()->status)->toBe(RoundStatus::Closed);
+});
+
 test('limite de sorteios sem vencedor com highest_score premia a maior pontuação', function () {
     $round = Round::factory()->emAndamento()->create(['max_draws' => 2]);
     $lider = Bet::factory()->paga()

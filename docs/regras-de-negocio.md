@@ -63,8 +63,9 @@ A conta que tem que fechar **sempre**, e que o relatório confere na sua frente:
 ## 6. Quando a rodada termina
 
 - **Alguém fez 10 pontos** → a rodada encerra naquele mesmo concurso. Sorteios seguintes não valem.
-- **Ninguém fez 10 em até 15 concursos** (limite configurável) → vale a política da rodada, publicada no regulamento:
-  - **paga a maior pontuação** (padrão), com os mesmos desempates; ou
+- Por padrão, **não há limite de concursos**: os sorteios seguem valendo até alguém fechar os 10 pontos.
+- O administrador **pode** configurar um limite de concursos na criação da rodada (isso aparece no regulamento). Nesse caso, se ninguém fizer 10 até o limite, vale a política publicada:
+  - **paga a maior pontuação**, com os mesmos desempates; ou
   - **acumula**: o prêmio principal vira ponto de partida do pote da próxima rodada, e a atual paga só o 2º lugar e a administração.
 
 O prêmio é pago pela administração **fora do sistema** (PIX direto ao ganhador); o sistema registra quando e como foi pago.

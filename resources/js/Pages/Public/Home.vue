@@ -423,8 +423,9 @@ const contagem = computed(() => {
                     <template v-else>
                         <p class="text-12 uppercase text-vidro">Sorteios</p>
                         <p class="mt-1 font-mono text-20 font-tabular">
-                            {{ rodada.sorteiosPublicados }}/{{ rodada.maxSorteios }}
+                            {{ rodada.sorteiosPublicados }}<template v-if="rodada.maxSorteios > 0">/{{ rodada.maxSorteios }}</template>
                         </p>
+                        <p v-if="rodada.maxSorteios === 0" class="text-12 text-vidro">até alguém ganhar</p>
                     </template>
                 </div>
             </section>

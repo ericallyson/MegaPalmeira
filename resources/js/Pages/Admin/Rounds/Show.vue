@@ -203,7 +203,9 @@ function registrarPagamento(payoutId: number) {
                 <p class="mt-1 font-mono text-16 font-tabular">
                     {{ rodada.pctMain }}/{{ rodada.pctSecond }}/{{ rodada.pctAdmin }}
                 </p>
-                <p class="text-12 text-vidro">{{ rodada.politicaSemVencedor }}</p>
+                <p class="text-12 text-vidro">
+                    {{ rodada.maxSorteios === 0 ? 'Sorteios até alguém ganhar' : `Até ${rodada.maxSorteios} sorteios · ${rodada.politicaSemVencedor}` }}
+                </p>
             </div>
             <div class="rounded-lg bg-noite p-4">
                 <p class="text-12 uppercase text-vidro">Valor da cartela</p>

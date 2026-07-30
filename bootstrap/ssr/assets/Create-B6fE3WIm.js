@@ -14,7 +14,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       pct_main: 70,
       pct_second: 15,
       pct_admin: 15,
-      max_draws: 15,
+      max_draws: 0,
       max_bets_per_person: 5,
       min_paid_bets: 10,
       no_winner_policy: "highest_score",
@@ -56,7 +56,13 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</fieldset><div class="grid grid-cols-3 gap-4"${_scopeId}><div${_scopeId}><label class="block text-14 text-vidro" for="max_draws"${_scopeId}>Limite de sorteios</label><input id="max_draws"${ssrRenderAttr("value", unref(form).max_draws)} type="number" min="1" max="50" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"${_scopeId}></div><div${_scopeId}><label class="block text-14 text-vidro" for="max_bets_per_person"${_scopeId}>Cartelas por pessoa</label><input id="max_bets_per_person"${ssrRenderAttr("value", unref(form).max_bets_per_person)} type="number" min="0" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"${_scopeId}></div><div${_scopeId}><label class="block text-14 text-vidro" for="min_paid_bets"${_scopeId}>Mínimo de pagas</label><input id="min_paid_bets"${ssrRenderAttr("value", unref(form).min_paid_bets)} type="number" min="0" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"${_scopeId}></div></div><div${_scopeId}><label class="block text-14 text-vidro" for="no_winner_policy"${_scopeId}>Se ninguém fechar 10 pontos</label><select id="no_winner_policy" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 text-16 focus:border-aceso focus:outline-none"${_scopeId}><option value="highest_score"${ssrIncludeBooleanAttr(Array.isArray(unref(form).no_winner_policy) ? ssrLooseContain(unref(form).no_winner_policy, "highest_score") : ssrLooseEqual(unref(form).no_winner_policy, "highest_score")) ? " selected" : ""}${_scopeId}>Paga a maior pontuação</option><option value="rollover"${ssrIncludeBooleanAttr(Array.isArray(unref(form).no_winner_policy) ? ssrLooseContain(unref(form).no_winner_policy, "rollover") : ssrLooseEqual(unref(form).no_winner_policy, "rollover")) ? " selected" : ""}${_scopeId}>Acumula para a próxima rodada</option></select></div><button type="submit"${ssrIncludeBooleanAttr(unref(form).processing) ? " disabled" : ""} class="rounded bg-aceso px-6 py-2 font-display text-14 font-bold uppercase text-tinta disabled:opacity-60"${_scopeId}> Criar rodada </button></form>`);
+            _push2(`</fieldset><div class="grid grid-cols-3 gap-4"${_scopeId}><div${_scopeId}><label class="block text-14 text-vidro" for="max_draws"${_scopeId}>Limite de sorteios</label><input id="max_draws"${ssrRenderAttr("value", unref(form).max_draws)} type="number" min="0" max="99" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"${_scopeId}><p class="mt-1 text-12 text-vidro"${_scopeId}>0 = sem limite: joga até alguém ganhar</p></div><div${_scopeId}><label class="block text-14 text-vidro" for="max_bets_per_person"${_scopeId}>Cartelas por pessoa</label><input id="max_bets_per_person"${ssrRenderAttr("value", unref(form).max_bets_per_person)} type="number" min="0" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"${_scopeId}></div><div${_scopeId}><label class="block text-14 text-vidro" for="min_paid_bets"${_scopeId}>Mínimo de pagas</label><input id="min_paid_bets"${ssrRenderAttr("value", unref(form).min_paid_bets)} type="number" min="0" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"${_scopeId}></div></div>`);
+            if (unref(form).max_draws > 0) {
+              _push2(`<div${_scopeId}><label class="block text-14 text-vidro" for="no_winner_policy"${_scopeId}>Se ninguém fechar 10 pontos até o limite</label><select id="no_winner_policy" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 text-16 focus:border-aceso focus:outline-none"${_scopeId}><option value="highest_score"${ssrIncludeBooleanAttr(Array.isArray(unref(form).no_winner_policy) ? ssrLooseContain(unref(form).no_winner_policy, "highest_score") : ssrLooseEqual(unref(form).no_winner_policy, "highest_score")) ? " selected" : ""}${_scopeId}>Paga a maior pontuação</option><option value="rollover"${ssrIncludeBooleanAttr(Array.isArray(unref(form).no_winner_policy) ? ssrLooseContain(unref(form).no_winner_policy, "rollover") : ssrLooseEqual(unref(form).no_winner_policy, "rollover")) ? " selected" : ""}${_scopeId}>Acumula para a próxima rodada</option></select></div>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(`<button type="submit"${ssrIncludeBooleanAttr(unref(form).processing) ? " disabled" : ""} class="rounded bg-aceso px-6 py-2 font-display text-14 font-bold uppercase text-tinta disabled:opacity-60"${_scopeId}> Criar rodada </button></form>`);
           } else {
             return [
               createVNode("h1", { class: "font-display text-28 font-black uppercase tracking-tight" }, "Criar rodada"),
@@ -255,8 +261,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                       id: "max_draws",
                       "onUpdate:modelValue": ($event) => unref(form).max_draws = $event,
                       type: "number",
-                      min: "1",
-                      max: "50",
+                      min: "0",
+                      max: "99",
                       class: "mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"
                     }, null, 8, ["onUpdate:modelValue"]), [
                       [
@@ -265,7 +271,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                         void 0,
                         { number: true }
                       ]
-                    ])
+                    ]),
+                    createVNode("p", { class: "mt-1 text-12 text-vidro" }, "0 = sem limite: joga até alguém ganhar")
                   ]),
                   createVNode("div", null, [
                     createVNode("label", {
@@ -308,11 +315,11 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                     ])
                   ])
                 ]),
-                createVNode("div", null, [
+                unref(form).max_draws > 0 ? (openBlock(), createBlock("div", { key: 0 }, [
                   createVNode("label", {
                     class: "block text-14 text-vidro",
                     for: "no_winner_policy"
-                  }, "Se ninguém fechar 10 pontos"),
+                  }, "Se ninguém fechar 10 pontos até o limite"),
                   withDirectives(createVNode("select", {
                     id: "no_winner_policy",
                     "onUpdate:modelValue": ($event) => unref(form).no_winner_policy = $event,
@@ -323,7 +330,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                   ], 8, ["onUpdate:modelValue"]), [
                     [vModelSelect, unref(form).no_winner_policy]
                   ])
-                ]),
+                ])) : createCommentVNode("", true),
                 createVNode("button", {
                   type: "submit",
                   disabled: unref(form).processing,

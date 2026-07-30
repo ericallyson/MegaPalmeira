@@ -31,7 +31,7 @@ class RoundFactory extends Factory
             'pct_main' => 70,
             'pct_second' => 15,
             'pct_admin' => 15,
-            'max_draws' => 15,
+            'max_draws' => 0,
             'max_bets_per_person' => 5,
             'min_paid_bets' => 10,
             'no_winner_policy' => NoWinnerPolicy::HighestScore,

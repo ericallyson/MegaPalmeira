@@ -41,7 +41,8 @@ class PublicarSorteio
                 throw RodadaNaoAceitaSorteios::porStatus($round->status);
             }
 
-            if ($round->draws()->count() >= $round->max_draws) {
+            // max_draws = 0 significa sem limite: joga até alguém fechar 10
+            if ($round->max_draws > 0 && $round->draws()->count() >= $round->max_draws) {
                 throw RodadaNaoAceitaSorteios::limiteAtingido($round->max_draws);
             }
 
@@ -67,7 +68,7 @@ class PublicarSorteio
 
             if ($someoneCompleted) {
                 $this->encerrarRodada->handle($round, $draw, $actor);
-            } elseif ($round->draws()->count() >= $round->max_draws) {
+            } elseif ($round->max_draws > 0 && $round->draws()->count() >= $round->max_draws) {
                 $this->encerrarRodada->handle($round, null, $actor);
             }
 

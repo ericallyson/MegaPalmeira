@@ -16,7 +16,7 @@ class RodadaData extends Data
         public int $pctMain = 70,
         public int $pctSecond = 15,
         public int $pctAdmin = 15,
-        public int $maxDraws = 15,
+        public int $maxDraws = 0,
         public int $maxBetsPerPerson = 5,
         public int $minPaidBets = 10,
         public NoWinnerPolicy $noWinnerPolicy = NoWinnerPolicy::HighestScore,
