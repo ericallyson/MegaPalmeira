@@ -49,7 +49,7 @@ function dispensar() {
         aria-label="Instalar o aplicativo"
     >
         <p class="flex-1 text-14 text-papel">
-            Instale o Bolão Dez na tela inicial e abra o placar num toque.
+            Instale o MegaPalmeira na tela inicial e abra o placar num toque.
         </p>
         <button
             type="button"

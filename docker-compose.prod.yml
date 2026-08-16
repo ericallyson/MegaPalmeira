@@ -24,8 +24,6 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-      redis:
-        condition: service_healthy
     restart: unless-stopped
 
   queue:
@@ -33,15 +31,13 @@ services:
       context: .
       dockerfile: docker/prod.Dockerfile
       target: app
-    command: ["php", "artisan", "queue:work", "redis", "--queue=payments,apuracao,notifications,default", "--tries=3", "--sleep=2", "--max-time=3600"]
+    command: ["php", "artisan", "queue:work", "database", "--queue=payments,apuracao,notifications,default", "--tries=3", "--sleep=2", "--max-time=3600"]
     environment:
       APP_ROLE: worker
     env_file:
       - .env
     depends_on:
       mysql:
-        condition: service_healthy
-      redis:
         condition: service_healthy
     restart: unless-stopped
 
@@ -58,8 +54,6 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-      redis:
-        condition: service_healthy
     restart: unless-stopped
 
   reverb:
@@ -74,9 +68,6 @@ services:
       - .env
     ports:
       - "${REVERB_PUBLIC_PORT:-8081}:8080"
-    depends_on:
-      redis:
-        condition: service_healthy
     restart: unless-stopped
 
   ssr:
@@ -102,17 +93,5 @@ services:
       retries: 20
     restart: unless-stopped
 
-  redis:
-    image: redis:7-alpine
-    volumes:
-      - redis_data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 5s
-      timeout: 3s
-      retries: 20
-    restart: unless-stopped
-
 volumes:
   mysql_data:
-  redis_data:

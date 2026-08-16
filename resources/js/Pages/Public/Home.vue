@@ -263,7 +263,7 @@ const contagem = computed(() => {
 </script>
 
 <template>
-    <Head :title="rodada ? rodada.nome : 'Bolão Dez'" />
+    <Head :title="rodada ? rodada.nome : 'MegaPalmeira'" />
     <div class="min-h-screen bg-tinta text-papel">
         <!-- 4. cartela campeã em tela cheia -->
         <div
@@ -295,7 +295,7 @@ const contagem = computed(() => {
 
         <header class="border-b border-noite print:hidden">
             <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-                <p class="font-display text-16 font-black uppercase tracking-tight text-aceso">Bolão Dez</p>
+                <img src="/logoMega.png" alt="MegaPalmeira" class="h-9 w-auto" />
                 <p v-if="rodada" class="text-14 text-vidro">{{ rodada.nome }} · {{ rodada.statusLabel }}</p>
             </div>
         </header>
@@ -539,7 +539,7 @@ const contagem = computed(() => {
                     </div>
                 </div>
                 <h2 class="hidden font-display text-20 font-black uppercase print:block">
-                    Bolão Dez — {{ rodada.nome }} — cartelas pagas
+                    MegaPalmeira — {{ rodada.nome }} — cartelas pagas
                 </h2>
                 <ul class="mt-3 divide-y divide-vidro/10 rounded-lg bg-noite px-4 font-mono text-14 font-tabular print:divide-black/20 print:bg-papel print:text-black">
                     <li v-for="item in cartelasOrdenadas" :key="`lista-${item.betUuid}`" class="py-2">
@@ -563,7 +563,7 @@ const contagem = computed(() => {
 
         <main v-else class="mx-auto max-w-5xl px-4">
             <div class="mt-16 rounded-lg bg-noite p-8 text-center">
-                <p class="font-display text-28 font-black uppercase tracking-tight text-aceso">Bolão Dez</p>
+                <img src="/logoMega.png" alt="MegaPalmeira" class="mx-auto h-16 w-auto" />
                 <p class="mt-3 text-16 text-vidro">
                     Nenhuma rodada em andamento no momento. Volte em breve — a próxima está chegando.
                 </p>

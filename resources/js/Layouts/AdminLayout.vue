@@ -15,8 +15,9 @@ function sair() {
     <div class="min-h-screen bg-tinta text-papel">
         <header class="border-b border-noite">
             <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-                <Link href="/admin" class="font-display text-16 font-black uppercase tracking-tight text-aceso">
-                    Bolão Dez · Admin
+                <Link href="/admin" class="flex items-center gap-2">
+                    <img src="/logoMega.png" alt="MegaPalmeira" class="h-8 w-auto" />
+                    <span class="font-display text-16 font-black uppercase tracking-tight text-aceso">Admin</span>
                 </Link>
                 <nav class="flex items-center gap-4 text-14">
                     <Link href="/admin" class="text-vidro hover:text-papel">Painel</Link>

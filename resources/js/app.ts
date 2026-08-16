@@ -5,7 +5,7 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
 createInertiaApp({
-    title: (title) => (title ? `${title} — Bolão Dez` : 'Bolão Dez'),
+    title: (title) => (title ? `${title} — MegaPalmeira` : 'MegaPalmeira'),
     resolve: (name) =>
         resolvePageComponent(
             `./Pages/${name}.vue`,

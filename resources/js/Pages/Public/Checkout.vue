@@ -91,7 +91,7 @@ onUnmounted(() => {
         <header class="border-b border-noite">
             <div class="mx-auto flex max-w-xl items-center justify-between px-4 py-3">
                 <Link href="/" class="font-display text-16 font-black uppercase tracking-tight text-aceso">
-                    Bolão Dez
+                    MegaPalmeira
                 </Link>
                 <p class="text-14 text-vidro">{{ rodada.nome }}</p>
             </div>
