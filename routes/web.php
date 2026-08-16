@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\PayoutController;
 use App\Http\Controllers\Admin\RelatorioController;
 use App\Http\Controllers\Admin\RoundController;
 use App\Http\Controllers\Admin\TwoFactorSetupController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Public\BettorController;
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\RankingApiController;
@@ -64,5 +65,12 @@ Route::middleware(['auth', 'can:administrar-bolao'])
             Route::get('/apostas', [BetController::class, 'index'])->name('apostas.index');
             Route::post('/apostas/{bet:uuid}/baixa', [BetController::class, 'darBaixa'])->name('apostas.baixa');
             Route::post('/apostas/{bet:uuid}/cancelar', [BetController::class, 'cancelar'])->name('apostas.cancelar');
+
+            Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios.index');
+            Route::get('/usuarios/criar', [UserController::class, 'create'])->name('usuarios.create');
+            Route::post('/usuarios', [UserController::class, 'store'])->name('usuarios.store');
+            Route::get('/usuarios/{user}/editar', [UserController::class, 'edit'])->name('usuarios.edit');
+            Route::put('/usuarios/{user}', [UserController::class, 'update'])->name('usuarios.update');
+            Route::delete('/usuarios/{user}', [UserController::class, 'destroy'])->name('usuarios.destroy');
         });
     });

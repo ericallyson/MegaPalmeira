@@ -13,7 +13,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     return (_ctx, _push, _parent, _attrs) => {
       _push(`<!--[-->`);
       _push(ssrRenderComponent(unref(Head), { title: "Entrar" }, null, _parent));
-      _push(`<div class="flex min-h-screen items-center justify-center bg-tinta px-4"><form class="w-full max-w-sm rounded-lg bg-noite p-6"><h1 class="font-display text-20 font-black uppercase tracking-tight text-aceso">Bolão Dez</h1><p class="mt-1 text-14 text-vidro">Acesso do administrador</p><label class="mt-6 block text-14 text-vidro" for="email">E-mail</label><input id="email"${ssrRenderAttr("value", unref(form).email)} type="email" required autocomplete="email" class="mt-1 w-full rounded border border-vidro/30 bg-tinta px-3 py-2 text-16 text-papel focus:border-aceso focus:outline-none">`);
+      _push(`<div class="flex min-h-screen items-center justify-center bg-tinta px-4"><form class="w-full max-w-sm rounded-lg bg-noite p-6"><img src="/logoMega.png" alt="MegaPalmeira" class="h-12 w-auto"><p class="mt-2 text-14 text-vidro">Acesso do administrador</p><label class="mt-6 block text-14 text-vidro" for="email">E-mail</label><input id="email"${ssrRenderAttr("value", unref(form).email)} type="email" required autocomplete="email" class="mt-1 w-full rounded border border-vidro/30 bg-tinta px-3 py-2 text-16 text-papel focus:border-aceso focus:outline-none">`);
       if (unref(form).errors.email) {
         _push(`<p class="mt-1 text-12 text-erro">${ssrInterpolate(unref(form).errors.email)}</p>`);
       } else {

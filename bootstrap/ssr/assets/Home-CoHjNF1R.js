@@ -28,7 +28,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
           class: "fixed inset-x-3 bottom-3 z-40 mx-auto flex max-w-md items-center gap-3 rounded-lg border border-vidro/30 bg-noite p-3 shadow-lg print:hidden",
           role: "dialog",
           "aria-label": "Instalar o aplicativo"
-        }, _attrs))}><p class="flex-1 text-14 text-papel"> Instale o Bolão Dez na tela inicial e abra o placar num toque. </p><button type="button" class="rounded bg-aceso px-3 py-1.5 font-display text-12 font-bold uppercase text-tinta"> Instalar </button><button type="button" class="text-14 text-vidro underline"> Agora não </button></div>`);
+        }, _attrs))}><p class="flex-1 text-14 text-papel"> Instale o MegaPalmeira na tela inicial e abra o placar num toque. </p><button type="button" class="rounded bg-aceso px-3 py-1.5 font-display text-12 font-bold uppercase text-tinta"> Instalar </button><button type="button" class="text-14 text-vidro underline"> Agora não </button></div>`);
       } else {
         _push(`<!---->`);
       }
@@ -203,7 +203,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     return (_ctx, _push, _parent, _attrs) => {
       _push(`<!--[-->`);
       _push(ssrRenderComponent(unref(Head), {
-        title: rodada.value ? rodada.value.nome : "Bolão Dez"
+        title: rodada.value ? rodada.value.nome : "MegaPalmeira"
       }, null, _parent));
       _push(`<div class="min-h-screen bg-tinta text-papel">`);
       if (cartelaCampea.value) {
@@ -225,7 +225,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       } else {
         _push(`<!---->`);
       }
-      _push(`<header class="border-b border-noite print:hidden"><div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3"><p class="font-display text-16 font-black uppercase tracking-tight text-aceso">Bolão Dez</p>`);
+      _push(`<header class="border-b border-noite print:hidden"><div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3"><img src="/logoMega.png" alt="MegaPalmeira" class="h-9 w-auto">`);
       if (rodada.value) {
         _push(`<p class="text-14 text-vidro">${ssrInterpolate(rodada.value.nome)} · ${ssrInterpolate(rodada.value.statusLabel)}</p>`);
       } else {
@@ -388,7 +388,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           _push(`<!---->`);
         }
         if (ranking.value.length) {
-          _push(`<section class="mt-8" aria-labelledby="cartelas-titulo"><div class="flex flex-wrap items-center justify-between gap-3 print:hidden"><h2 id="cartelas-titulo" class="text-14 uppercase tracking-wide text-vidro"> Todas as cartelas pagas (${ssrInterpolate(ranking.value.length)}) </h2><div class="flex items-center gap-2"><input${ssrRenderAttr("value", buscaCartelas.value)} type="search" placeholder="Buscar" aria-label="Buscar na lista de cartelas" class="rounded border border-vidro/30 bg-noite px-3 py-1.5 text-14 focus:border-aceso focus:outline-none"><button type="button" class="rounded border border-vidro/40 px-3 py-1.5 text-14 text-vidro hover:text-papel"> Imprimir </button></div></div><h2 class="hidden font-display text-20 font-black uppercase print:block"> Bolão Dez — ${ssrInterpolate(rodada.value.nome)} — cartelas pagas </h2><ul class="mt-3 divide-y divide-vidro/10 rounded-lg bg-noite px-4 font-mono text-14 font-tabular print:divide-black/20 print:bg-papel print:text-black"><!--[-->`);
+          _push(`<section class="mt-8" aria-labelledby="cartelas-titulo"><div class="flex flex-wrap items-center justify-between gap-3 print:hidden"><h2 id="cartelas-titulo" class="text-14 uppercase tracking-wide text-vidro"> Todas as cartelas pagas (${ssrInterpolate(ranking.value.length)}) </h2><div class="flex items-center gap-2"><input${ssrRenderAttr("value", buscaCartelas.value)} type="search" placeholder="Buscar" aria-label="Buscar na lista de cartelas" class="rounded border border-vidro/30 bg-noite px-3 py-1.5 text-14 focus:border-aceso focus:outline-none"><button type="button" class="rounded border border-vidro/40 px-3 py-1.5 text-14 text-vidro hover:text-papel"> Imprimir </button></div></div><h2 class="hidden font-display text-20 font-black uppercase print:block"> MegaPalmeira — ${ssrInterpolate(rodada.value.nome)} — cartelas pagas </h2><ul class="mt-3 divide-y divide-vidro/10 rounded-lg bg-noite px-4 font-mono text-14 font-tabular print:divide-black/20 print:bg-papel print:text-black"><!--[-->`);
           ssrRenderList(cartelasOrdenadas.value, (item) => {
             _push(`<li class="py-2">${ssrInterpolate(item.displayName)} — ${ssrInterpolate(item.maskedPhone)} — ${ssrInterpolate(item.numbers.map((n) => String(n.number).padStart(2, "0")).join(" "))}</li>`);
           });
@@ -414,7 +414,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         }, _parent));
         _push(` · Sobras de centavos de qualquer divisão vão para a administração. </p></footer></main>`);
       } else {
-        _push(`<main class="mx-auto max-w-5xl px-4"><div class="mt-16 rounded-lg bg-noite p-8 text-center"><p class="font-display text-28 font-black uppercase tracking-tight text-aceso">Bolão Dez</p><p class="mt-3 text-16 text-vidro"> Nenhuma rodada em andamento no momento. Volte em breve — a próxima está chegando. </p></div></main>`);
+        _push(`<main class="mx-auto max-w-5xl px-4"><div class="mt-16 rounded-lg bg-noite p-8 text-center"><img src="/logoMega.png" alt="MegaPalmeira" class="mx-auto h-16 w-auto"><p class="mt-3 text-16 text-vidro"> Nenhuma rodada em andamento no momento. Volte em breve — a próxima está chegando. </p></div></main>`);
       }
       _push(`</div><!--]-->`);
     };

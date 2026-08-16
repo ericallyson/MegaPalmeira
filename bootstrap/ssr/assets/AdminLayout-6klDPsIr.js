@@ -1,4 +1,4 @@
-import { defineComponent, computed, mergeProps, unref, withCtx, createTextVNode, useSSRContext } from "vue";
+import { defineComponent, computed, mergeProps, unref, withCtx, createVNode, createTextVNode, useSSRContext } from "vue";
 import { ssrRenderAttrs, ssrRenderComponent, ssrInterpolate, ssrRenderSlot } from "vue/server-renderer";
 import { usePage, Link } from "@inertiajs/vue3";
 const _sfc_main = /* @__PURE__ */ defineComponent({
@@ -12,14 +12,19 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       _push(`<div${ssrRenderAttrs(mergeProps({ class: "min-h-screen bg-tinta text-papel" }, _attrs))}><header class="border-b border-noite"><div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">`);
       _push(ssrRenderComponent(unref(Link), {
         href: "/admin",
-        class: "font-display text-16 font-black uppercase tracking-tight text-aceso"
+        class: "flex items-center gap-2"
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(` Bolão Dez · Admin `);
+            _push2(`<img src="/logoMega.png" alt="MegaPalmeira" class="h-8 w-auto"${_scopeId}><span class="font-display text-16 font-black uppercase tracking-tight text-aceso"${_scopeId}>Admin</span>`);
           } else {
             return [
-              createTextVNode(" Bolão Dez · Admin ")
+              createVNode("img", {
+                src: "/logoMega.png",
+                alt: "MegaPalmeira",
+                class: "h-8 w-auto"
+              }),
+              createVNode("span", { class: "font-display text-16 font-black uppercase tracking-tight text-aceso" }, "Admin")
             ];
           }
         }),
@@ -66,6 +71,21 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           } else {
             return [
               createTextVNode("Apostas")
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      _push(ssrRenderComponent(unref(Link), {
+        href: "/admin/usuarios",
+        class: "text-vidro hover:text-papel"
+      }, {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`Usuários`);
+          } else {
+            return [
+              createTextVNode("Usuários")
             ];
           }
         }),

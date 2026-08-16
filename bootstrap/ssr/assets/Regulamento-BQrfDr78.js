@@ -26,10 +26,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(` Bolão Dez `);
+            _push2(` MegaPalmeira `);
           } else {
             return [
-              createTextVNode(" Bolão Dez ")
+              createTextVNode(" MegaPalmeira ")
             ];
           }
         }),

@@ -30,13 +30,13 @@ class MercadoPagoClient
             ->withHeaders(['X-Idempotency-Key' => $bet->uuid])
             ->post('/v1/payments', [
                 'transaction_amount' => round($bet->amount_cents / 100, 2),
-                'description' => "Bolão Dez — {$round->name}",
+                'description' => "MegaPalmeira — {$round->name}",
                 'payment_method_id' => 'pix',
                 'external_reference' => $bet->uuid,
                 'notification_url' => config('services.mercado_pago.notification_url') ?: null,
                 'date_of_expiration' => $expiresAt->format('Y-m-d\TH:i:s.vP'),
                 'payer' => [
-                    'email' => $bettor->email ?: "{$bet->uuid}@apostador.bolaodez.com.br",
+                    'email' => $bettor->email ?: "{$bet->uuid}@apostador.megapalmeira.com.br",
                     'first_name' => (string) $nameParts->first(),
                     'last_name' => (string) ($nameParts->count() > 1 ? $nameParts->last() : ''),
                 ],

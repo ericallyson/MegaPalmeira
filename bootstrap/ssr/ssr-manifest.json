@@ -7,40 +7,40 @@
     "/build/assets/Ball-Cix1i8dF.js"
   ],
   "resources/js/Components/InstallPrompt.vue": [
-    "/build/assets/Home-Cj7mhyu5.js"
+    "/build/assets/Home-CoHjNF1R.js"
   ],
   "resources/js/Components/InstallPrompt.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Home-Cj7mhyu5.js"
+    "/build/assets/Home-CoHjNF1R.js"
   ],
   "resources/js/Layouts/AdminLayout.vue": [
-    "/build/assets/AdminLayout-aaBQ2MKn.js"
+    "/build/assets/AdminLayout-6klDPsIr.js"
   ],
   "resources/js/Layouts/AdminLayout.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/AdminLayout-aaBQ2MKn.js"
+    "/build/assets/AdminLayout-6klDPsIr.js"
   ],
   "resources/js/Pages/Admin/Bets/Index.vue": [
-    "/build/assets/Index-CWausZyl.js"
+    "/build/assets/Index-DIr7Pj8d.js"
   ],
   "resources/js/Pages/Admin/Bets/Index.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Index-CWausZyl.js"
+    "/build/assets/Index-DIr7Pj8d.js"
   ],
   "resources/js/Pages/Admin/Dashboard.vue": [
-    "/build/assets/Dashboard-BLRqxDdA.js"
+    "/build/assets/Dashboard-DMv5PzOH.js"
   ],
   "resources/js/Pages/Admin/Dashboard.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Dashboard-BLRqxDdA.js"
+    "/build/assets/Dashboard-DMv5PzOH.js"
   ],
   "resources/js/Pages/Admin/Rounds/Create.vue": [
-    "/build/assets/Create-B6fE3WIm.js"
+    "/build/assets/Create-DPoyMgI_.js"
   ],
   "resources/js/Pages/Admin/Rounds/Create.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Create-B6fE3WIm.js"
+    "/build/assets/Create-DPoyMgI_.js"
   ],
   "resources/js/Pages/Admin/Rounds/Index.vue": [
-    "/build/assets/Index-Cvmosh8L.js"
+    "/build/assets/Index-DonjhhAW.js"
   ],
   "resources/js/Pages/Admin/Rounds/Index.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Index-Cvmosh8L.js"
+    "/build/assets/Index-DonjhhAW.js"
   ],
   "resources/js/Pages/Admin/Rounds/Relatorio.vue": [
     "/build/assets/Relatorio-DM5a9_X5.js"
@@ -49,10 +49,22 @@
     "/build/assets/Relatorio-DM5a9_X5.js"
   ],
   "resources/js/Pages/Admin/Rounds/Show.vue": [
-    "/build/assets/Show-BsUlUIpy.js"
+    "/build/assets/Show-ClcpqWB6.js"
   ],
   "resources/js/Pages/Admin/Rounds/Show.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Show-BsUlUIpy.js"
+    "/build/assets/Show-ClcpqWB6.js"
+  ],
+  "resources/js/Pages/Admin/Users/Form.vue": [
+    "/build/assets/Form-CBVI5Bzy.js"
+  ],
+  "resources/js/Pages/Admin/Users/Form.vue?vue&type=script&setup=true&lang.ts": [
+    "/build/assets/Form-CBVI5Bzy.js"
+  ],
+  "resources/js/Pages/Admin/Users/Index.vue": [
+    "/build/assets/Index-B2KavIRS.js"
+  ],
+  "resources/js/Pages/Admin/Users/Index.vue?vue&type=script&setup=true&lang.ts": [
+    "/build/assets/Index-B2KavIRS.js"
   ],
   "resources/js/Pages/Auth/ConfirmPassword.vue": [
     "/build/assets/ConfirmPassword-CcDrr5l8.js"
@@ -61,10 +73,10 @@
     "/build/assets/ConfirmPassword-CcDrr5l8.js"
   ],
   "resources/js/Pages/Auth/Login.vue": [
-    "/build/assets/Login-BkPfsp5R.js"
+    "/build/assets/Login-DIzok755.js"
   ],
   "resources/js/Pages/Auth/Login.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Login-BkPfsp5R.js"
+    "/build/assets/Login-DIzok755.js"
   ],
   "resources/js/Pages/Auth/TwoFactorChallenge.vue": [
     "/build/assets/TwoFactorChallenge-3Tp3NUYt.js"
@@ -79,34 +91,34 @@
     "/build/assets/TwoFactorSetup-D3e5P1TS.js"
   ],
   "resources/js/Pages/Public/Apostar.vue": [
-    "/build/assets/Apostar-DI7jgMv7.js"
+    "/build/assets/Apostar-CObQN9Mx.js"
   ],
   "resources/js/Pages/Public/Apostar.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Apostar-DI7jgMv7.js"
+    "/build/assets/Apostar-CObQN9Mx.js"
   ],
   "resources/js/Pages/Public/Checkout.vue": [
-    "/build/assets/Checkout-C3yJYSQM.js"
+    "/build/assets/Checkout-DFHxxqCp.js"
   ],
   "resources/js/Pages/Public/Checkout.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Checkout-C3yJYSQM.js"
+    "/build/assets/Checkout-DFHxxqCp.js"
   ],
   "resources/js/Pages/Public/Home.vue": [
-    "/build/assets/Home-Cj7mhyu5.js"
+    "/build/assets/Home-CoHjNF1R.js"
   ],
   "resources/js/Pages/Public/Home.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Home-Cj7mhyu5.js"
+    "/build/assets/Home-CoHjNF1R.js"
   ],
   "resources/js/Pages/Public/MinhasCartelas.vue": [
-    "/build/assets/MinhasCartelas-eWaRaJZc.js"
+    "/build/assets/MinhasCartelas-Dryn-w4R.js"
   ],
   "resources/js/Pages/Public/MinhasCartelas.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/MinhasCartelas-eWaRaJZc.js"
+    "/build/assets/MinhasCartelas-Dryn-w4R.js"
   ],
   "resources/js/Pages/Public/Regulamento.vue": [
-    "/build/assets/Regulamento-Dvdsxl_U.js"
+    "/build/assets/Regulamento-BQrfDr78.js"
   ],
   "resources/js/Pages/Public/Regulamento.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Regulamento-Dvdsxl_U.js"
+    "/build/assets/Regulamento-BQrfDr78.js"
   ],
   "resources/js/lib/echo.ts": [
     "/build/assets/echo-BK4Yv9l8.js"

@@ -23,6 +23,7 @@ function sair() {
                     <Link href="/admin" class="text-vidro hover:text-papel">Painel</Link>
                     <Link href="/admin/rodadas" class="text-vidro hover:text-papel">Rodadas</Link>
                     <Link href="/admin/apostas" class="text-vidro hover:text-papel">Apostas</Link>
+                    <Link href="/admin/usuarios" class="text-vidro hover:text-papel">Usuários</Link>
                     <button type="button" class="text-vidro hover:text-papel" @click="sair">
                         Sair<span v-if="user" class="hidden sm:inline"> ({{ user.name }})</span>
                     </button>
