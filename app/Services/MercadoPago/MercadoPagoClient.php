@@ -4,12 +4,17 @@ namespace App\Services\MercadoPago;
 
 use App\Models\Bet;
 use App\Models\Payment;
+use App\Settings\SettingsRepository;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 
 class MercadoPagoClient
 {
+    public function __construct(private readonly SettingsRepository $settings)
+    {
+    }
+
     /**
      * Cria uma cobrança PIX para a aposta. O valor vem sempre do
      * servidor (amount_cents da aposta) e a expiração é o menor entre
@@ -33,7 +38,7 @@ class MercadoPagoClient
                 'description' => "MegaPalmeira — {$round->name}",
                 'payment_method_id' => 'pix',
                 'external_reference' => $bet->uuid,
-                'notification_url' => config('services.mercado_pago.notification_url') ?: null,
+                'notification_url' => $this->settings->mercadoPago()['notification_url'] ?: null,
                 'date_of_expiration' => $expiresAt->format('Y-m-d\TH:i:s.vP'),
                 'payer' => [
                     'email' => $bettor->email ?: "{$bet->uuid}@apostador.megapalmeira.com.br",
@@ -76,8 +81,10 @@ class MercadoPagoClient
 
     private function request(): PendingRequest
     {
-        return Http::baseUrl((string) config('services.mercado_pago.base_url'))
-            ->withToken((string) config('services.mercado_pago.access_token'))
+        $mp = $this->settings->mercadoPago();
+
+        return Http::baseUrl($mp['base_url'])
+            ->withToken($mp['access_token'])
             ->acceptJson()
             ->timeout(15);
     }

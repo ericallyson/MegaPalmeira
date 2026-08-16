@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        $this->app->singleton(\App\Settings\SettingsRepository::class);
     }
 
     public function boot(): void

@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Webhooks;
 use App\Http\Controllers\Controller;
 use App\Jobs\ProcessarWebhookMercadoPago;
 use App\Models\PaymentWebhookEvent;
+use App\Settings\SettingsRepository;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class MercadoPagoWebhookController extends Controller
 {
+    public function __construct(private readonly SettingsRepository $settings)
+    {
+    }
+
     /**
      * Valida a assinatura, persiste o evento (unique em
      * provider_event_id garante idempotência), responde 200 imediato
@@ -46,7 +51,7 @@ class MercadoPagoWebhookController extends Controller
 
     private function signatureIsValid(Request $request): bool
     {
-        $secret = (string) config('services.mercado_pago.webhook_secret');
+        $secret = $this->settings->mercadoPago()['webhook_secret'];
         $signature = (string) $request->header('x-signature', '');
 
         if ($secret === '' || $signature === '') {

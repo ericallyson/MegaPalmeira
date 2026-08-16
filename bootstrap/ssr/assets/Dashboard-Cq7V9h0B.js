@@ -1,7 +1,7 @@
 import { defineComponent, unref, withCtx, createTextVNode, createVNode, openBlock, createBlock, Fragment, toDisplayString, createCommentVNode, useSSRContext } from "vue";
 import { ssrRenderComponent, ssrInterpolate } from "vue/server-renderer";
 import { Head, Link } from "@inertiajs/vue3";
-import { _ as _sfc_main$1 } from "./AdminLayout-6klDPsIr.js";
+import { _ as _sfc_main$1 } from "./AdminLayout-DEWhWsQ5.js";
 import { b as brl, a as dataHora } from "./format-BNqt_JV5.js";
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "Dashboard",

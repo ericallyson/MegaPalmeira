@@ -1,7 +1,7 @@
 import { defineComponent, computed, unref, withCtx, createTextVNode, createVNode, toDisplayString, withModifiers, withDirectives, vModelText, openBlock, createBlock, createCommentVNode, vModelCheckbox, useSSRContext } from "vue";
 import { ssrRenderComponent, ssrInterpolate, ssrRenderAttr, ssrIncludeBooleanAttr, ssrLooseContain } from "vue/server-renderer";
 import { useForm, Head, Link } from "@inertiajs/vue3";
-import { _ as _sfc_main$1 } from "./AdminLayout-6klDPsIr.js";
+import { _ as _sfc_main$1 } from "./AdminLayout-DEWhWsQ5.js";
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "Form",
   __ssrInlineRender: true,

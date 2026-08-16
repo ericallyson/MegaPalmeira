@@ -1,7 +1,7 @@
 import { defineComponent, ref, unref, withCtx, createTextVNode, createVNode, withModifiers, withDirectives, vModelText, openBlock, createBlock, Fragment, renderList, toDisplayString, createCommentVNode, useSSRContext } from "vue";
 import { ssrRenderComponent, ssrRenderAttr, ssrRenderList, ssrInterpolate, ssrRenderClass } from "vue/server-renderer";
 import { Head, Link, router } from "@inertiajs/vue3";
-import { _ as _sfc_main$1 } from "./AdminLayout-6klDPsIr.js";
+import { _ as _sfc_main$1 } from "./AdminLayout-DEWhWsQ5.js";
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "Index",
   __ssrInlineRender: true,

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DrawController;
 use App\Http\Controllers\Admin\PayoutController;
 use App\Http\Controllers\Admin\RelatorioController;
 use App\Http\Controllers\Admin\RoundController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\TwoFactorSetupController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Public\BettorController;
@@ -72,5 +73,8 @@ Route::middleware(['auth', 'can:administrar-bolao'])
             Route::get('/usuarios/{user}/editar', [UserController::class, 'edit'])->name('usuarios.edit');
             Route::put('/usuarios/{user}', [UserController::class, 'update'])->name('usuarios.update');
             Route::delete('/usuarios/{user}', [UserController::class, 'destroy'])->name('usuarios.destroy');
+
+            Route::get('/configuracoes', [SettingsController::class, 'edit'])->name('configuracoes.edit');
+            Route::put('/configuracoes', [SettingsController::class, 'update'])->name('configuracoes.update');
         });
     });

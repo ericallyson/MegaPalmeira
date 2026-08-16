@@ -13,34 +13,34 @@
     "/build/assets/Home-CoHjNF1R.js"
   ],
   "resources/js/Layouts/AdminLayout.vue": [
-    "/build/assets/AdminLayout-6klDPsIr.js"
+    "/build/assets/AdminLayout-DEWhWsQ5.js"
   ],
   "resources/js/Layouts/AdminLayout.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/AdminLayout-6klDPsIr.js"
+    "/build/assets/AdminLayout-DEWhWsQ5.js"
   ],
   "resources/js/Pages/Admin/Bets/Index.vue": [
-    "/build/assets/Index-DIr7Pj8d.js"
+    "/build/assets/Index-UhNHMSrz.js"
   ],
   "resources/js/Pages/Admin/Bets/Index.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Index-DIr7Pj8d.js"
+    "/build/assets/Index-UhNHMSrz.js"
   ],
   "resources/js/Pages/Admin/Dashboard.vue": [
-    "/build/assets/Dashboard-DMv5PzOH.js"
+    "/build/assets/Dashboard-Cq7V9h0B.js"
   ],
   "resources/js/Pages/Admin/Dashboard.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Dashboard-DMv5PzOH.js"
+    "/build/assets/Dashboard-Cq7V9h0B.js"
   ],
   "resources/js/Pages/Admin/Rounds/Create.vue": [
-    "/build/assets/Create-DPoyMgI_.js"
+    "/build/assets/Create-B4eQKLBY.js"
   ],
   "resources/js/Pages/Admin/Rounds/Create.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Create-DPoyMgI_.js"
+    "/build/assets/Create-B4eQKLBY.js"
   ],
   "resources/js/Pages/Admin/Rounds/Index.vue": [
-    "/build/assets/Index-DonjhhAW.js"
+    "/build/assets/Index-C0vckBSJ.js"
   ],
   "resources/js/Pages/Admin/Rounds/Index.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Index-DonjhhAW.js"
+    "/build/assets/Index-C0vckBSJ.js"
   ],
   "resources/js/Pages/Admin/Rounds/Relatorio.vue": [
     "/build/assets/Relatorio-DM5a9_X5.js"
@@ -49,22 +49,28 @@
     "/build/assets/Relatorio-DM5a9_X5.js"
   ],
   "resources/js/Pages/Admin/Rounds/Show.vue": [
-    "/build/assets/Show-ClcpqWB6.js"
+    "/build/assets/Show-C_Cp-R58.js"
   ],
   "resources/js/Pages/Admin/Rounds/Show.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Show-ClcpqWB6.js"
+    "/build/assets/Show-C_Cp-R58.js"
+  ],
+  "resources/js/Pages/Admin/Settings/Index.vue": [
+    "/build/assets/Index-BRFewItr.js"
+  ],
+  "resources/js/Pages/Admin/Settings/Index.vue?vue&type=script&setup=true&lang.ts": [
+    "/build/assets/Index-BRFewItr.js"
   ],
   "resources/js/Pages/Admin/Users/Form.vue": [
-    "/build/assets/Form-CBVI5Bzy.js"
+    "/build/assets/Form-4JhdjdDH.js"
   ],
   "resources/js/Pages/Admin/Users/Form.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Form-CBVI5Bzy.js"
+    "/build/assets/Form-4JhdjdDH.js"
   ],
   "resources/js/Pages/Admin/Users/Index.vue": [
-    "/build/assets/Index-B2KavIRS.js"
+    "/build/assets/Index-C6PDiIhY.js"
   ],
   "resources/js/Pages/Admin/Users/Index.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Index-B2KavIRS.js"
+    "/build/assets/Index-C6PDiIhY.js"
   ],
   "resources/js/Pages/Auth/ConfirmPassword.vue": [
     "/build/assets/ConfirmPassword-CcDrr5l8.js"

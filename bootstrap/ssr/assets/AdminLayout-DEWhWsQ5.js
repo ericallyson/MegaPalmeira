@@ -91,6 +91,21 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         }),
         _: 1
       }, _parent));
+      _push(ssrRenderComponent(unref(Link), {
+        href: "/admin/configuracoes",
+        class: "text-vidro hover:text-papel"
+      }, {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`Configurações`);
+          } else {
+            return [
+              createTextVNode("Configurações")
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
       _push(`<button type="button" class="text-vidro hover:text-papel"> Sair`);
       if (user.value) {
         _push(`<span class="hidden sm:inline"> (${ssrInterpolate(user.value.name)})</span>`);
