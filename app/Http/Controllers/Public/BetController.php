@@ -59,6 +59,7 @@ class BetController extends Controller
             $bet = $registrar->handle($round, new ApostaData(
                 bettorName: $request->string('nome')->toString(),
                 bettorPhone: $request->string('celular')->toString(),
+                bettorBirthDate: $request->date('data_nascimento')->format('Y-m-d'),
                 numbers: array_map(intval(...), $request->array('numbers')),
                 acceptedIp: (string) $request->ip(),
                 bettorEmail: $request->filled('email') ? $request->string('email')->toString() : null,

@@ -19,8 +19,19 @@ class Bettor extends Model
     protected $fillable = [
         'name',
         'phone',
+        'birth_date',
         'email',
     ];
+
+    /**
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'birth_date' => 'date',
+        ];
+    }
 
     /**
      * @return list<string>

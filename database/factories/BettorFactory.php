@@ -18,6 +18,7 @@ class BettorFactory extends Factory
         return [
             'name' => fake()->name(),
             'phone' => '+5582'.fake()->numerify('9########'),
+            'birth_date' => fake()->dateTimeBetween('-70 years', '-18 years')->format('Y-m-d'),
             'email' => fake()->optional()->safeEmail(),
         ];
     }

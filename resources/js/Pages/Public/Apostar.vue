@@ -16,6 +16,7 @@ const props = defineProps<{
 const form = useForm({
     nome: '',
     celular: '',
+    data_nascimento: '',
     email: '',
     numbers: [] as number[],
     aceite_maioridade: false,
@@ -129,6 +130,19 @@ function pagar() {
                             />
                             <p v-if="form.errors.celular" class="mt-1 text-12 text-erro">{{ form.errors.celular }}</p>
                         </div>
+                    </div>
+                    <div class="mt-4">
+                        <label class="block text-14 text-vidro" for="data_nascimento">Data de nascimento</label>
+                        <input
+                            id="data_nascimento"
+                            v-model="form.data_nascimento"
+                            type="date"
+                            required
+                            autocomplete="bday"
+                            class="mt-1 w-full rounded border border-vidro/30 bg-tinta px-3 py-2 text-16 focus:border-aceso focus:outline-none"
+                        />
+                        <p class="mt-1 text-12 text-vidro">Você vai usá-la como senha para acessar suas apostas.</p>
+                        <p v-if="form.errors.data_nascimento" class="mt-1 text-12 text-erro">{{ form.errors.data_nascimento }}</p>
                     </div>
                     <div class="mt-4">
                         <label class="block text-14 text-vidro" for="email">E-mail (opcional, para o comprovante)</label>

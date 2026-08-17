@@ -34,6 +34,7 @@ function payloadAposta(array $overrides = []): array
     return array_merge([
         'nome' => 'Rafael Silva',
         'celular' => '(82) 99123-4589',
+        'data_nascimento' => '1990-05-20',
         'email' => null,
         'numbers' => [1, 5, 8, 12, 19, 25, 33, 47, 51, 60],
         'aceite_maioridade' => true,
