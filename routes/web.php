@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\TwoFactorSetupController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Public\BettorController;
+use App\Http\Controllers\Public\BettorPortalController;
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\RankingApiController;
 use App\Http\Controllers\Public\RegulamentoController;
@@ -34,6 +35,14 @@ Route::post('/apostas/{bet:uuid}/qr', [App\Http\Controllers\Public\BetController
 Route::get('/minhas-cartelas/{bettor:uuid}', BettorController::class)
     ->middleware('signed')
     ->name('apostador.cartelas');
+
+// Portal do apostador: login só com telefone completo.
+Route::get('/apostador/entrar', [BettorPortalController::class, 'showLogin'])->name('apostador.login');
+Route::post('/apostador/entrar', [BettorPortalController::class, 'login'])
+    ->middleware('throttle:apostador-login')
+    ->name('apostador.login.attempt');
+Route::post('/apostador/sair', [BettorPortalController::class, 'logout'])->name('apostador.logout');
+Route::get('/apostador/minhas-apostas', [BettorPortalController::class, 'cartelas'])->name('apostador.portal');
 Route::get('/api/rodada-atual/ranking', RankingApiController::class)
     ->name('api.ranking');
 Route::get('/regulamento', RegulamentoController::class)->name('regulamento');

@@ -31,5 +31,9 @@ class AppServiceProvider extends ServiceProvider
         );
 
         RateLimiter::for('apostas', fn (Request $request) => Limit::perMinute(5)->by($request->ip()));
+
+        // Login do apostador é só por telefone: limita tentativas para
+        // dificultar enumeração de números.
+        RateLimiter::for('apostador-login', fn (Request $request) => Limit::perMinute(5)->by($request->ip()));
     }
 }

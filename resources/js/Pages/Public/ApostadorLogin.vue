@@ -1,0 +1,58 @@
+<script setup lang="ts">
+import { Head, Link, useForm } from '@inertiajs/vue3';
+
+const form = useForm({
+    celular: '',
+});
+
+function entrar() {
+    form.post('/apostador/entrar');
+}
+</script>
+
+<template>
+    <Head title="Minhas apostas" />
+    <div class="min-h-screen bg-tinta text-papel">
+        <header class="border-b border-noite">
+            <div class="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
+                <Link href="/" class="font-display text-16 font-black uppercase tracking-tight text-aceso">
+                    MegaPalmeira
+                </Link>
+            </div>
+        </header>
+
+        <main class="mx-auto flex max-w-sm flex-col px-4 pt-16">
+            <h1 class="font-display text-28 font-black uppercase tracking-tight">Minhas apostas</h1>
+            <p class="mt-1 text-14 text-vidro">
+                Entre com o celular que você usou para apostar — o mesmo, com DDD.
+            </p>
+
+            <form class="mt-6" @submit.prevent="entrar">
+                <label class="block text-12 uppercase text-vidro" for="celular">Celular com DDD</label>
+                <input
+                    id="celular"
+                    v-model="form.celular"
+                    type="tel"
+                    inputmode="tel"
+                    autocomplete="tel"
+                    placeholder="(82) 99123-4589"
+                    class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 text-16 focus:border-aceso focus:outline-none"
+                />
+                <p v-if="form.errors.celular" class="mt-1 text-12 text-erro">{{ form.errors.celular }}</p>
+
+                <button
+                    type="submit"
+                    :disabled="form.processing"
+                    class="mt-4 w-full rounded bg-aceso px-4 py-2 font-display text-14 font-bold uppercase text-tinta disabled:opacity-50"
+                >
+                    Entrar
+                </button>
+            </form>
+
+            <p class="mt-6 text-12 text-vidro">
+                Ainda não apostou?
+                <Link href="/apostar" class="text-aceso underline">Fazer uma aposta</Link>.
+            </p>
+        </main>
+    </div>
+</template>

@@ -7,10 +7,10 @@
     "/build/assets/Ball-Cix1i8dF.js"
   ],
   "resources/js/Components/InstallPrompt.vue": [
-    "/build/assets/Home-CoHjNF1R.js"
+    "/build/assets/Home-DkDrwyWE.js"
   ],
   "resources/js/Components/InstallPrompt.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Home-CoHjNF1R.js"
+    "/build/assets/Home-DkDrwyWE.js"
   ],
   "resources/js/Layouts/AdminLayout.vue": [
     "/build/assets/AdminLayout-DEWhWsQ5.js"
@@ -96,6 +96,18 @@
   "resources/js/Pages/Auth/TwoFactorSetup.vue?vue&type=script&setup=true&lang.ts": [
     "/build/assets/TwoFactorSetup-D3e5P1TS.js"
   ],
+  "resources/js/Pages/Public/ApostadorLogin.vue": [
+    "/build/assets/ApostadorLogin-CslnZYpO.js"
+  ],
+  "resources/js/Pages/Public/ApostadorLogin.vue?vue&type=script&setup=true&lang.ts": [
+    "/build/assets/ApostadorLogin-CslnZYpO.js"
+  ],
+  "resources/js/Pages/Public/ApostadorPortal.vue": [
+    "/build/assets/ApostadorPortal-Lcar1qc5.js"
+  ],
+  "resources/js/Pages/Public/ApostadorPortal.vue?vue&type=script&setup=true&lang.ts": [
+    "/build/assets/ApostadorPortal-Lcar1qc5.js"
+  ],
   "resources/js/Pages/Public/Apostar.vue": [
     "/build/assets/Apostar-CObQN9Mx.js"
   ],
@@ -109,10 +121,10 @@
     "/build/assets/Checkout-DFHxxqCp.js"
   ],
   "resources/js/Pages/Public/Home.vue": [
-    "/build/assets/Home-CoHjNF1R.js"
+    "/build/assets/Home-DkDrwyWE.js"
   ],
   "resources/js/Pages/Public/Home.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Home-CoHjNF1R.js"
+    "/build/assets/Home-DkDrwyWE.js"
   ],
   "resources/js/Pages/Public/MinhasCartelas.vue": [
     "/build/assets/MinhasCartelas-Dryn-w4R.js"

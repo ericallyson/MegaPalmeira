@@ -225,13 +225,28 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       } else {
         _push(`<!---->`);
       }
-      _push(`<header class="border-b border-noite print:hidden"><div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3"><img src="/logoMega.png" alt="MegaPalmeira" class="h-9 w-auto">`);
+      _push(`<header class="border-b border-noite print:hidden"><div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3"><img src="/logoMega.png" alt="MegaPalmeira" class="h-9 w-auto"><div class="flex items-center gap-4">`);
       if (rodada.value) {
-        _push(`<p class="text-14 text-vidro">${ssrInterpolate(rodada.value.nome)} · ${ssrInterpolate(rodada.value.statusLabel)}</p>`);
+        _push(`<p class="hidden text-14 text-vidro sm:block">${ssrInterpolate(rodada.value.nome)} · ${ssrInterpolate(rodada.value.statusLabel)}</p>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`</div></header>`);
+      _push(ssrRenderComponent(unref(Link), {
+        href: "/apostador/minhas-apostas",
+        class: "text-14 text-aceso hover:underline"
+      }, {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`Minhas apostas`);
+          } else {
+            return [
+              createTextVNode("Minhas apostas")
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      _push(`</div></div></header>`);
       _push(ssrRenderComponent(_sfc_main$1, null, null, _parent));
       if (rodada.value) {
         _push(`<main class="mx-auto max-w-5xl px-4 pb-16"><!--[-->`);
