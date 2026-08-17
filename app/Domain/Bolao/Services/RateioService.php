@@ -21,6 +21,20 @@ class RateioService
     }
 
     /**
+     * Pote líquido = o que efetivamente vira prêmio, já sem a comissão da
+     * administração. É este valor que se mostra ao público como "pote".
+     * Definido como a soma dos prêmios (principal + segundo) para casar
+     * exatamente com os valores exibidos — quando só há prêmio principal,
+     * pote líquido == prêmio de 10 pontos.
+     */
+    public function poteLiquidoCents(Round $round): int
+    {
+        $pote = $this->poteCents($round);
+
+        return intdiv($pote * $round->pct_main, 100) + intdiv($pote * $round->pct_second, 100);
+    }
+
+    /**
      * Divide o pote. Tudo em centavos inteiros; toda sobra de qualquer
      * divisão vai para a administração. Com $payMain = false (política
      * rollover), o prêmio principal inteiro sai como rolloverOutCents.

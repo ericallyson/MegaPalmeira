@@ -32,7 +32,7 @@ class SnapshotService
                 'nome' => $round->name,
                 'status' => $round->status->value,
                 'statusLabel' => $round->status->label(),
-                'poteCents' => $pote,
+                'poteCents' => $this->rateio->poteLiquidoCents($round),
                 'premioPrincipalCents' => intdiv($pote * $round->pct_main, 100),
                 'valorCartelaCents' => $round->bet_amount_cents,
                 'cartelasPagas' => $round->bets()->where('status', BetStatus::Paid)->count(),

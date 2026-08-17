@@ -79,3 +79,28 @@ test('apostas não pagas ficam fora do pote', function () {
 
     expect(app(RateioService::class)->poteCents($round))->toBe(4000);
 });
+
+test('pote líquido é o bruto sem a comissão da administração', function () {
+    // 3 × 2000 = 6000 bruto; comissão 15% → líquido 5100
+    $round = rodadaComPote(3, 2000);
+
+    expect(app(RateioService::class)->poteLiquidoCents($round))->toBe(5100);
+});
+
+test('com prêmio único, pote líquido é igual ao prêmio de 10 pontos', function () {
+    // pct_main 100, sem 2º lugar e sem comissão → líquido == prêmio principal
+    $round = Round::factory()->emAndamento()->create([
+        'bet_amount_cents' => 1000,
+        'pct_main' => 70,
+        'pct_second' => 0,
+        'pct_admin' => 30,
+    ]);
+    Bet::factory()->paga()->for($round)->create(['amount_cents' => 1000]);
+
+    $rateio = app(RateioService::class);
+    $premioPrincipal = intdiv($rateio->poteCents($round) * $round->pct_main, 100);
+
+    expect($rateio->poteLiquidoCents($round))
+        ->toBe(700)
+        ->toBe($premioPrincipal);
+});

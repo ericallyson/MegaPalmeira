@@ -25,7 +25,7 @@ class DashboardController extends Controller
                 'nome' => $round->name,
                 'status' => $round->status->value,
                 'statusLabel' => $round->status->label(),
-                'poteCents' => $rateio->poteCents($round),
+                'poteCents' => $rateio->poteLiquidoCents($round),
                 'premioPrincipalCents' => intdiv($rateio->poteCents($round) * $round->pct_main, 100),
                 'apostasPagas' => $round->bets()->where('status', BetStatus::Paid)->count(),
                 'apostasPendentes' => $round->bets()->where('status', BetStatus::AwaitingPayment)->count(),

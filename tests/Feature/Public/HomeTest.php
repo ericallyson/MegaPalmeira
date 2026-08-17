@@ -16,7 +16,8 @@ test('home mostra a rodada aberta', function () {
             ->where('rodada.nome', 'Bolão de Agosto')
             ->where('rodada.status', 'open')
             ->where('rodada.cartelasPagas', 3)
-            ->where('rodada.poteCents', 6000)
+            // pote exibido é líquido: 6000 bruto − 15% de comissão = 5100
+            ->where('rodada.poteCents', 5100)
             ->has('ranking', 3));
 });
 

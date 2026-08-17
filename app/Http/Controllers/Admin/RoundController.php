@@ -90,7 +90,7 @@ class RoundController extends Controller
                 'maxSorteios' => $round->max_draws,
                 'politicaSemVencedor' => $round->no_winner_policy->label(),
                 'rolloverCents' => $round->rollover_in_cents,
-                'poteCents' => $rateio->poteCents($round),
+                'poteCents' => $rateio->poteLiquidoCents($round),
                 'apostasPagas' => $round->bets()->where('status', BetStatus::Paid)->count(),
                 'apostasPendentes' => $round->bets()->where('status', BetStatus::AwaitingPayment)->count(),
             ],
