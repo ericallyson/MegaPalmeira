@@ -24,6 +24,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       if (!confirm(`Excluir o usuário ${nome}? Esta ação não pode ser desfeita.`)) return;
       router.delete(`/admin/usuarios/${id}`);
     }
+    function resetar2fa(id, nome) {
+      if (!confirm(`Resetar o 2FA de ${nome}? Ele precisará reconfigurar no próximo acesso ao admin.`)) return;
+      router.post(`/admin/usuarios/${id}/reset-2fa`, {}, { preserveScroll: true });
+    }
     return (_ctx, _push, _parent, _attrs) => {
       _push(`<!--[-->`);
       _push(ssrRenderComponent(unref(Head), { title: "Usuários" }, null, _parent));
@@ -54,7 +58,13 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               } else {
                 _push2(`<!---->`);
               }
-              _push2(`</td><td class="px-3 py-2 text-vidro"${_scopeId}>${ssrInterpolate(u.email)}</td><td class="px-3 py-2 font-mono text-12 font-tabular text-vidro"${_scopeId}>${ssrInterpolate(u.telefone ?? "—")}</td><td class="px-3 py-2"${_scopeId}><span class="${ssrRenderClass(u.admin ? "text-jade" : "text-vidro")}"${_scopeId}>${ssrInterpolate(u.admin ? "Administrador" : "Comum")}</span></td><td class="px-3 py-2"${_scopeId}><div class="flex gap-3"${_scopeId}>`);
+              _push2(`</td><td class="px-3 py-2 text-vidro"${_scopeId}>${ssrInterpolate(u.email)}</td><td class="px-3 py-2 font-mono text-12 font-tabular text-vidro"${_scopeId}>${ssrInterpolate(u.telefone ?? "—")}</td><td class="px-3 py-2"${_scopeId}><span class="${ssrRenderClass(u.admin ? "text-jade" : "text-vidro")}"${_scopeId}>${ssrInterpolate(u.admin ? "Administrador" : "Comum")}</span>`);
+              if (u.admin) {
+                _push2(`<span class="${ssrRenderClass([u.doisFatoresAtivo ? "text-vidro" : "text-brasa", "block text-12"])}"${_scopeId}>${ssrInterpolate(u.doisFatoresAtivo ? "2FA ativo" : "2FA pendente")}</span>`);
+              } else {
+                _push2(`<!---->`);
+              }
+              _push2(`</td><td class="px-3 py-2"${_scopeId}><div class="flex flex-wrap gap-3"${_scopeId}>`);
               _push2(ssrRenderComponent(unref(Link), {
                 href: `/admin/usuarios/${u.id}/editar`,
                 class: "text-aceso underline"
@@ -70,6 +80,11 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 }),
                 _: 2
               }, _parent2, _scopeId));
+              if (u.doisFatoresAtivo) {
+                _push2(`<button type="button" class="text-brasa underline"${_scopeId}> Resetar 2FA </button>`);
+              } else {
+                _push2(`<!---->`);
+              }
               if (u.id !== __props.usuarioAtualId) {
                 _push2(`<button type="button" class="text-erro underline"${_scopeId}> Excluir </button>`);
               } else {
@@ -168,10 +183,14 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                         createVNode("td", { class: "px-3 py-2" }, [
                           createVNode("span", {
                             class: u.admin ? "text-jade" : "text-vidro"
-                          }, toDisplayString(u.admin ? "Administrador" : "Comum"), 3)
+                          }, toDisplayString(u.admin ? "Administrador" : "Comum"), 3),
+                          u.admin ? (openBlock(), createBlock("span", {
+                            key: 0,
+                            class: ["block text-12", u.doisFatoresAtivo ? "text-vidro" : "text-brasa"]
+                          }, toDisplayString(u.doisFatoresAtivo ? "2FA ativo" : "2FA pendente"), 3)) : createCommentVNode("", true)
                         ]),
                         createVNode("td", { class: "px-3 py-2" }, [
-                          createVNode("div", { class: "flex gap-3" }, [
+                          createVNode("div", { class: "flex flex-wrap gap-3" }, [
                             createVNode(unref(Link), {
                               href: `/admin/usuarios/${u.id}/editar`,
                               class: "text-aceso underline"
@@ -181,8 +200,14 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                               ]),
                               _: 1
                             }, 8, ["href"]),
-                            u.id !== __props.usuarioAtualId ? (openBlock(), createBlock("button", {
+                            u.doisFatoresAtivo ? (openBlock(), createBlock("button", {
                               key: 0,
+                              type: "button",
+                              class: "text-brasa underline",
+                              onClick: ($event) => resetar2fa(u.id, u.nome)
+                            }, " Resetar 2FA ", 8, ["onClick"])) : createCommentVNode("", true),
+                            u.id !== __props.usuarioAtualId ? (openBlock(), createBlock("button", {
+                              key: 1,
                               type: "button",
                               class: "text-erro underline",
                               onClick: ($event) => excluir(u.id, u.nome)

@@ -34,6 +34,7 @@ class UserController extends Controller
                 'email' => $user->email,
                 'telefone' => $user->phone,
                 'admin' => $user->is_admin,
+                'doisFatoresAtivo' => $user->two_factor_confirmed_at !== null,
                 'criadoEm' => $user->created_at?->toIso8601String(),
             ]),
             'filtros' => $request->only(['busca']),
@@ -100,6 +101,19 @@ class UserController extends Controller
         return redirect()
             ->route('admin.usuarios.index')
             ->with('sucesso', 'Usuário atualizado.');
+    }
+
+    public function resetTwoFactor(User $user): RedirectResponse
+    {
+        // Zera o 2FA: no próximo acesso ao admin, o middleware força
+        // uma nova configuração antes de liberar qualquer rota.
+        $user->forceFill([
+            'two_factor_secret' => null,
+            'two_factor_recovery_codes' => null,
+            'two_factor_confirmed_at' => null,
+        ])->save();
+
+        return back()->with('sucesso', "2FA de {$user->name} resetado. Ele precisará reconfigurar no próximo acesso.");
     }
 
     public function destroy(Request $request, User $user): RedirectResponse

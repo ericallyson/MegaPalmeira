@@ -72,6 +72,7 @@ Route::middleware(['auth', 'can:administrar-bolao'])
             Route::post('/usuarios', [UserController::class, 'store'])->name('usuarios.store');
             Route::get('/usuarios/{user}/editar', [UserController::class, 'edit'])->name('usuarios.edit');
             Route::put('/usuarios/{user}', [UserController::class, 'update'])->name('usuarios.update');
+            Route::post('/usuarios/{user}/reset-2fa', [UserController::class, 'resetTwoFactor'])->name('usuarios.reset2fa');
             Route::delete('/usuarios/{user}', [UserController::class, 'destroy'])->name('usuarios.destroy');
 
             Route::get('/configuracoes', [SettingsController::class, 'edit'])->name('configuracoes.edit');

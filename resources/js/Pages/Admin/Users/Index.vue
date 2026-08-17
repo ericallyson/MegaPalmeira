@@ -12,6 +12,7 @@ const props = defineProps<{
             email: string;
             telefone: string | null;
             admin: boolean;
+            doisFatoresAtivo: boolean;
             criadoEm: string | null;
         }>;
         links: Array<{ url: string | null; label: string; active: boolean }>;
@@ -33,6 +34,11 @@ function filtrar() {
 function excluir(id: number, nome: string) {
     if (!confirm(`Excluir o usuário ${nome}? Esta ação não pode ser desfeita.`)) return;
     router.delete(`/admin/usuarios/${id}`);
+}
+
+function resetar2fa(id: number, nome: string) {
+    if (!confirm(`Resetar o 2FA de ${nome}? Ele precisará reconfigurar no próximo acesso ao admin.`)) return;
+    router.post(`/admin/usuarios/${id}/reset-2fa`, {}, { preserveScroll: true });
 }
 </script>
 
@@ -87,10 +93,21 @@ function excluir(id: number, nome: string) {
                             <span :class="u.admin ? 'text-jade' : 'text-vidro'">
                                 {{ u.admin ? 'Administrador' : 'Comum' }}
                             </span>
+                            <span v-if="u.admin" class="block text-12" :class="u.doisFatoresAtivo ? 'text-vidro' : 'text-brasa'">
+                                {{ u.doisFatoresAtivo ? '2FA ativo' : '2FA pendente' }}
+                            </span>
                         </td>
                         <td class="px-3 py-2">
-                            <div class="flex gap-3">
+                            <div class="flex flex-wrap gap-3">
                                 <Link :href="`/admin/usuarios/${u.id}/editar`" class="text-aceso underline">Editar</Link>
+                                <button
+                                    v-if="u.doisFatoresAtivo"
+                                    type="button"
+                                    class="text-brasa underline"
+                                    @click="resetar2fa(u.id, u.nome)"
+                                >
+                                    Resetar 2FA
+                                </button>
                                 <button
                                     v-if="u.id !== usuarioAtualId"
                                     type="button"
