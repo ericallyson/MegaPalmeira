@@ -20,16 +20,19 @@ class RankingService
      */
     public function orderedBets(Round $round): Collection
     {
+        // O "último ponto conquistado" vem de uma subquery escalar
+        // correlacionada, em vez de join + GROUP BY: assim não dependemos
+        // de o servidor reconhecer a dependência funcional da PK
+        // (ONLY_FULL_GROUP_BY estrito no MySQL/MariaDB de produção).
+        $ultimoPonto = 'COALESCE((select max(bn.matched_draw_id) from bet_numbers as bn '
+            .'where bn.bet_id = bets.id and bn.matched_draw_id is not null), 18446744073709551615)';
+
         return Bet::query()
             ->where('bets.round_id', $round->id)
             ->where('bets.status', BetStatus::Paid)
             ->join('bettors', 'bettors.id', '=', 'bets.bettor_id')
-            ->leftJoin('bet_numbers as bn', function ($join): void {
-                $join->on('bn.bet_id', '=', 'bets.id')->whereNotNull('bn.matched_draw_id');
-            })
-            ->groupBy('bets.id', 'bets.hits_count', 'bets.paid_at', 'bettors.name')
             ->orderByDesc('bets.hits_count')
-            ->orderByRaw('COALESCE(MAX(bn.matched_draw_id), 18446744073709551615) ASC')
+            ->orderByRaw($ultimoPonto.' ASC')
             ->orderBy('bets.paid_at')
             ->orderBy('bettors.name')
             ->select('bets.*')
