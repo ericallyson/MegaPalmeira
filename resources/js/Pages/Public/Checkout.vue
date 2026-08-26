@@ -88,12 +88,12 @@ onUnmounted(() => {
 <template>
     <Head title="Pagar com PIX" />
     <div class="min-h-screen bg-tinta text-papel">
-        <header class="border-b border-noite">
+        <header class="bg-papel text-tinta">
             <div class="mx-auto flex max-w-xl items-center justify-between px-4 py-3">
-                <Link href="/" class="font-display text-16 font-black uppercase tracking-tight text-aceso">
-                    MegaPalmeira
+                <Link href="/">
+                    <img src="/logoMega.png" alt="MegaPalmeira" class="h-12 w-auto" />
                 </Link>
-                <p class="text-14 text-vidro">{{ rodada.nome }}</p>
+                <p class="text-14 text-noite/70">{{ rodada.nome }}</p>
             </div>
         </header>
 

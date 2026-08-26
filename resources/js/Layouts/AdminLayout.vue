@@ -13,19 +13,19 @@ function sair() {
 
 <template>
     <div class="min-h-screen bg-tinta text-papel">
-        <header class="border-b border-noite">
+        <header class="bg-papel text-tinta">
             <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
                 <Link href="/admin" class="flex items-center gap-2">
-                    <img src="/logoMega.png" alt="MegaPalmeira" class="h-12 w-auto" />
-                    <span class="font-display text-16 font-black uppercase tracking-tight text-aceso">Admin</span>
+                    <img src="/logoMega.png" alt="MegaPalmeira" class="h-14 w-auto" />
+                    <span class="font-display text-16 font-black uppercase tracking-tight text-tinta">Admin</span>
                 </Link>
                 <nav class="flex items-center gap-4 text-14">
-                    <Link href="/admin" class="text-vidro hover:text-papel">Painel</Link>
-                    <Link href="/admin/rodadas" class="text-vidro hover:text-papel">Rodadas</Link>
-                    <Link href="/admin/apostas" class="text-vidro hover:text-papel">Apostas</Link>
-                    <Link href="/admin/usuarios" class="text-vidro hover:text-papel">Usuários</Link>
-                    <Link href="/admin/configuracoes" class="text-vidro hover:text-papel">Configurações</Link>
-                    <button type="button" class="text-vidro hover:text-papel" @click="sair">
+                    <Link href="/admin" class="text-noite/70 hover:text-tinta">Painel</Link>
+                    <Link href="/admin/rodadas" class="text-noite/70 hover:text-tinta">Rodadas</Link>
+                    <Link href="/admin/apostas" class="text-noite/70 hover:text-tinta">Apostas</Link>
+                    <Link href="/admin/usuarios" class="text-noite/70 hover:text-tinta">Usuários</Link>
+                    <Link href="/admin/configuracoes" class="text-noite/70 hover:text-tinta">Configurações</Link>
+                    <button type="button" class="text-noite/70 hover:text-tinta" @click="sair">
                         Sair<span v-if="user" class="hidden sm:inline"> ({{ user.name }})</span>
                     </button>
                 </nav>

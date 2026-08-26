@@ -293,12 +293,12 @@ const contagem = computed(() => {
             <button type="button" class="ml-2 underline" @click="recarregar">Recarregar</button>
         </div>
 
-        <header class="border-b border-noite print:hidden">
+        <header class="bg-papel text-tinta print:hidden">
             <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-                <img src="/logoMega.png" alt="MegaPalmeira" class="h-14 w-auto" />
+                <img src="/logoMega.png" alt="MegaPalmeira" class="h-16 w-auto" />
                 <div class="flex items-center gap-4">
-                    <p v-if="rodada" class="hidden text-14 text-vidro sm:block">{{ rodada.nome }} · {{ rodada.statusLabel }}</p>
-                    <Link href="/apostador/minhas-apostas" class="text-14 text-aceso hover:underline">Minhas apostas</Link>
+                    <p v-if="rodada" class="hidden text-14 text-noite/70 sm:block">{{ rodada.nome }} · {{ rodada.statusLabel }}</p>
+                    <Link href="/apostador/minhas-apostas" class="text-14 font-bold text-tinta hover:underline">Minhas apostas</Link>
                 </div>
             </div>
         </header>
