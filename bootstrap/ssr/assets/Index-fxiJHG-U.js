@@ -1,7 +1,7 @@
 import { defineComponent, ref, unref, withCtx, createVNode, withModifiers, withDirectives, openBlock, createBlock, Fragment, renderList, toDisplayString, vModelSelect, vModelText, createCommentVNode, useSSRContext } from "vue";
 import { ssrRenderComponent, ssrIncludeBooleanAttr, ssrLooseContain, ssrLooseEqual, ssrRenderList, ssrRenderAttr, ssrInterpolate, ssrRenderClass } from "vue/server-renderer";
 import { Head, Link, router } from "@inertiajs/vue3";
-import { _ as _sfc_main$1 } from "./AdminLayout-DEWhWsQ5.js";
+import { _ as _sfc_main$1 } from "./AdminLayout-BunQtFw9.js";
 import { d as dezena, b as brl, a as dataHora } from "./format-BNqt_JV5.js";
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "Index",
@@ -9,20 +9,27 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
   props: {
     apostas: {},
     filtros: {},
-    statusDisponiveis: {}
+    statusDisponiveis: {},
+    rodadasDisponiveis: {}
   },
   setup(__props) {
     const props = __props;
     const status = ref(props.filtros.status ?? "");
     const busca = ref(props.filtros.busca ?? "");
     const filtroDezena = ref(props.filtros.dezena ?? "");
+    const rodada = ref(props.filtros.rodada ?? "");
     const motivos = ref({});
     const abertaParaBaixa = ref(null);
     const abertaParaEstorno = ref(null);
     function filtrar() {
       router.get(
         "/admin/apostas",
-        { status: status.value || void 0, busca: busca.value || void 0, dezena: filtroDezena.value || void 0 },
+        {
+          status: status.value || void 0,
+          busca: busca.value || void 0,
+          dezena: filtroDezena.value || void 0,
+          rodada: rodada.value || void 0
+        },
         { preserveState: true, replace: true }
       );
     }
@@ -46,13 +53,17 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       _push(ssrRenderComponent(_sfc_main$1, null, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<h1 class="font-display text-28 font-black uppercase tracking-tight"${_scopeId}>Apostas</h1><form class="mt-4 flex flex-wrap items-end gap-3"${_scopeId}><div${_scopeId}><label class="block text-12 uppercase text-vidro" for="filtro-status"${_scopeId}>Status</label><select id="filtro-status" class="mt-1 rounded border border-vidro/30 bg-noite px-3 py-2 text-14 focus:border-aceso focus:outline-none"${_scopeId}><option value=""${ssrIncludeBooleanAttr(Array.isArray(status.value) ? ssrLooseContain(status.value, "") : ssrLooseEqual(status.value, "")) ? " selected" : ""}${_scopeId}>Todos</option><!--[-->`);
+            _push2(`<h1 class="font-display text-28 font-black uppercase tracking-tight"${_scopeId}>Apostas</h1><form class="mt-4 flex flex-wrap items-end gap-3"${_scopeId}><div${_scopeId}><label class="block text-12 uppercase text-vidro" for="filtro-rodada"${_scopeId}>Rodada</label><select id="filtro-rodada" class="mt-1 rounded border border-vidro/30 bg-noite px-3 py-2 text-14 focus:border-aceso focus:outline-none"${_scopeId}><option value=""${ssrIncludeBooleanAttr(Array.isArray(rodada.value) ? ssrLooseContain(rodada.value, "") : ssrLooseEqual(rodada.value, "")) ? " selected" : ""}${_scopeId}>Todas</option><!--[-->`);
+            ssrRenderList(__props.rodadasDisponiveis, (r) => {
+              _push2(`<option${ssrRenderAttr("value", r.value)}${ssrIncludeBooleanAttr(Array.isArray(rodada.value) ? ssrLooseContain(rodada.value, r.value) : ssrLooseEqual(rodada.value, r.value)) ? " selected" : ""}${_scopeId}>${ssrInterpolate(r.label)}</option>`);
+            });
+            _push2(`<!--]--></select></div><div${_scopeId}><label class="block text-12 uppercase text-vidro" for="filtro-status"${_scopeId}>Status</label><select id="filtro-status" class="mt-1 rounded border border-vidro/30 bg-noite px-3 py-2 text-14 focus:border-aceso focus:outline-none"${_scopeId}><option value=""${ssrIncludeBooleanAttr(Array.isArray(status.value) ? ssrLooseContain(status.value, "") : ssrLooseEqual(status.value, "")) ? " selected" : ""}${_scopeId}>Todos</option><!--[-->`);
             ssrRenderList(__props.statusDisponiveis, (s) => {
               _push2(`<option${ssrRenderAttr("value", s.value)}${ssrIncludeBooleanAttr(Array.isArray(status.value) ? ssrLooseContain(status.value, s.value) : ssrLooseEqual(status.value, s.value)) ? " selected" : ""}${_scopeId}>${ssrInterpolate(s.label)}</option>`);
             });
             _push2(`<!--]--></select></div><div${_scopeId}><label class="block text-12 uppercase text-vidro" for="filtro-busca"${_scopeId}>Nome ou telefone</label><input id="filtro-busca"${ssrRenderAttr("value", busca.value)} type="search" class="mt-1 rounded border border-vidro/30 bg-noite px-3 py-2 text-14 focus:border-aceso focus:outline-none"${_scopeId}></div><div${_scopeId}><label class="block text-12 uppercase text-vidro" for="filtro-dezena"${_scopeId}>Dezena</label><input id="filtro-dezena"${ssrRenderAttr("value", filtroDezena.value)} type="number" min="1" max="60" class="mt-1 w-20 rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-14 font-tabular focus:border-aceso focus:outline-none"${_scopeId}></div><button type="submit" class="rounded bg-aceso px-4 py-2 font-display text-14 font-bold uppercase text-tinta"${_scopeId}> Filtrar </button></form><div class="mt-4 overflow-x-auto rounded-lg bg-noite"${_scopeId}><table class="w-full text-left text-14"${_scopeId}><thead${_scopeId}><tr class="border-b border-vidro/20 text-12 uppercase text-vidro"${_scopeId}><th class="px-3 py-2"${_scopeId}>Apostador</th><th class="px-3 py-2"${_scopeId}>Dezenas</th><th class="px-3 py-2"${_scopeId}>Valor</th><th class="px-3 py-2"${_scopeId}>Status</th><th class="px-3 py-2"${_scopeId}>Pts</th><th class="px-3 py-2"${_scopeId}>Ações</th></tr></thead><tbody${_scopeId}><!--[-->`);
             ssrRenderList(__props.apostas.data, (aposta) => {
-              _push2(`<!--[--><tr class="${ssrRenderClass([aposta.status === "paid_late" ? "bg-brasa/10" : "", "border-b border-vidro/10"])}"${_scopeId}><td class="px-3 py-2"${_scopeId}><p${_scopeId}>${ssrInterpolate(aposta.nome)}</p><p class="font-mono text-12 font-tabular text-vidro"${_scopeId}>${ssrInterpolate(aposta.telefone)}</p></td><td class="px-3 py-2 font-mono text-12 font-tabular"${_scopeId}>${ssrInterpolate(aposta.dezenas.map(unref(dezena)).join(" "))}</td><td class="px-3 py-2 font-mono font-tabular"${_scopeId}>${ssrInterpolate(unref(brl)(aposta.valorCents))}</td><td class="px-3 py-2"${_scopeId}><span class="${ssrRenderClass(aposta.status === "paid" ? "text-jade" : aposta.status === "paid_late" ? "text-brasa" : "text-vidro")}"${_scopeId}>${ssrInterpolate(aposta.statusLabel)}</span>`);
+              _push2(`<!--[--><tr class="${ssrRenderClass([aposta.status === "paid_late" ? "bg-brasa/10" : "", "border-b border-vidro/10"])}"${_scopeId}><td class="px-3 py-2"${_scopeId}><p${_scopeId}>${ssrInterpolate(aposta.nome)}</p><p class="font-mono text-12 font-tabular text-vidro"${_scopeId}>${ssrInterpolate(aposta.telefone)}</p><p class="text-12 text-vidro/70"${_scopeId}>${ssrInterpolate(aposta.rodada)}</p></td><td class="px-3 py-2 font-mono text-12 font-tabular"${_scopeId}>${ssrInterpolate(aposta.dezenas.map(unref(dezena)).join(" "))}</td><td class="px-3 py-2 font-mono font-tabular"${_scopeId}>${ssrInterpolate(unref(brl)(aposta.valorCents))}</td><td class="px-3 py-2"${_scopeId}><span class="${ssrRenderClass(aposta.status === "paid" ? "text-jade" : aposta.status === "paid_late" ? "text-brasa" : "text-vidro")}"${_scopeId}>${ssrInterpolate(aposta.statusLabel)}</span>`);
               if (aposta.pagaEm) {
                 _push2(`<p class="text-12 text-vidro"${_scopeId}>${ssrInterpolate(unref(dataHora)(aposta.pagaEm))}</p>`);
               } else {
@@ -114,6 +125,28 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 class: "mt-4 flex flex-wrap items-end gap-3",
                 onSubmit: withModifiers(filtrar, ["prevent"])
               }, [
+                createVNode("div", null, [
+                  createVNode("label", {
+                    class: "block text-12 uppercase text-vidro",
+                    for: "filtro-rodada"
+                  }, "Rodada"),
+                  withDirectives(createVNode("select", {
+                    id: "filtro-rodada",
+                    "onUpdate:modelValue": ($event) => rodada.value = $event,
+                    class: "mt-1 rounded border border-vidro/30 bg-noite px-3 py-2 text-14 focus:border-aceso focus:outline-none",
+                    onChange: filtrar
+                  }, [
+                    createVNode("option", { value: "" }, "Todas"),
+                    (openBlock(true), createBlock(Fragment, null, renderList(__props.rodadasDisponiveis, (r) => {
+                      return openBlock(), createBlock("option", {
+                        key: r.value,
+                        value: r.value
+                      }, toDisplayString(r.label), 9, ["value"]);
+                    }), 128))
+                  ], 40, ["onUpdate:modelValue"]), [
+                    [vModelSelect, rodada.value]
+                  ])
+                ]),
                 createVNode("div", null, [
                   createVNode("label", {
                     class: "block text-12 uppercase text-vidro",
@@ -193,7 +226,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                         }, [
                           createVNode("td", { class: "px-3 py-2" }, [
                             createVNode("p", null, toDisplayString(aposta.nome), 1),
-                            createVNode("p", { class: "font-mono text-12 font-tabular text-vidro" }, toDisplayString(aposta.telefone), 1)
+                            createVNode("p", { class: "font-mono text-12 font-tabular text-vidro" }, toDisplayString(aposta.telefone), 1),
+                            createVNode("p", { class: "text-12 text-vidro/70" }, toDisplayString(aposta.rodada), 1)
                           ]),
                           createVNode("td", { class: "px-3 py-2 font-mono text-12 font-tabular" }, toDisplayString(aposta.dezenas.map(unref(dezena)).join(" ")), 1),
                           createVNode("td", { class: "px-3 py-2 font-mono font-tabular" }, toDisplayString(unref(brl)(aposta.valorCents)), 1),

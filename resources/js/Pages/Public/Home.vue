@@ -295,7 +295,7 @@ const contagem = computed(() => {
 
         <header class="border-b border-noite print:hidden">
             <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-                <img src="/logoMega.png" alt="MegaPalmeira" class="h-9 w-auto" />
+                <img src="/logoMega.png" alt="MegaPalmeira" class="h-14 w-auto" />
                 <div class="flex items-center gap-4">
                     <p v-if="rodada" class="hidden text-14 text-vidro sm:block">{{ rodada.nome }} · {{ rodada.statusLabel }}</p>
                     <Link href="/apostador/minhas-apostas" class="text-14 text-aceso hover:underline">Minhas apostas</Link>
@@ -566,7 +566,7 @@ const contagem = computed(() => {
 
         <main v-else class="mx-auto max-w-5xl px-4">
             <div class="mt-16 rounded-lg bg-noite p-8 text-center">
-                <img src="/logoMega.png" alt="MegaPalmeira" class="mx-auto h-16 w-auto" />
+                <img src="/logoMega.png" alt="MegaPalmeira" class="mx-auto h-24 w-auto" />
                 <p class="mt-3 text-16 text-vidro">
                     Nenhuma rodada em andamento no momento. Volte em breve — a próxima está chegando.
                 </p>

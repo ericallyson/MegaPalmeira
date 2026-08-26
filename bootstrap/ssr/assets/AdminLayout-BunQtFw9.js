@@ -16,13 +16,13 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(`<img src="/logoMega.png" alt="MegaPalmeira" class="h-8 w-auto"${_scopeId}><span class="font-display text-16 font-black uppercase tracking-tight text-aceso"${_scopeId}>Admin</span>`);
+            _push2(`<img src="/logoMega.png" alt="MegaPalmeira" class="h-12 w-auto"${_scopeId}><span class="font-display text-16 font-black uppercase tracking-tight text-aceso"${_scopeId}>Admin</span>`);
           } else {
             return [
               createVNode("img", {
                 src: "/logoMega.png",
                 alt: "MegaPalmeira",
-                class: "h-8 w-auto"
+                class: "h-12 w-auto"
               }),
               createVNode("span", { class: "font-display text-16 font-black uppercase tracking-tight text-aceso" }, "Admin")
             ];

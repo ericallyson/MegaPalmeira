@@ -20,13 +20,15 @@ const props = defineProps<{
         }>;
         links: Array<{ url: string | null; label: string; active: boolean }>;
     };
-    filtros: { status?: string; busca?: string; dezena?: string };
+    filtros: { status?: string; busca?: string; dezena?: string; rodada?: string };
     statusDisponiveis: Array<{ value: string; label: string }>;
+    rodadasDisponiveis: Array<{ value: string; label: string }>;
 }>();
 
 const status = ref(props.filtros.status ?? '');
 const busca = ref(props.filtros.busca ?? '');
 const filtroDezena = ref(props.filtros.dezena ?? '');
+const rodada = ref(props.filtros.rodada ?? '');
 const motivos = ref<Record<string, string>>({});
 const abertaParaBaixa = ref<string | null>(null);
 const abertaParaEstorno = ref<string | null>(null);
@@ -34,7 +36,12 @@ const abertaParaEstorno = ref<string | null>(null);
 function filtrar() {
     router.get(
         '/admin/apostas',
-        { status: status.value || undefined, busca: busca.value || undefined, dezena: filtroDezena.value || undefined },
+        {
+            status: status.value || undefined,
+            busca: busca.value || undefined,
+            dezena: filtroDezena.value || undefined,
+            rodada: rodada.value || undefined,
+        },
         { preserveState: true, replace: true },
     );
 }
@@ -62,6 +69,18 @@ function marcarEstorno(uuid: string) {
         <h1 class="font-display text-28 font-black uppercase tracking-tight">Apostas</h1>
 
         <form class="mt-4 flex flex-wrap items-end gap-3" @submit.prevent="filtrar">
+            <div>
+                <label class="block text-12 uppercase text-vidro" for="filtro-rodada">Rodada</label>
+                <select
+                    id="filtro-rodada"
+                    v-model="rodada"
+                    class="mt-1 rounded border border-vidro/30 bg-noite px-3 py-2 text-14 focus:border-aceso focus:outline-none"
+                    @change="filtrar"
+                >
+                    <option value="">Todas</option>
+                    <option v-for="r in rodadasDisponiveis" :key="r.value" :value="r.value">{{ r.label }}</option>
+                </select>
+            </div>
             <div>
                 <label class="block text-12 uppercase text-vidro" for="filtro-status">Status</label>
                 <select
@@ -120,6 +139,7 @@ function marcarEstorno(uuid: string) {
                             <td class="px-3 py-2">
                                 <p>{{ aposta.nome }}</p>
                                 <p class="font-mono text-12 font-tabular text-vidro">{{ aposta.telefone }}</p>
+                                <p class="text-12 text-vidro/70">{{ aposta.rodada }}</p>
                             </td>
                             <td class="px-3 py-2 font-mono text-12 font-tabular">
                                 {{ aposta.dezenas.map(dezena).join(' ') }}

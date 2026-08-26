@@ -7,40 +7,40 @@
     "/build/assets/Ball-Cix1i8dF.js"
   ],
   "resources/js/Components/InstallPrompt.vue": [
-    "/build/assets/Home-DkDrwyWE.js"
+    "/build/assets/Home-DXaisdkW.js"
   ],
   "resources/js/Components/InstallPrompt.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Home-DkDrwyWE.js"
+    "/build/assets/Home-DXaisdkW.js"
   ],
   "resources/js/Layouts/AdminLayout.vue": [
-    "/build/assets/AdminLayout-DEWhWsQ5.js"
+    "/build/assets/AdminLayout-BunQtFw9.js"
   ],
   "resources/js/Layouts/AdminLayout.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/AdminLayout-DEWhWsQ5.js"
+    "/build/assets/AdminLayout-BunQtFw9.js"
   ],
   "resources/js/Pages/Admin/Bets/Index.vue": [
-    "/build/assets/Index-UhNHMSrz.js"
+    "/build/assets/Index-fxiJHG-U.js"
   ],
   "resources/js/Pages/Admin/Bets/Index.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Index-UhNHMSrz.js"
+    "/build/assets/Index-fxiJHG-U.js"
   ],
   "resources/js/Pages/Admin/Dashboard.vue": [
-    "/build/assets/Dashboard-Cq7V9h0B.js"
+    "/build/assets/Dashboard-uEbWZPlN.js"
   ],
   "resources/js/Pages/Admin/Dashboard.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Dashboard-Cq7V9h0B.js"
+    "/build/assets/Dashboard-uEbWZPlN.js"
   ],
   "resources/js/Pages/Admin/Rounds/Create.vue": [
-    "/build/assets/Create-B4eQKLBY.js"
+    "/build/assets/Create-4DUtL8o_.js"
   ],
   "resources/js/Pages/Admin/Rounds/Create.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Create-B4eQKLBY.js"
+    "/build/assets/Create-4DUtL8o_.js"
   ],
   "resources/js/Pages/Admin/Rounds/Index.vue": [
-    "/build/assets/Index-C0vckBSJ.js"
+    "/build/assets/Index-UdAMSps8.js"
   ],
   "resources/js/Pages/Admin/Rounds/Index.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Index-C0vckBSJ.js"
+    "/build/assets/Index-UdAMSps8.js"
   ],
   "resources/js/Pages/Admin/Rounds/Relatorio.vue": [
     "/build/assets/Relatorio-DM5a9_X5.js"
@@ -49,28 +49,28 @@
     "/build/assets/Relatorio-DM5a9_X5.js"
   ],
   "resources/js/Pages/Admin/Rounds/Show.vue": [
-    "/build/assets/Show-C_Cp-R58.js"
+    "/build/assets/Show-BjusvNEU.js"
   ],
   "resources/js/Pages/Admin/Rounds/Show.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Show-C_Cp-R58.js"
+    "/build/assets/Show-BjusvNEU.js"
   ],
   "resources/js/Pages/Admin/Settings/Index.vue": [
-    "/build/assets/Index-BRFewItr.js"
+    "/build/assets/Index-IP1Bt6UP.js"
   ],
   "resources/js/Pages/Admin/Settings/Index.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Index-BRFewItr.js"
+    "/build/assets/Index-IP1Bt6UP.js"
   ],
   "resources/js/Pages/Admin/Users/Form.vue": [
-    "/build/assets/Form-4JhdjdDH.js"
+    "/build/assets/Form-sBPM5LKB.js"
   ],
   "resources/js/Pages/Admin/Users/Form.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Form-4JhdjdDH.js"
+    "/build/assets/Form-sBPM5LKB.js"
   ],
   "resources/js/Pages/Admin/Users/Index.vue": [
-    "/build/assets/Index-CUyR1e6t.js"
+    "/build/assets/Index-DMUdon6t.js"
   ],
   "resources/js/Pages/Admin/Users/Index.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Index-CUyR1e6t.js"
+    "/build/assets/Index-DMUdon6t.js"
   ],
   "resources/js/Pages/Auth/ConfirmPassword.vue": [
     "/build/assets/ConfirmPassword-CcDrr5l8.js"
@@ -79,10 +79,10 @@
     "/build/assets/ConfirmPassword-CcDrr5l8.js"
   ],
   "resources/js/Pages/Auth/Login.vue": [
-    "/build/assets/Login-DIzok755.js"
+    "/build/assets/Login-DlUAxFDi.js"
   ],
   "resources/js/Pages/Auth/Login.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Login-DIzok755.js"
+    "/build/assets/Login-DlUAxFDi.js"
   ],
   "resources/js/Pages/Auth/TwoFactorChallenge.vue": [
     "/build/assets/TwoFactorChallenge-3Tp3NUYt.js"
@@ -121,10 +121,10 @@
     "/build/assets/Checkout-DFHxxqCp.js"
   ],
   "resources/js/Pages/Public/Home.vue": [
-    "/build/assets/Home-DkDrwyWE.js"
+    "/build/assets/Home-DXaisdkW.js"
   ],
   "resources/js/Pages/Public/Home.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Home-DkDrwyWE.js"
+    "/build/assets/Home-DXaisdkW.js"
   ],
   "resources/js/Pages/Public/MinhasCartelas.vue": [
     "/build/assets/MinhasCartelas-Dryn-w4R.js"

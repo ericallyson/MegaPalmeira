@@ -9,6 +9,7 @@ use App\Domain\Bolao\Exceptions\BolaoException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\MotivoRequest;
 use App\Models\Bet;
+use App\Models\Round;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -31,6 +32,9 @@ class BetController extends Controller
             ->when($request->filled('dezena'), function ($query) use ($request): void {
                 $query->whereHas('betNumbers', fn ($sub) => $sub->where('number', $request->integer('dezena')));
             })
+            ->when($request->filled('rodada'), function ($query) use ($request): void {
+                $query->whereHas('round', fn ($sub) => $sub->where('uuid', $request->string('rodada')->toString()));
+            })
             ->latest('id')
             ->paginate(50)
             ->withQueryString();
@@ -48,11 +52,18 @@ class BetController extends Controller
                 'pontos' => $bet->hits_count,
                 'pagaEm' => $bet->paid_at?->toIso8601String(),
             ]),
-            'filtros' => $request->only(['status', 'busca', 'dezena']),
+            'filtros' => $request->only(['status', 'busca', 'dezena', 'rodada']),
             'statusDisponiveis' => collect(BetStatus::cases())
                 ->map(fn (BetStatus $status): array => [
                     'value' => $status->value,
                     'label' => $status->label(),
+                ]),
+            'rodadasDisponiveis' => Round::query()
+                ->latest('id')
+                ->get(['uuid', 'name'])
+                ->map(fn (Round $round): array => [
+                    'value' => $round->uuid,
+                    'label' => $round->name,
                 ]),
         ]);
     }

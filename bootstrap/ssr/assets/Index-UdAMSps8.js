@@ -1,7 +1,7 @@
-import { defineComponent, unref, withCtx, createTextVNode, toDisplayString, createVNode, openBlock, createBlock, Fragment, renderList, createCommentVNode, useSSRContext } from "vue";
+import { defineComponent, unref, withCtx, createTextVNode, toDisplayString, openBlock, createBlock, createVNode, Fragment, renderList, createCommentVNode, useSSRContext } from "vue";
 import { ssrRenderComponent, ssrRenderList, ssrInterpolate } from "vue/server-renderer";
 import { Head, Link } from "@inertiajs/vue3";
-import { _ as _sfc_main$1 } from "./AdminLayout-DEWhWsQ5.js";
+import { _ as _sfc_main$1 } from "./AdminLayout-BunQtFw9.js";
 import { c as dataCurta, b as brl } from "./format-BNqt_JV5.js";
 const _sfc_main = /* @__PURE__ */ defineComponent({
   __name: "Index",
@@ -32,7 +32,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               }),
               _: 1
             }, _parent2, _scopeId));
-            _push2(`</div><div class="mt-6 overflow-x-auto rounded-lg bg-noite"${_scopeId}><table class="w-full text-left text-14"${_scopeId}><thead${_scopeId}><tr class="border-b border-vidro/20 text-12 uppercase text-vidro"${_scopeId}><th class="px-4 py-3"${_scopeId}>Rodada</th><th class="px-4 py-3"${_scopeId}>Status</th><th class="px-4 py-3"${_scopeId}>Início</th><th class="px-4 py-3"${_scopeId}>Valor</th><th class="px-4 py-3"${_scopeId}>Pagas</th><th class="px-4 py-3"${_scopeId}>Sorteios</th></tr></thead><tbody${_scopeId}><!--[-->`);
+            _push2(`</div><div class="mt-6 overflow-x-auto rounded-lg bg-noite"${_scopeId}><table class="w-full text-left text-14"${_scopeId}><thead${_scopeId}><tr class="border-b border-vidro/20 text-12 uppercase text-vidro"${_scopeId}><th class="px-4 py-3"${_scopeId}>Rodada</th><th class="px-4 py-3"${_scopeId}>Status</th><th class="px-4 py-3"${_scopeId}>Início</th><th class="px-4 py-3"${_scopeId}>Valor</th><th class="px-4 py-3"${_scopeId}>Pagas</th><th class="px-4 py-3"${_scopeId}>Sorteios</th><th class="px-4 py-3"${_scopeId}>Ações</th></tr></thead><tbody${_scopeId}><!--[-->`);
             ssrRenderList(__props.rodadas, (r) => {
               _push2(`<tr class="border-b border-vidro/10 hover:bg-tinta/40"${_scopeId}><td class="px-4 py-3"${_scopeId}>`);
               _push2(ssrRenderComponent(unref(Link), {
@@ -50,11 +50,44 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 }),
                 _: 2
               }, _parent2, _scopeId));
-              _push2(`</td><td class="px-4 py-3"${_scopeId}>${ssrInterpolate(r.statusLabel)}</td><td class="px-4 py-3 font-mono font-tabular"${_scopeId}>${ssrInterpolate(unref(dataCurta)(r.inicio + "T12:00:00"))}</td><td class="px-4 py-3 font-mono font-tabular"${_scopeId}>${ssrInterpolate(unref(brl)(r.valorCents))}</td><td class="px-4 py-3 font-mono font-tabular"${_scopeId}>${ssrInterpolate(r.apostasPagas)}</td><td class="px-4 py-3 font-mono font-tabular"${_scopeId}>${ssrInterpolate(r.sorteios)}</td></tr>`);
+              _push2(`</td><td class="px-4 py-3"${_scopeId}>${ssrInterpolate(r.statusLabel)}</td><td class="px-4 py-3 font-mono font-tabular"${_scopeId}>${ssrInterpolate(unref(dataCurta)(r.inicio + "T12:00:00"))}</td><td class="px-4 py-3 font-mono font-tabular"${_scopeId}>${ssrInterpolate(unref(brl)(r.valorCents))}</td><td class="px-4 py-3 font-mono font-tabular"${_scopeId}>${ssrInterpolate(r.apostasPagas)}</td><td class="px-4 py-3 font-mono font-tabular"${_scopeId}>${ssrInterpolate(r.sorteios)}</td><td class="px-4 py-3"${_scopeId}>`);
+              _push2(ssrRenderComponent(unref(Link), {
+                href: `/admin/apostas?rodada=${r.uuid}`,
+                class: "inline-flex items-center gap-1.5 text-aceso hover:underline",
+                title: `Ver apostas da ${r.nome}`
+              }, {
+                default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+                  if (_push3) {
+                    _push3(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true"${_scopeId2}><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"${_scopeId2}></path><path d="M13 5v2"${_scopeId2}></path><path d="M13 17v2"${_scopeId2}></path><path d="M13 11v2"${_scopeId2}></path></svg> Apostas `);
+                  } else {
+                    return [
+                      (openBlock(), createBlock("svg", {
+                        xmlns: "http://www.w3.org/2000/svg",
+                        viewBox: "0 0 24 24",
+                        fill: "none",
+                        stroke: "currentColor",
+                        "stroke-width": "2",
+                        "stroke-linecap": "round",
+                        "stroke-linejoin": "round",
+                        class: "h-4 w-4",
+                        "aria-hidden": "true"
+                      }, [
+                        createVNode("path", { d: "M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" }),
+                        createVNode("path", { d: "M13 5v2" }),
+                        createVNode("path", { d: "M13 17v2" }),
+                        createVNode("path", { d: "M13 11v2" })
+                      ])),
+                      createTextVNode(" Apostas ")
+                    ];
+                  }
+                }),
+                _: 2
+              }, _parent2, _scopeId));
+              _push2(`</td></tr>`);
             });
             _push2(`<!--]-->`);
             if (__props.rodadas.length === 0) {
-              _push2(`<tr${_scopeId}><td colspan="6" class="px-4 py-6 text-vidro"${_scopeId}>Nenhuma rodada ainda. Crie a primeira.</td></tr>`);
+              _push2(`<tr${_scopeId}><td colspan="7" class="px-4 py-6 text-vidro"${_scopeId}>Nenhuma rodada ainda. Crie a primeira.</td></tr>`);
             } else {
               _push2(`<!---->`);
             }
@@ -82,7 +115,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                       createVNode("th", { class: "px-4 py-3" }, "Início"),
                       createVNode("th", { class: "px-4 py-3" }, "Valor"),
                       createVNode("th", { class: "px-4 py-3" }, "Pagas"),
-                      createVNode("th", { class: "px-4 py-3" }, "Sorteios")
+                      createVNode("th", { class: "px-4 py-3" }, "Sorteios"),
+                      createVNode("th", { class: "px-4 py-3" }, "Ações")
                     ])
                   ]),
                   createVNode("tbody", null, [
@@ -106,12 +140,40 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                         createVNode("td", { class: "px-4 py-3 font-mono font-tabular" }, toDisplayString(unref(dataCurta)(r.inicio + "T12:00:00")), 1),
                         createVNode("td", { class: "px-4 py-3 font-mono font-tabular" }, toDisplayString(unref(brl)(r.valorCents)), 1),
                         createVNode("td", { class: "px-4 py-3 font-mono font-tabular" }, toDisplayString(r.apostasPagas), 1),
-                        createVNode("td", { class: "px-4 py-3 font-mono font-tabular" }, toDisplayString(r.sorteios), 1)
+                        createVNode("td", { class: "px-4 py-3 font-mono font-tabular" }, toDisplayString(r.sorteios), 1),
+                        createVNode("td", { class: "px-4 py-3" }, [
+                          createVNode(unref(Link), {
+                            href: `/admin/apostas?rodada=${r.uuid}`,
+                            class: "inline-flex items-center gap-1.5 text-aceso hover:underline",
+                            title: `Ver apostas da ${r.nome}`
+                          }, {
+                            default: withCtx(() => [
+                              (openBlock(), createBlock("svg", {
+                                xmlns: "http://www.w3.org/2000/svg",
+                                viewBox: "0 0 24 24",
+                                fill: "none",
+                                stroke: "currentColor",
+                                "stroke-width": "2",
+                                "stroke-linecap": "round",
+                                "stroke-linejoin": "round",
+                                class: "h-4 w-4",
+                                "aria-hidden": "true"
+                              }, [
+                                createVNode("path", { d: "M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" }),
+                                createVNode("path", { d: "M13 5v2" }),
+                                createVNode("path", { d: "M13 17v2" }),
+                                createVNode("path", { d: "M13 11v2" })
+                              ])),
+                              createTextVNode(" Apostas ")
+                            ]),
+                            _: 1
+                          }, 8, ["href", "title"])
+                        ])
                       ]);
                     }), 128)),
                     __props.rodadas.length === 0 ? (openBlock(), createBlock("tr", { key: 0 }, [
                       createVNode("td", {
-                        colspan: "6",
+                        colspan: "7",
                         class: "px-4 py-6 text-vidro"
                       }, "Nenhuma rodada ainda. Crie a primeira.")
                     ])) : createCommentVNode("", true)

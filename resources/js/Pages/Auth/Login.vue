@@ -16,7 +16,7 @@ function entrar() {
     <Head title="Entrar" />
     <div class="flex min-h-screen items-center justify-center bg-tinta px-4">
         <form class="w-full max-w-sm rounded-lg bg-noite p-6" @submit.prevent="entrar">
-            <img src="/logoMega.png" alt="MegaPalmeira" class="h-12 w-auto" />
+            <img src="/logoMega.png" alt="MegaPalmeira" class="h-16 w-auto" />
             <p class="mt-2 text-14 text-vidro">Acesso do administrador</p>
 
             <label class="mt-6 block text-14 text-vidro" for="email">E-mail</label>

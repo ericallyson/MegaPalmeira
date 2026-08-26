@@ -225,7 +225,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       } else {
         _push(`<!---->`);
       }
-      _push(`<header class="border-b border-noite print:hidden"><div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3"><img src="/logoMega.png" alt="MegaPalmeira" class="h-9 w-auto"><div class="flex items-center gap-4">`);
+      _push(`<header class="border-b border-noite print:hidden"><div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-3"><img src="/logoMega.png" alt="MegaPalmeira" class="h-14 w-auto"><div class="flex items-center gap-4">`);
       if (rodada.value) {
         _push(`<p class="hidden text-14 text-vidro sm:block">${ssrInterpolate(rodada.value.nome)} · ${ssrInterpolate(rodada.value.statusLabel)}</p>`);
       } else {
@@ -429,7 +429,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         }, _parent));
         _push(` · Sobras de centavos de qualquer divisão vão para a administração. </p></footer></main>`);
       } else {
-        _push(`<main class="mx-auto max-w-5xl px-4"><div class="mt-16 rounded-lg bg-noite p-8 text-center"><img src="/logoMega.png" alt="MegaPalmeira" class="mx-auto h-16 w-auto"><p class="mt-3 text-16 text-vidro"> Nenhuma rodada em andamento no momento. Volte em breve — a próxima está chegando. </p></div></main>`);
+        _push(`<main class="mx-auto max-w-5xl px-4"><div class="mt-16 rounded-lg bg-noite p-8 text-center"><img src="/logoMega.png" alt="MegaPalmeira" class="mx-auto h-24 w-auto"><p class="mt-3 text-16 text-vidro"> Nenhuma rodada em andamento no momento. Volte em breve — a próxima está chegando. </p></div></main>`);
       }
       _push(`</div><!--]-->`);
     };
