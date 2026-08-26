@@ -19,7 +19,7 @@ test('cria rodada com defaults corretos', function () {
 
     expect($round->status)->toBe(RoundStatus::Draft)
         ->and($round->slug)->toBe('bolao-de-agosto')
-        ->and($round->bets_close_at->format('Y-m-d H:i'))->toBe('2026-08-10 18:00')
+        ->and($round->bets_close_at->format('Y-m-d H:i:s'))->toBe('2026-08-09 23:59:59')
         ->and($round->pct_main)->toBe(70)
         ->and($round->pct_second)->toBe(15)
         ->and($round->pct_admin)->toBe(15)

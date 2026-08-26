@@ -21,7 +21,7 @@ class CriarRodada
             'name' => $data->name,
             'slug' => $this->uniqueSlug($data->name),
             'starts_on' => $data->startsOn->toDateString(),
-            'bets_close_at' => ($data->betsCloseAt ?? $data->startsOn->setTime(18, 0))->toDateTimeString(),
+            'bets_close_at' => ($data->betsCloseAt ?? $data->startsOn->subDay()->setTime(23, 59, 59))->toDateTimeString(),
             'bet_amount_cents' => $data->betAmountCents,
             'pct_main' => $data->pctMain,
             'pct_second' => $data->pctSecond,

@@ -44,7 +44,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div${_scopeId}><label class="block text-14 text-vidro" for="bets_close_at"${_scopeId}>Apostas até (opcional)</label><input id="bets_close_at"${ssrRenderAttr("value", unref(form).bets_close_at)} type="datetime-local" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 text-16 focus:border-aceso focus:outline-none"${_scopeId}><p class="mt-1 text-12 text-vidro"${_scopeId}>Vazio = 18h da data de início</p></div></div><div class="grid grid-cols-2 gap-4"${_scopeId}><div${_scopeId}><label class="block text-14 text-vidro" for="bet_amount_cents"${_scopeId}>Valor da aposta (centavos)</label><input id="bet_amount_cents"${ssrRenderAttr("value", unref(form).bet_amount_cents)} type="number" min="100" step="1" required class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"${_scopeId}><p class="mt-1 text-12 text-vidro"${_scopeId}>2000 = R$ 20,00</p>`);
+            _push2(`</div><div${_scopeId}><label class="block text-14 text-vidro" for="bets_close_at"${_scopeId}>Apostas até (opcional)</label><input id="bets_close_at"${ssrRenderAttr("value", unref(form).bets_close_at)} type="datetime-local" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 text-16 focus:border-aceso focus:outline-none"${_scopeId}><p class="mt-1 text-12 text-vidro"${_scopeId}>Vazio = 23:59:59 do dia anterior ao início</p></div></div><div class="grid grid-cols-2 gap-4"${_scopeId}><div${_scopeId}><label class="block text-14 text-vidro" for="bet_amount_cents"${_scopeId}>Valor da aposta (centavos)</label><input id="bet_amount_cents"${ssrRenderAttr("value", unref(form).bet_amount_cents)} type="number" min="100" step="1" required class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"${_scopeId}><p class="mt-1 text-12 text-vidro"${_scopeId}>2000 = R$ 20,00</p>`);
             if (unref(form).errors.bet_amount_cents) {
               _push2(`<p class="mt-1 text-12 text-erro"${_scopeId}>${ssrInterpolate(unref(form).errors.bet_amount_cents)}</p>`);
             } else {
@@ -123,7 +123,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                     }, null, 8, ["onUpdate:modelValue"]), [
                       [vModelText, unref(form).bets_close_at]
                     ]),
-                    createVNode("p", { class: "mt-1 text-12 text-vidro" }, "Vazio = 18h da data de início")
+                    createVNode("p", { class: "mt-1 text-12 text-vidro" }, "Vazio = 23:59:59 do dia anterior ao início")
                   ])
                 ]),
                 createVNode("div", { class: "grid grid-cols-2 gap-4" }, [

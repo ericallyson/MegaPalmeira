@@ -66,7 +66,7 @@ function salvar() {
                         type="datetime-local"
                         class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 text-16 focus:border-aceso focus:outline-none"
                     />
-                    <p class="mt-1 text-12 text-vidro">Vazio = 18h da data de início</p>
+                    <p class="mt-1 text-12 text-vidro">Vazio = 23:59:59 do dia anterior ao início</p>
                 </div>
             </div>
 
