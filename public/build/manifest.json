@@ -1,0 +1,316 @@
+{
+  "_AdminLayout.vue_vue_type_script_setup_true_lang-DyvzXa6N.js": {
+    "file": "assets/AdminLayout.vue_vue_type_script_setup_true_lang-DyvzXa6N.js",
+    "name": "AdminLayout.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "resources/js/app.ts"
+    ]
+  },
+  "_Ball.vue_vue_type_script_setup_true_lang-CbRbzMe4.js": {
+    "file": "assets/Ball.vue_vue_type_script_setup_true_lang-CbRbzMe4.js",
+    "name": "Ball.vue_vue_type_script_setup_true_lang",
+    "imports": [
+      "_format-ChC0tpzc.js",
+      "resources/js/app.ts"
+    ]
+  },
+  "_format-ChC0tpzc.js": {
+    "file": "assets/format-ChC0tpzc.js",
+    "name": "format"
+  },
+  "_index-CzApALvg.js": {
+    "file": "assets/index-CzApALvg.js",
+    "name": "index"
+  },
+  "node_modules/@fontsource-variable/archivo/files/archivo-latin-ext-wght-normal.woff2": {
+    "file": "assets/archivo-latin-ext-wght-normal-C4zznr8T.woff2",
+    "src": "node_modules/@fontsource-variable/archivo/files/archivo-latin-ext-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2": {
+    "file": "assets/archivo-latin-wght-normal-E0tuGl4L.woff2",
+    "src": "node_modules/@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/archivo/files/archivo-vietnamese-wght-normal.woff2": {
+    "file": "assets/archivo-vietnamese-wght-normal-XAtsl5Q_.woff2",
+    "src": "node_modules/@fontsource-variable/archivo/files/archivo-vietnamese-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/instrument-sans/files/instrument-sans-latin-ext-wght-normal.woff2": {
+    "file": "assets/instrument-sans-latin-ext-wght-normal-B5bTHO_g.woff2",
+    "src": "node_modules/@fontsource-variable/instrument-sans/files/instrument-sans-latin-ext-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2": {
+    "file": "assets/instrument-sans-latin-wght-normal-BbzFLZTg.woff2",
+    "src": "node_modules/@fontsource-variable/instrument-sans/files/instrument-sans-latin-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/martian-mono/files/martian-mono-cyrillic-ext-wght-normal.woff2": {
+    "file": "assets/martian-mono-cyrillic-ext-wght-normal-DAknEryR.woff2",
+    "src": "node_modules/@fontsource-variable/martian-mono/files/martian-mono-cyrillic-ext-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/martian-mono/files/martian-mono-cyrillic-wght-normal.woff2": {
+    "file": "assets/martian-mono-cyrillic-wght-normal-B84CD5C_.woff2",
+    "src": "node_modules/@fontsource-variable/martian-mono/files/martian-mono-cyrillic-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/martian-mono/files/martian-mono-latin-ext-wght-normal.woff2": {
+    "file": "assets/martian-mono-latin-ext-wght-normal-DlL6xMw5.woff2",
+    "src": "node_modules/@fontsource-variable/martian-mono/files/martian-mono-latin-ext-wght-normal.woff2"
+  },
+  "node_modules/@fontsource-variable/martian-mono/files/martian-mono-latin-wght-normal.woff2": {
+    "file": "assets/martian-mono-latin-wght-normal-5W32yIyr.woff2",
+    "src": "node_modules/@fontsource-variable/martian-mono/files/martian-mono-latin-wght-normal.woff2"
+  },
+  "resources/js/Pages/Admin/Bets/Index.vue": {
+    "file": "assets/Index-B3nzJgo3.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Admin/Bets/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "_AdminLayout.vue_vue_type_script_setup_true_lang-DyvzXa6N.js",
+      "_format-ChC0tpzc.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Dashboard.vue": {
+    "file": "assets/Dashboard-Dv4NzIwD.js",
+    "name": "Dashboard",
+    "src": "resources/js/Pages/Admin/Dashboard.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "_AdminLayout.vue_vue_type_script_setup_true_lang-DyvzXa6N.js",
+      "_format-ChC0tpzc.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Rounds/Create.vue": {
+    "file": "assets/Create-fYjrzVqW.js",
+    "name": "Create",
+    "src": "resources/js/Pages/Admin/Rounds/Create.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "_AdminLayout.vue_vue_type_script_setup_true_lang-DyvzXa6N.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Rounds/Index.vue": {
+    "file": "assets/Index-BKVXB5ne.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Admin/Rounds/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "_AdminLayout.vue_vue_type_script_setup_true_lang-DyvzXa6N.js",
+      "_format-ChC0tpzc.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Rounds/Relatorio.vue": {
+    "file": "assets/Relatorio-D-egfXAe.js",
+    "name": "Relatorio",
+    "src": "resources/js/Pages/Admin/Rounds/Relatorio.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "_format-ChC0tpzc.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Rounds/Show.vue": {
+    "file": "assets/Show-DO_w9bYo.js",
+    "name": "Show",
+    "src": "resources/js/Pages/Admin/Rounds/Show.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "_index-CzApALvg.js",
+      "_AdminLayout.vue_vue_type_script_setup_true_lang-DyvzXa6N.js",
+      "_format-ChC0tpzc.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Settings/Index.vue": {
+    "file": "assets/Index-CY9kzrmD.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Admin/Settings/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "_AdminLayout.vue_vue_type_script_setup_true_lang-DyvzXa6N.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Users/Form.vue": {
+    "file": "assets/Form-B0_UyEIe.js",
+    "name": "Form",
+    "src": "resources/js/Pages/Admin/Users/Form.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "_AdminLayout.vue_vue_type_script_setup_true_lang-DyvzXa6N.js"
+    ]
+  },
+  "resources/js/Pages/Admin/Users/Index.vue": {
+    "file": "assets/Index-D-kWiQLU.js",
+    "name": "Index",
+    "src": "resources/js/Pages/Admin/Users/Index.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "_AdminLayout.vue_vue_type_script_setup_true_lang-DyvzXa6N.js"
+    ]
+  },
+  "resources/js/Pages/Auth/ConfirmPassword.vue": {
+    "file": "assets/ConfirmPassword-CYZxq_Lf.js",
+    "name": "ConfirmPassword",
+    "src": "resources/js/Pages/Auth/ConfirmPassword.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts"
+    ]
+  },
+  "resources/js/Pages/Auth/Login.vue": {
+    "file": "assets/Login-fmtTGd6Z.js",
+    "name": "Login",
+    "src": "resources/js/Pages/Auth/Login.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts"
+    ]
+  },
+  "resources/js/Pages/Auth/TwoFactorChallenge.vue": {
+    "file": "assets/TwoFactorChallenge-nVsLSoy8.js",
+    "name": "TwoFactorChallenge",
+    "src": "resources/js/Pages/Auth/TwoFactorChallenge.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts"
+    ]
+  },
+  "resources/js/Pages/Auth/TwoFactorSetup.vue": {
+    "file": "assets/TwoFactorSetup-BrFGMLlA.js",
+    "name": "TwoFactorSetup",
+    "src": "resources/js/Pages/Auth/TwoFactorSetup.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "_index-CzApALvg.js"
+    ]
+  },
+  "resources/js/Pages/Public/ApostadorLogin.vue": {
+    "file": "assets/ApostadorLogin-CsWnKWGG.js",
+    "name": "ApostadorLogin",
+    "src": "resources/js/Pages/Public/ApostadorLogin.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts"
+    ]
+  },
+  "resources/js/Pages/Public/ApostadorPortal.vue": {
+    "file": "assets/ApostadorPortal-BhwcDRHz.js",
+    "name": "ApostadorPortal",
+    "src": "resources/js/Pages/Public/ApostadorPortal.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "_Ball.vue_vue_type_script_setup_true_lang-CbRbzMe4.js",
+      "_format-ChC0tpzc.js"
+    ]
+  },
+  "resources/js/Pages/Public/Apostar.vue": {
+    "file": "assets/Apostar-CTcJ6DZu.js",
+    "name": "Apostar",
+    "src": "resources/js/Pages/Public/Apostar.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "_format-ChC0tpzc.js"
+    ]
+  },
+  "resources/js/Pages/Public/Checkout.vue": {
+    "file": "assets/Checkout-CNaaAMnS.js",
+    "name": "Checkout",
+    "src": "resources/js/Pages/Public/Checkout.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "_Ball.vue_vue_type_script_setup_true_lang-CbRbzMe4.js",
+      "_format-ChC0tpzc.js"
+    ]
+  },
+  "resources/js/Pages/Public/Home.vue": {
+    "file": "assets/Home-COzPyMXi.js",
+    "name": "Home",
+    "src": "resources/js/Pages/Public/Home.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "_Ball.vue_vue_type_script_setup_true_lang-CbRbzMe4.js",
+      "_format-ChC0tpzc.js"
+    ],
+    "dynamicImports": [
+      "resources/js/lib/echo.ts"
+    ]
+  },
+  "resources/js/Pages/Public/MinhasCartelas.vue": {
+    "file": "assets/MinhasCartelas-CjYS5K9J.js",
+    "name": "MinhasCartelas",
+    "src": "resources/js/Pages/Public/MinhasCartelas.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts",
+      "_Ball.vue_vue_type_script_setup_true_lang-CbRbzMe4.js",
+      "_format-ChC0tpzc.js"
+    ]
+  },
+  "resources/js/Pages/Public/Regulamento.vue": {
+    "file": "assets/Regulamento-DD1dL5py.js",
+    "name": "Regulamento",
+    "src": "resources/js/Pages/Public/Regulamento.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.ts"
+    ]
+  },
+  "resources/js/app.ts": {
+    "file": "assets/app-DDbvbSte.js",
+    "name": "app",
+    "src": "resources/js/app.ts",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/Pages/Admin/Bets/Index.vue",
+      "resources/js/Pages/Admin/Dashboard.vue",
+      "resources/js/Pages/Admin/Rounds/Create.vue",
+      "resources/js/Pages/Admin/Rounds/Index.vue",
+      "resources/js/Pages/Admin/Rounds/Relatorio.vue",
+      "resources/js/Pages/Admin/Rounds/Show.vue",
+      "resources/js/Pages/Admin/Settings/Index.vue",
+      "resources/js/Pages/Admin/Users/Form.vue",
+      "resources/js/Pages/Admin/Users/Index.vue",
+      "resources/js/Pages/Auth/ConfirmPassword.vue",
+      "resources/js/Pages/Auth/Login.vue",
+      "resources/js/Pages/Auth/TwoFactorChallenge.vue",
+      "resources/js/Pages/Auth/TwoFactorSetup.vue",
+      "resources/js/Pages/Public/ApostadorLogin.vue",
+      "resources/js/Pages/Public/ApostadorPortal.vue",
+      "resources/js/Pages/Public/Apostar.vue",
+      "resources/js/Pages/Public/Checkout.vue",
+      "resources/js/Pages/Public/Home.vue",
+      "resources/js/Pages/Public/MinhasCartelas.vue",
+      "resources/js/Pages/Public/Regulamento.vue"
+    ],
+    "css": [
+      "assets/app-CgJsaT9B.css"
+    ],
+    "assets": [
+      "assets/archivo-vietnamese-wght-normal-XAtsl5Q_.woff2",
+      "assets/archivo-latin-ext-wght-normal-C4zznr8T.woff2",
+      "assets/archivo-latin-wght-normal-E0tuGl4L.woff2",
+      "assets/instrument-sans-latin-ext-wght-normal-B5bTHO_g.woff2",
+      "assets/instrument-sans-latin-wght-normal-BbzFLZTg.woff2",
+      "assets/martian-mono-cyrillic-ext-wght-normal-DAknEryR.woff2",
+      "assets/martian-mono-cyrillic-wght-normal-B84CD5C_.woff2",
+      "assets/martian-mono-latin-ext-wght-normal-DlL6xMw5.woff2",
+      "assets/martian-mono-latin-wght-normal-5W32yIyr.woff2"
+    ]
+  },
+  "resources/js/lib/echo.ts": {
+    "file": "assets/echo-CW01PGs7.js",
+    "name": "echo",
+    "src": "resources/js/lib/echo.ts",
+    "isDynamicEntry": true
+  }
+}
