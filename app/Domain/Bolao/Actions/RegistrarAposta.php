@@ -52,6 +52,7 @@ class RegistrarAposta
             /** @var Bet $bet */
             $bet = $round->bets()->create([
                 'bettor_id' => $bettor->id,
+                'seller_id' => $data->sellerId,
                 'numbers' => $numbers,
                 'amount_cents' => $round->bet_amount_cents,
                 'status' => BetStatus::AwaitingPayment,

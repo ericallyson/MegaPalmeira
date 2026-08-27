@@ -4,12 +4,14 @@ namespace App\Domain\Bolao\Services;
 
 use App\Domain\Bolao\Enums\BetStatus;
 use App\Domain\Bolao\Enums\NoWinnerPolicy;
+use App\Domain\Bolao\Enums\PaidMethod;
 use App\Domain\Bolao\Enums\PayoutCategory;
 use App\Models\Bet;
 use App\Models\BetStatusLog;
 use App\Models\Draw;
 use App\Models\Payout;
 use App\Models\Round;
+use App\Models\Seller;
 use App\Models\User;
 use App\Support\PhoneMask;
 use Illuminate\Support\Facades\DB;
@@ -32,6 +34,7 @@ class RelatorioService
         return [
             'identificacao' => $this->identificacao($round),
             'financeiro' => $this->financeiro($round),
+            'baixas' => $this->baixas($round),
             'ganhadores' => $this->ganhadores($round),
             'classificacao' => $this->classificacao($round),
             'sorteios' => $this->sorteios($round),
@@ -92,6 +95,20 @@ class RelatorioService
         $linha(['Administração', $this->reais($fin['administracaoCents'])]);
         $linha(['Sobra de centavos (na administração)', $this->reais($fin['sobraCents'])]);
         $linha(['Conferência (prêmios + administração + acumulado = pote)', $fin['conferenciaFecha'] ? 'FECHA EXATA' : 'NÃO FECHA']);
+        $linha([]);
+
+        $baixas = $relatorio['baixas'];
+        $linha(['BAIXAS (PRESTAÇÃO DE CONTAS)']);
+        $linha(['Baixas automáticas (PIX)', $baixas['automaticas']['quantidade'], $this->reais($baixas['automaticas']['valorCents'])]);
+        $linha(['Baixas manuais', $baixas['manuais']['quantidade'], $this->reais($baixas['manuais']['valorCents'])]);
+        $linha([]);
+        $linha(['Vendedor', 'Pagas', 'Automáticas', 'Manuais', 'Arrecadação', 'Comissão %', 'Comissão']);
+        foreach ($baixas['porVendedor'] as $v) {
+            $linha([
+                $v['nome'], $v['apostasPagas'], $v['baixasAutomaticas'], $v['baixasManuais'],
+                $this->reais($v['arrecadacaoCents']), $v['comissaoPct'].'%', $this->reais($v['comissaoCents']),
+            ]);
+        }
         $linha([]);
 
         $linha(['GANHADORES']);
@@ -206,6 +223,71 @@ class RelatorioService
     }
 
     /**
+     * Prestação de contas das baixas: separa as pagas por PIX (automáticas)
+     * das baixas manuais, e detalha por vendedor — arrecadação, comissão e
+     * quantas baixas cada um deu na mão.
+     *
+     * @return array<string, mixed>
+     */
+    private function baixas(Round $round): array
+    {
+        $pagas = $round->bets()
+            ->where('status', BetStatus::Paid)
+            ->get(['id', 'seller_id', 'amount_cents', 'paid_method']);
+
+        $vendedores = Seller::query()
+            ->whereIn('id', $pagas->pluck('seller_id')->filter()->unique())
+            ->get()
+            ->keyBy('id')
+            ->all();
+
+        $manuais = $pagas->where('paid_method', PaidMethod::Manual);
+        $automaticas = $pagas->reject(fn (Bet $bet): bool => $bet->paid_method === PaidMethod::Manual);
+
+        $porVendedor = $pagas
+            ->groupBy(fn (Bet $bet): int => $bet->seller_id ?? 0)
+            ->map(function ($grupo, int $key) use ($vendedores): array {
+                $arrecadacao = (int) $grupo->sum('amount_cents');
+
+                if (isset($vendedores[$key])) {
+                    $nome = $vendedores[$key]->name;
+                    $slug = $vendedores[$key]->slug;
+                    $pct = $vendedores[$key]->commission_pct;
+                } else {
+                    $nome = 'Sem vendedor (link geral)';
+                    $slug = null;
+                    $pct = 0;
+                }
+
+                return [
+                    'nome' => $nome,
+                    'slug' => $slug,
+                    'apostasPagas' => $grupo->count(),
+                    'baixasAutomaticas' => $grupo->reject(fn (Bet $b): bool => $b->paid_method === PaidMethod::Manual)->count(),
+                    'baixasManuais' => $grupo->where('paid_method', PaidMethod::Manual)->count(),
+                    'arrecadacaoCents' => $arrecadacao,
+                    'comissaoPct' => $pct,
+                    'comissaoCents' => intdiv($arrecadacao * $pct, 100),
+                ];
+            })
+            ->sortBy('nome')
+            ->values()
+            ->all();
+
+        return [
+            'automaticas' => [
+                'quantidade' => $automaticas->count(),
+                'valorCents' => (int) $automaticas->sum('amount_cents'),
+            ],
+            'manuais' => [
+                'quantidade' => $manuais->count(),
+                'valorCents' => (int) $manuais->sum('amount_cents'),
+            ],
+            'porVendedor' => $porVendedor,
+        ];
+    }
+
+    /**
      * @return list<array<string, mixed>>
      */
     private function ganhadores(Round $round): array
@@ -285,23 +367,36 @@ class RelatorioService
 
         $logs = BetStatusLog::query()
             ->whereIn('to_status', array_keys($tipos))
-            ->where('actor_type', 'user')
+            ->whereIn('actor_type', ['user', 'seller'])
             ->whereHas('bet', fn ($query) => $query->where('round_id', $round->id))
             ->with('bet.bettor')
             ->orderBy('id')
             ->get();
 
         $usuarios = User::query()
-            ->whereIn('id', $logs->pluck('actor_id')->filter()->unique())
+            ->whereIn('id', $logs->where('actor_type', 'user')->pluck('actor_id')->filter()->unique())
             ->pluck('name', 'id');
 
-        $eventos = $logs->map(fn (BetStatusLog $log): array => [
-            'tipo' => $tipos[$log->to_status],
-            'alvo' => $log->bet->bettor->name,
-            'motivo' => (string) $log->reason,
-            'responsavel' => $log->actor_id !== null ? $usuarios[$log->actor_id] ?? null : null,
-            'quando' => $log->created_at?->toDateTimeString() ?? '',
-        ]);
+        $vendedores = Seller::query()
+            ->whereIn('id', $logs->where('actor_type', 'seller')->pluck('actor_id')->filter()->unique())
+            ->pluck('name', 'id');
+
+        $eventos = $logs->map(function (BetStatusLog $log) use ($tipos, $usuarios, $vendedores): array {
+            $responsavel = null;
+            if ($log->actor_id !== null) {
+                $responsavel = $log->actor_type === 'seller'
+                    ? ($vendedores[$log->actor_id] ?? null).' (vendedor)'
+                    : $usuarios[$log->actor_id] ?? null;
+            }
+
+            return [
+                'tipo' => $tipos[$log->to_status],
+                'alvo' => $log->bet->bettor->name,
+                'motivo' => (string) $log->reason,
+                'responsavel' => $responsavel,
+                'quando' => $log->created_at?->toDateTimeString() ?? '',
+            ];
+        });
 
         $correcoes = $round->draws()
             ->whereNotNull('corrected_at')

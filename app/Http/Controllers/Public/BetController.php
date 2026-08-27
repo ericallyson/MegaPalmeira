@@ -12,9 +12,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Public\StoreBetRequest;
 use App\Models\Bet;
 use App\Models\Round;
+use App\Models\Seller;
 use App\Services\MercadoPago\MercadoPagoClient;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Validation\ValidationException;
@@ -62,6 +64,7 @@ class BetController extends Controller
                 numbers: array_map(intval(...), $request->array('numbers')),
                 acceptedIp: (string) $request->ip(),
                 bettorEmail: $request->filled('email') ? $request->string('email')->toString() : null,
+                sellerId: $this->sellerLinkId($request),
             ));
         } catch (ApostasEncerradas|LimiteDeCartelasExcedido $e) {
             throw ValidationException::withMessages(['numbers' => $e->getMessage()]);
@@ -145,6 +148,21 @@ class BetController extends Controller
         }
 
         return redirect()->route('apostas.checkout', $bet);
+    }
+
+    /**
+     * Vendedor de origem da aposta: guardado na sessão ao abrir o link
+     * do vendedor (/v/{slug}). Só atribui se o vendedor ainda existe.
+     */
+    private function sellerLinkId(Request $request): ?int
+    {
+        $id = $request->session()->get('seller_link_id');
+
+        if ($id === null) {
+            return null;
+        }
+
+        return Seller::query()->whereKey($id)->exists() ? (int) $id : null;
     }
 
     private function openRound(): ?Round

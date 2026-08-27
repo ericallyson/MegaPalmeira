@@ -23,6 +23,7 @@ function sair() {
                     <Link href="/admin" class="text-noite/70 hover:text-tinta">Painel</Link>
                     <Link href="/admin/rodadas" class="text-noite/70 hover:text-tinta">Rodadas</Link>
                     <Link href="/admin/apostas" class="text-noite/70 hover:text-tinta">Apostas</Link>
+                    <Link href="/admin/vendedores" class="text-noite/70 hover:text-tinta">Vendedores</Link>
                     <Link href="/admin/usuarios" class="text-noite/70 hover:text-tinta">Usuários</Link>
                     <Link href="/admin/configuracoes" class="text-noite/70 hover:text-tinta">Configurações</Link>
                     <button type="button" class="text-noite/70 hover:text-tinta" @click="sair">

@@ -28,6 +28,20 @@ defineProps<{
             sobraCents: number;
             conferenciaFecha: boolean;
         };
+        baixas: {
+            automaticas: { quantidade: number; valorCents: number };
+            manuais: { quantidade: number; valorCents: number };
+            porVendedor: Array<{
+                nome: string;
+                slug: string | null;
+                apostasPagas: number;
+                baixasAutomaticas: number;
+                baixasManuais: number;
+                arrecadacaoCents: number;
+                comissaoPct: number;
+                comissaoCents: number;
+            }>;
+        };
         ganhadores: Array<{
             categoria: string;
             nome: string;
@@ -160,7 +174,60 @@ function imprimir() {
                 </table>
             </section>
 
-            <!-- 3. ganhadores -->
+            <!-- 3. baixas / prestação de contas -->
+            <section class="mt-8">
+                <h2 class="border-b border-tinta/20 pb-1 font-display text-16 font-bold uppercase">
+                    Baixas — prestação de contas
+                </h2>
+                <table class="mt-3 w-full text-14">
+                    <tbody>
+                        <tr>
+                            <td class="py-1">Baixas automáticas (PIX)</td>
+                            <td class="py-1 text-right font-mono font-tabular">
+                                {{ relatorio.baixas.automaticas.quantidade }} · {{ brl(relatorio.baixas.automaticas.valorCents) }}
+                            </td>
+                        </tr>
+                        <tr class="border-b border-tinta/10">
+                            <td class="py-1">Baixas manuais</td>
+                            <td class="py-1 text-right font-mono font-tabular">
+                                {{ relatorio.baixas.manuais.quantidade }} · {{ brl(relatorio.baixas.manuais.valorCents) }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mt-4 font-display text-14 font-bold uppercase text-tinta/70">Por vendedor</h3>
+                <p v-if="relatorio.baixas.porVendedor.length === 0" class="mt-2 text-14 text-tinta/60">
+                    Nenhuma aposta paga nesta rodada.
+                </p>
+                <table v-else class="mt-2 w-full text-left text-14">
+                    <thead>
+                        <tr class="border-b border-tinta/10 text-12 uppercase text-tinta/60">
+                            <th class="py-1 pr-2">Vendedor</th>
+                            <th class="py-1 pr-2 text-right">Pagas</th>
+                            <th class="py-1 pr-2 text-right">Autom.</th>
+                            <th class="py-1 pr-2 text-right">Manuais</th>
+                            <th class="py-1 pr-2 text-right">Arrecadação</th>
+                            <th class="py-1 pr-2 text-right">Comissão</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(v, i) in relatorio.baixas.porVendedor" :key="i" class="border-b border-tinta/5">
+                            <td class="py-1.5 pr-2">{{ v.nome }}</td>
+                            <td class="py-1.5 pr-2 text-right font-mono font-tabular">{{ v.apostasPagas }}</td>
+                            <td class="py-1.5 pr-2 text-right font-mono font-tabular">{{ v.baixasAutomaticas }}</td>
+                            <td class="py-1.5 pr-2 text-right font-mono font-tabular">{{ v.baixasManuais }}</td>
+                            <td class="py-1.5 pr-2 text-right font-mono font-tabular">{{ brl(v.arrecadacaoCents) }}</td>
+                            <td class="py-1.5 pr-2 text-right font-mono font-tabular">
+                                {{ brl(v.comissaoCents) }}
+                                <span class="text-tinta/50">({{ v.comissaoPct }}%)</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- 4. ganhadores -->
             <section class="mt-8">
                 <h2 class="border-b border-tinta/20 pb-1 font-display text-16 font-bold uppercase">Ganhadores</h2>
                 <p v-if="relatorio.ganhadores.length === 0" class="mt-2 text-14 text-tinta/60">

@@ -53,6 +53,7 @@ const props = defineProps<{
     sorteios: Sorteio[];
     ranking: RankingItem[];
     ganhadores: Array<{ categoria: string; nome: string; valorCents: number }>;
+    vendedor?: { nome: string; grupoUrl: string | null } | null;
 }>();
 
 // Estado vivo: começa com os props e passa a ser alimentado pelo socket.
@@ -199,10 +200,6 @@ const ultimoSorteio = computed(() => sorteios.value[0] ?? null);
 const sorteiosAnteriores = computed(() => sorteios.value.slice(1));
 const correcoes = computed(() => sorteios.value.filter((s) => s.corrigidoEm));
 
-function imprimir() {
-    window.print();
-}
-
 // offline: o placar avisa que pode estar desatualizado
 const offline = ref(false);
 const marcarOffline = () => (offline.value = true);
@@ -286,6 +283,14 @@ const contagem = computed(() => {
         </header>
 
         <InstallPrompt />
+
+        <div
+            v-if="vendedor"
+            class="border-b border-jade/30 bg-jade/10 px-4 py-2 text-center text-14 text-jade print:hidden"
+            role="status"
+        >
+            Você está no link de <span class="font-bold">{{ vendedor.nome }}</span>.
+        </div>
 
         <main v-if="rodada" class="mx-auto max-w-5xl px-4 pb-16">
             <!-- aviso de correção -->
@@ -434,10 +439,13 @@ const contagem = computed(() => {
                         />
                         <button
                             type="button"
-                            class="rounded border border-vidro/40 px-3 py-1.5 text-14 text-vidro hover:text-papel"
-                            @click="imprimir"
+                            aria-label="Buscar"
+                            class="inline-flex items-center justify-center rounded border border-vidro/40 px-3 py-1.5 text-vidro hover:text-papel"
                         >
-                            Imprimir
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="11" cy="11" r="7" />
+                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                            </svg>
                         </button>
                     </div>
                 </div>
@@ -499,6 +507,7 @@ const contagem = computed(() => {
                 </p>
                 <p class="mt-2">
                     <Link href="/regulamento" class="underline">Regulamento</Link>
+                    · <Link href="/vendedor/entrar" class="underline">Área do vendedor</Link>
                     · Sobras de centavos de qualquer divisão vão para a administração.
                 </p>
             </footer>

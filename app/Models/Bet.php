@@ -22,6 +22,7 @@ class Bet extends Model
     protected $fillable = [
         'round_id',
         'bettor_id',
+        'seller_id',
         'numbers',
         'amount_cents',
         'status',
@@ -73,6 +74,14 @@ class Bet extends Model
     public function bettor(): BelongsTo
     {
         return $this->belongsTo(Bettor::class);
+    }
+
+    /**
+     * @return BelongsTo<Seller, $this>
+     */
+    public function seller(): BelongsTo
+    {
+        return $this->belongsTo(Seller::class);
     }
 
     /**

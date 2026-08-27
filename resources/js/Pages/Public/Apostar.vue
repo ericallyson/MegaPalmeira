@@ -16,7 +16,6 @@ const props = defineProps<{
 const form = useForm({
     nome: '',
     celular: '',
-    email: '',
     numbers: [] as number[],
     aceite_maioridade: false,
     aceite_regulamento: false,
@@ -130,25 +129,13 @@ function pagar() {
                             <p v-if="form.errors.celular" class="mt-1 text-12 text-erro">{{ form.errors.celular }}</p>
                         </div>
                     </div>
-                    <div class="mt-4">
-                        <label class="block text-14 text-vidro" for="email">E-mail (opcional, para o comprovante)</label>
-                        <input
-                            id="email"
-                            v-model="form.email"
-                            type="email"
-                            autocomplete="email"
-                            class="mt-1 w-full rounded border border-vidro/30 bg-tinta px-3 py-2 text-16 focus:border-aceso focus:outline-none"
-                        />
-                        <p v-if="form.errors.email" class="mt-1 text-12 text-erro">{{ form.errors.email }}</p>
-                    </div>
-
-                    <label class="mt-4 flex items-start gap-2 text-14">
-                        <input v-model="form.aceite_maioridade" type="checkbox" class="mt-1 accent-aceso" />
+                    <label class="mt-4 flex items-center gap-3 text-16">
+                        <input v-model="form.aceite_maioridade" type="checkbox" class="h-6 w-6 shrink-0 accent-aceso" />
                         <span>Tenho 18 anos ou mais.</span>
                     </label>
                     <p v-if="form.errors.aceite_maioridade" class="mt-1 text-12 text-erro">{{ form.errors.aceite_maioridade }}</p>
-                    <label class="mt-2 flex items-start gap-2 text-14">
-                        <input v-model="form.aceite_regulamento" type="checkbox" class="mt-1 accent-aceso" />
+                    <label class="mt-3 flex items-center gap-3 text-16">
+                        <input v-model="form.aceite_regulamento" type="checkbox" class="h-6 w-6 shrink-0 accent-aceso" />
                         <span>
                             Li e aceito o
                             <Link href="/regulamento" class="text-aceso underline" target="_blank">regulamento</Link>

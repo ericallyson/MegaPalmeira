@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DrawController;
 use App\Http\Controllers\Admin\PayoutController;
 use App\Http\Controllers\Admin\RelatorioController;
 use App\Http\Controllers\Admin\RoundController;
+use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\TwoFactorSetupController;
 use App\Http\Controllers\Admin\UserController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Public\BettorPortalController;
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\RankingApiController;
 use App\Http\Controllers\Public\RegulamentoController;
+use App\Http\Controllers\Public\SellerPortalController;
 use App\Http\Controllers\Webhooks\MercadoPagoWebhookController;
 use App\Http\Middleware\EnsureTwoFactorIsEnabled;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +24,8 @@ Route::get('/', HomeController::class)->name('home');
 
 Route::post('/webhooks/mercadopago', MercadoPagoWebhookController::class)
     ->name('webhooks.mercadopago');
+
+Route::get('/v/{seller:slug}', App\Http\Controllers\Public\SellerLinkController::class)->name('vendedor.link');
 
 Route::get('/apostar', [App\Http\Controllers\Public\BetController::class, 'create'])->name('apostas.create');
 Route::post('/apostas', [App\Http\Controllers\Public\BetController::class, 'store'])
@@ -43,6 +47,15 @@ Route::post('/apostador/entrar', [BettorPortalController::class, 'login'])
     ->name('apostador.login.attempt');
 Route::post('/apostador/sair', [BettorPortalController::class, 'logout'])->name('apostador.logout');
 Route::get('/apostador/minhas-apostas', [BettorPortalController::class, 'cartelas'])->name('apostador.portal');
+// Portal do vendedor: login com slug + senha.
+Route::get('/vendedor/entrar', [SellerPortalController::class, 'showLogin'])->name('vendedor.entrar');
+Route::post('/vendedor/entrar', [SellerPortalController::class, 'login'])
+    ->middleware('throttle:apostador-login')
+    ->name('vendedor.entrar.attempt');
+Route::post('/vendedor/sair', [SellerPortalController::class, 'logout'])->name('vendedor.sair');
+Route::get('/vendedor/painel', [SellerPortalController::class, 'painel'])->name('vendedor.painel');
+Route::post('/vendedor/apostas/{bet:uuid}/baixa', [SellerPortalController::class, 'darBaixa'])->name('vendedor.baixa');
+
 Route::get('/api/rodada-atual/ranking', RankingApiController::class)
     ->name('api.ranking');
 Route::get('/regulamento', RegulamentoController::class)->name('regulamento');
@@ -76,6 +89,13 @@ Route::middleware(['auth', 'can:administrar-bolao'])
             Route::get('/apostas', [BetController::class, 'index'])->name('apostas.index');
             Route::post('/apostas/{bet:uuid}/baixa', [BetController::class, 'darBaixa'])->name('apostas.baixa');
             Route::post('/apostas/{bet:uuid}/cancelar', [BetController::class, 'cancelar'])->name('apostas.cancelar');
+
+            Route::get('/vendedores', [SellerController::class, 'index'])->name('vendedores.index');
+            Route::get('/vendedores/criar', [SellerController::class, 'create'])->name('vendedores.create');
+            Route::post('/vendedores', [SellerController::class, 'store'])->name('vendedores.store');
+            Route::get('/vendedores/{seller:uuid}/editar', [SellerController::class, 'edit'])->name('vendedores.edit');
+            Route::put('/vendedores/{seller:uuid}', [SellerController::class, 'update'])->name('vendedores.update');
+            Route::delete('/vendedores/{seller:uuid}', [SellerController::class, 'destroy'])->name('vendedores.destroy');
 
             Route::get('/usuarios', [UserController::class, 'index'])->name('usuarios.index');
             Route::get('/usuarios/criar', [UserController::class, 'create'])->name('usuarios.create');

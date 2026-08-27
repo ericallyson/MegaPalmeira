@@ -15,5 +15,6 @@ class ApostaData extends Data
         public array $numbers,
         public string $acceptedIp,
         public ?string $bettorEmail = null,
+        public ?int $sellerId = null,
     ) {}
 }
