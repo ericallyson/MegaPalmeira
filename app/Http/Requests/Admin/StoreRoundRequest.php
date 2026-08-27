@@ -30,6 +30,7 @@ class StoreRoundRequest extends FormRequest
             'min_paid_bets' => ['required', 'integer', 'min:0'],
             'no_winner_policy' => ['required', 'in:highest_score,rollover'],
             'rollover_in_cents' => ['nullable', 'integer', 'min:0'],
+            'whatsapp_group_url' => ['nullable', 'url', 'max:255'],
         ];
     }
 

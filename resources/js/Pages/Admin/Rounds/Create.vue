@@ -16,6 +16,7 @@ const form = useForm({
     min_paid_bets: 10,
     no_winner_policy: 'highest_score',
     rollover_in_cents: 0,
+    whatsapp_group_url: '',
 });
 
 const somaPercentuais = computed(
@@ -174,6 +175,19 @@ function salvar() {
                         class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"
                     />
                 </div>
+            </div>
+
+            <div>
+                <label class="block text-14 text-vidro" for="whatsapp_group_url">Link do grupo do WhatsApp (opcional)</label>
+                <input
+                    id="whatsapp_group_url"
+                    v-model="form.whatsapp_group_url"
+                    type="url"
+                    placeholder="https://chat.whatsapp.com/..."
+                    class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 text-16 focus:border-aceso focus:outline-none"
+                />
+                <p class="mt-1 text-12 text-vidro">Aparece como botão na página de acompanhamento.</p>
+                <p v-if="form.errors.whatsapp_group_url" class="mt-1 text-12 text-erro">{{ form.errors.whatsapp_group_url }}</p>
             </div>
 
             <div v-if="form.max_draws > 0">

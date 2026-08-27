@@ -113,7 +113,15 @@ function marcarEstorno(uuid: string) {
                     class="mt-1 w-20 rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-14 font-tabular focus:border-aceso focus:outline-none"
                 />
             </div>
-            <button type="submit" class="rounded bg-aceso px-4 py-2 font-display text-14 font-bold uppercase text-tinta">
+            <button
+                type="submit"
+                aria-label="Filtrar"
+                class="inline-flex items-center gap-2 rounded bg-aceso px-4 py-2 font-display text-14 font-bold uppercase text-tinta"
+            >
+                <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
                 Filtrar
             </button>
         </form>

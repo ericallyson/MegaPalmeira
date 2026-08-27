@@ -3,7 +3,6 @@ import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
     celular: '',
-    data_nascimento: '',
 });
 
 function entrar() {
@@ -25,7 +24,7 @@ function entrar() {
         <main class="mx-auto flex max-w-sm flex-col px-4 pt-16">
             <h1 class="font-display text-28 font-black uppercase tracking-tight">Minhas apostas</h1>
             <p class="mt-1 text-14 text-vidro">
-                Entre com o celular e a data de nascimento que você usou para apostar.
+                Entre com o celular que você usou para apostar.
             </p>
 
             <form class="mt-6" @submit.prevent="entrar">
@@ -40,16 +39,6 @@ function entrar() {
                     class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 text-16 focus:border-aceso focus:outline-none"
                 />
                 <p v-if="form.errors.celular" class="mt-1 text-12 text-erro">{{ form.errors.celular }}</p>
-
-                <label class="mt-4 block text-12 uppercase text-vidro" for="data_nascimento">Data de nascimento</label>
-                <input
-                    id="data_nascimento"
-                    v-model="form.data_nascimento"
-                    type="date"
-                    autocomplete="bday"
-                    class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 text-16 focus:border-aceso focus:outline-none"
-                />
-                <p v-if="form.errors.data_nascimento" class="mt-1 text-12 text-erro">{{ form.errors.data_nascimento }}</p>
 
                 <button
                     type="submit"

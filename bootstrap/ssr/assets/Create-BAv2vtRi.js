@@ -18,7 +18,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       max_bets_per_person: 5,
       min_paid_bets: 10,
       no_winner_policy: "highest_score",
-      rollover_in_cents: 0
+      rollover_in_cents: 0,
+      whatsapp_group_url: ""
     });
     const somaPercentuais = computed(
       () => Number(form.pct_main) + Number(form.pct_second) + Number(form.pct_admin)
@@ -56,7 +57,13 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</fieldset><div class="grid grid-cols-3 gap-4"${_scopeId}><div${_scopeId}><label class="block text-14 text-vidro" for="max_draws"${_scopeId}>Limite de sorteios</label><input id="max_draws"${ssrRenderAttr("value", unref(form).max_draws)} type="number" min="0" max="99" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"${_scopeId}><p class="mt-1 text-12 text-vidro"${_scopeId}>0 = sem limite: joga até alguém ganhar</p></div><div${_scopeId}><label class="block text-14 text-vidro" for="max_bets_per_person"${_scopeId}>Cartelas por pessoa</label><input id="max_bets_per_person"${ssrRenderAttr("value", unref(form).max_bets_per_person)} type="number" min="0" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"${_scopeId}></div><div${_scopeId}><label class="block text-14 text-vidro" for="min_paid_bets"${_scopeId}>Mínimo de pagas</label><input id="min_paid_bets"${ssrRenderAttr("value", unref(form).min_paid_bets)} type="number" min="0" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"${_scopeId}></div></div>`);
+            _push2(`</fieldset><div class="grid grid-cols-3 gap-4"${_scopeId}><div${_scopeId}><label class="block text-14 text-vidro" for="max_draws"${_scopeId}>Limite de sorteios</label><input id="max_draws"${ssrRenderAttr("value", unref(form).max_draws)} type="number" min="0" max="99" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"${_scopeId}><p class="mt-1 text-12 text-vidro"${_scopeId}>0 = sem limite: joga até alguém ganhar</p></div><div${_scopeId}><label class="block text-14 text-vidro" for="max_bets_per_person"${_scopeId}>Cartelas por pessoa</label><input id="max_bets_per_person"${ssrRenderAttr("value", unref(form).max_bets_per_person)} type="number" min="0" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"${_scopeId}></div><div${_scopeId}><label class="block text-14 text-vidro" for="min_paid_bets"${_scopeId}>Mínimo de pagas</label><input id="min_paid_bets"${ssrRenderAttr("value", unref(form).min_paid_bets)} type="number" min="0" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-16 font-tabular focus:border-aceso focus:outline-none"${_scopeId}></div></div><div${_scopeId}><label class="block text-14 text-vidro" for="whatsapp_group_url"${_scopeId}>Link do grupo do WhatsApp (opcional)</label><input id="whatsapp_group_url"${ssrRenderAttr("value", unref(form).whatsapp_group_url)} type="url" placeholder="https://chat.whatsapp.com/..." class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 text-16 focus:border-aceso focus:outline-none"${_scopeId}><p class="mt-1 text-12 text-vidro"${_scopeId}>Aparece como botão na página de acompanhamento.</p>`);
+            if (unref(form).errors.whatsapp_group_url) {
+              _push2(`<p class="mt-1 text-12 text-erro"${_scopeId}>${ssrInterpolate(unref(form).errors.whatsapp_group_url)}</p>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(`</div>`);
             if (unref(form).max_draws > 0) {
               _push2(`<div${_scopeId}><label class="block text-14 text-vidro" for="no_winner_policy"${_scopeId}>Se ninguém fechar 10 pontos até o limite</label><select id="no_winner_policy" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 text-16 focus:border-aceso focus:outline-none"${_scopeId}><option value="highest_score"${ssrIncludeBooleanAttr(Array.isArray(unref(form).no_winner_policy) ? ssrLooseContain(unref(form).no_winner_policy, "highest_score") : ssrLooseEqual(unref(form).no_winner_policy, "highest_score")) ? " selected" : ""}${_scopeId}>Paga a maior pontuação</option><option value="rollover"${ssrIncludeBooleanAttr(Array.isArray(unref(form).no_winner_policy) ? ssrLooseContain(unref(form).no_winner_policy, "rollover") : ssrLooseEqual(unref(form).no_winner_policy, "rollover")) ? " selected" : ""}${_scopeId}>Acumula para a próxima rodada</option></select></div>`);
             } else {
@@ -314,6 +321,26 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                       ]
                     ])
                   ])
+                ]),
+                createVNode("div", null, [
+                  createVNode("label", {
+                    class: "block text-14 text-vidro",
+                    for: "whatsapp_group_url"
+                  }, "Link do grupo do WhatsApp (opcional)"),
+                  withDirectives(createVNode("input", {
+                    id: "whatsapp_group_url",
+                    "onUpdate:modelValue": ($event) => unref(form).whatsapp_group_url = $event,
+                    type: "url",
+                    placeholder: "https://chat.whatsapp.com/...",
+                    class: "mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 text-16 focus:border-aceso focus:outline-none"
+                  }, null, 8, ["onUpdate:modelValue"]), [
+                    [vModelText, unref(form).whatsapp_group_url]
+                  ]),
+                  createVNode("p", { class: "mt-1 text-12 text-vidro" }, "Aparece como botão na página de acompanhamento."),
+                  unref(form).errors.whatsapp_group_url ? (openBlock(), createBlock("p", {
+                    key: 0,
+                    class: "mt-1 text-12 text-erro"
+                  }, toDisplayString(unref(form).errors.whatsapp_group_url), 1)) : createCommentVNode("", true)
                 ]),
                 unref(form).max_draws > 0 ? (openBlock(), createBlock("div", { key: 0 }, [
                   createVNode("label", {

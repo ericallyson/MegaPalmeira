@@ -33,6 +33,7 @@ class CriarRodada
             'rollover_in_cents' => $data->rolloverInCents,
             'status' => RoundStatus::Draft,
             'rules_version' => $data->rulesVersion,
+            'whatsapp_group_url' => $data->whatsappGroupUrl,
             'created_by' => $creator?->id,
         ]);
     }

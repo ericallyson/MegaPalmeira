@@ -66,6 +66,9 @@ class RoundController extends Controller
             minPaidBets: $request->integer('min_paid_bets'),
             noWinnerPolicy: NoWinnerPolicy::from($request->string('no_winner_policy')->toString()),
             rolloverInCents: (int) $request->integer('rollover_in_cents'),
+            whatsappGroupUrl: $request->filled('whatsapp_group_url')
+                ? $request->string('whatsapp_group_url')->toString()
+                : null,
         ), $request->user());
 
         return redirect()
@@ -93,6 +96,7 @@ class RoundController extends Controller
                 'poteCents' => $rateio->poteLiquidoCents($round),
                 'apostasPagas' => $round->bets()->where('status', BetStatus::Paid)->count(),
                 'apostasPendentes' => $round->bets()->where('status', BetStatus::AwaitingPayment)->count(),
+                'whatsappGroupUrl' => $round->whatsapp_group_url,
             ],
             'sorteios' => $round->draws()
                 ->orderByDesc('sequence')
@@ -122,6 +126,19 @@ class RoundController extends Controller
                     'observacoes' => $payout->notes,
                 ]),
         ]);
+    }
+
+    public function atualizarWhatsapp(Round $round, Request $request): RedirectResponse
+    {
+        $dados = $request->validate([
+            'whatsapp_group_url' => ['nullable', 'url', 'max:255'],
+        ]);
+
+        $round->update([
+            'whatsapp_group_url' => $dados['whatsapp_group_url'] ?: null,
+        ]);
+
+        return back()->with('sucesso', 'Link do grupo do WhatsApp atualizado.');
     }
 
     public function abrir(Round $round, Request $request, AbrirRodada $abrirRodada): RedirectResponse

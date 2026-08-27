@@ -35,7 +35,10 @@ class BetController extends Controller
             ->when($request->filled('rodada'), function ($query) use ($request): void {
                 $query->whereHas('round', fn ($sub) => $sub->where('uuid', $request->string('rodada')->toString()));
             })
-            ->latest('id')
+            ->join('bettors', 'bettors.id', '=', 'bets.bettor_id')
+            ->orderBy('bettors.name')
+            ->orderBy('bets.id')
+            ->select('bets.*')
             ->paginate(50)
             ->withQueryString();
 

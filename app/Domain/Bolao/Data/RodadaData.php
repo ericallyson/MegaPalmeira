@@ -22,5 +22,6 @@ class RodadaData extends Data
         public NoWinnerPolicy $noWinnerPolicy = NoWinnerPolicy::HighestScore,
         public int $rolloverInCents = 0,
         public string $rulesVersion = '1.0',
+        public ?string $whatsappGroupUrl = null,
     ) {}
 }

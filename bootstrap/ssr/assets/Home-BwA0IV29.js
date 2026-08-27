@@ -56,11 +56,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const sorteios = ref([...props.sorteios]);
     const ranking = ref(props.ranking.map((r) => ({ ...r, numbers: r.numbers.map((n) => ({ ...n })) })));
     const ganhadores = ref([...props.ganhadores]);
-    const busca = ref("");
     const buscaCartelas = ref("");
     const aoVivo = ref(null);
     const recemAcesas = ref(/* @__PURE__ */ new Set());
-    const subiram = ref(/* @__PURE__ */ new Set());
     const cartelaCampea = ref(null);
     const timeouts = [];
     const reduzMovimento = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -76,7 +74,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         aplicarSnapshot(payload);
         return;
       }
-      const posicaoAntiga = new Map(ranking.value.map((r) => [r.betUuid, r.position]));
       aoVivo.value = { concurso: sorteio.concurso, data: sorteio.data, dezenas: [] };
       sorteio.dezenas.forEach((dezena, i) => {
         timeouts.push(
@@ -101,13 +98,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         setTimeout(() => {
           aplicarSnapshot(payload);
           aoVivo.value = null;
-          const sobem = /* @__PURE__ */ new Set();
-          for (const item of payload.ranking) {
-            const antes = posicaoAntiga.get(item.betUuid);
-            if (antes !== void 0 && item.position < antes) sobem.add(item.betUuid);
-          }
-          subiram.value = sobem;
-          timeouts.push(setTimeout(() => subiram.value = /* @__PURE__ */ new Set(), 2e3));
           timeouts.push(setTimeout(() => recemAcesas.value = /* @__PURE__ */ new Set(), 1300));
           const campea = payload.ranking.find((r) => r.hitsCount === 10);
           if (campea) {
@@ -156,13 +146,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       } catch {
       }
     });
-    const lider = computed(() => ranking.value[0] ?? null);
-    const faltam = computed(() => lider.value ? 10 - lider.value.hitsCount : 10);
-    const rankingFiltrado = computed(
-      () => ranking.value.filter(
-        (item) => item.displayName.toLowerCase().includes(busca.value.toLowerCase())
-      )
-    );
     const cartelasOrdenadas = computed(
       () => [...ranking.value].sort((a, b) => a.displayName.localeCompare(b.displayName, "pt-BR")).filter(
         (item) => item.displayName.toLowerCase().includes(buscaCartelas.value.toLowerCase())
@@ -270,27 +253,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         } else {
           _push(`<!---->`);
         }
-        if (lider.value) {
-          _push(`<section class="mt-8 print:hidden" aria-labelledby="hero-titulo"><h1 id="hero-titulo" class="text-14 uppercase tracking-wide text-vidro">${ssrInterpolate(rodada.value.status === "closed" ? "Cartela campeã" : "Quem está mais perto")}</h1><div class="mt-3 rounded-lg bg-noite p-5"><div class="flex flex-wrap items-center justify-between gap-4"><div><p class="font-display text-28 font-black uppercase tracking-tight">${ssrInterpolate(lider.value.displayName)}</p><p class="font-mono text-14 font-tabular text-vidro">${ssrInterpolate(lider.value.maskedPhone)}</p></div>`);
-          if (faltam.value > 0) {
-            _push(`<p class="font-display text-72 font-black uppercase leading-none tracking-tight text-aceso"> faltam ${ssrInterpolate(faltam.value)}</p>`);
-          } else {
-            _push(`<p class="font-display text-72 font-black uppercase leading-none text-aceso"> fechou! </p>`);
-          }
-          _push(`</div><div class="mt-4 grid grid-cols-5 gap-2 sm:flex sm:flex-wrap"><!--[-->`);
-          ssrRenderList(lider.value.numbers, (n) => {
-            _push(ssrRenderComponent(_sfc_main$2, {
-              key: n.number,
-              n: n.number,
-              lit: n.matchedDrawId !== null,
-              "just-lit": recemAcesas.value.has(`${lider.value.betUuid}:${n.number}`),
-              size: "hero"
-            }, null, _parent));
-          });
-          _push(`<!--]--></div></div></section>`);
-        } else {
-          _push(`<section class="mt-8 rounded-lg bg-noite p-6 print:hidden"><p class="text-20 text-vidro">Nenhuma cartela ainda. Seja o primeiro.</p></section>`);
-        }
         if (rodada.value.status === "open") {
           _push(`<section class="mt-6 print:hidden">`);
           _push(ssrRenderComponent(unref(Link), {
@@ -312,6 +274,11 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         } else {
           _push(`<!---->`);
         }
+        if (rodada.value.whatsappGroupUrl) {
+          _push(`<section class="mt-6 print:hidden"><a${ssrRenderAttr("href", rodada.value.whatsappGroupUrl)} target="_blank" rel="noopener" class="flex items-center justify-center gap-2 rounded-lg border border-jade/50 bg-jade/10 px-6 py-3 font-display text-16 font-bold uppercase tracking-tight text-jade"><svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.02h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.24 8.24 0 0 1-1.26-4.37c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43-.14-.01-.31-.01-.47-.01-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29Z"></path></svg> Entrar no grupo do WhatsApp </a></section>`);
+        } else {
+          _push(`<!---->`);
+        }
         if (ganhadores.value.length) {
           _push(`<section class="mt-6 rounded-lg border border-jade/40 bg-noite p-4 print:hidden"><h2 class="font-display text-16 font-bold uppercase text-jade">Premiação</h2><ul class="mt-2 space-y-1 text-14"><!--[-->`);
           ssrRenderList(ganhadores.value, (g, i) => {
@@ -321,13 +288,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         } else {
           _push(`<!---->`);
         }
-        _push(`<section class="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4 print:hidden" aria-label="Resumo da rodada"><div class="rounded-lg bg-noite p-4"><p class="text-12 uppercase text-vidro">Pote</p><p class="mt-1 font-mono text-20 font-tabular text-jade">${ssrInterpolate(unref(brl)(rodada.value.poteCents))}</p>`);
-        if (rodada.value.rolloverCents > 0) {
-          _push(`<p class="text-12 text-vidro"> inclui ${ssrInterpolate(unref(brl)(rodada.value.rolloverCents))} da rodada anterior </p>`);
-        } else {
-          _push(`<!---->`);
-        }
-        _push(`</div><div class="rounded-lg bg-noite p-4"><p class="text-12 uppercase text-vidro">Prêmio de 10 pontos</p><p class="mt-1 font-mono text-20 font-tabular text-aceso">${ssrInterpolate(unref(brl)(rodada.value.premioPrincipalCents))}</p></div><div class="rounded-lg bg-noite p-4"><p class="text-12 uppercase text-vidro">Cartelas</p><p class="mt-1 font-mono text-20 font-tabular">${ssrInterpolate(rodada.value.cartelasPagas)}</p><p class="text-12 text-vidro">${ssrInterpolate(unref(brl)(rodada.value.valorCartelaCents))} cada</p></div><div class="rounded-lg bg-noite p-4">`);
+        _push(`<section class="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-3 print:hidden" aria-label="Resumo da rodada"><div class="rounded-lg bg-noite p-4"><p class="text-12 uppercase text-vidro">Prêmio de 10 pontos</p><p class="mt-1 font-mono text-20 font-tabular text-aceso">${ssrInterpolate(unref(brl)(rodada.value.premioPrincipalCents))}</p></div><div class="rounded-lg bg-noite p-4"><p class="text-12 uppercase text-vidro">Cartelas</p><p class="mt-1 font-mono text-20 font-tabular">${ssrInterpolate(rodada.value.cartelasPagas)}</p><p class="text-12 text-vidro">${ssrInterpolate(unref(brl)(rodada.value.valorCartelaCents))} cada</p></div><div class="rounded-lg bg-noite p-4">`);
         if (rodada.value.status === "open") {
           _push(`<!--[--><p class="text-12 uppercase text-vidro">Apostas encerram em</p><p class="mt-1 font-mono text-20 font-tabular text-brasa">${ssrInterpolate(contagem.value)}</p><!--]-->`);
         } else {
@@ -372,15 +333,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           _push(`<!---->`);
         }
         if (ranking.value.length) {
-          _push(`<section class="mt-8 print:hidden" aria-labelledby="ranking-titulo"><div class="flex flex-wrap items-center justify-between gap-3"><h2 id="ranking-titulo" class="text-14 uppercase tracking-wide text-vidro">Ranking</h2><input${ssrRenderAttr("value", busca.value)} type="search" placeholder="Buscar por nome" aria-label="Buscar cartela por nome" class="rounded border border-vidro/30 bg-noite px-3 py-1.5 text-14 focus:border-aceso focus:outline-none"></div><ol${ssrRenderAttrs({
-            name: "fila",
-            class: "mt-3 space-y-2"
-          })}>`);
-          ssrRenderList(rankingFiltrado.value, (item) => {
-            _push(`<li class="${ssrRenderClass([{
-              "border border-aceso/60": item.hitsCount === 9,
-              "destaque-subiu": subiram.value.has(item.betUuid)
-            }, "rounded-lg bg-noite p-3"])}"><div class="flex flex-wrap items-center gap-3"><span class="w-8 font-mono text-14 font-tabular text-vidro">${ssrInterpolate(item.position)}º</span><span class="text-16">${ssrInterpolate(item.displayName)}</span><span class="font-mono text-12 font-tabular text-vidro">${ssrInterpolate(item.maskedPhone)}</span>`);
+          _push(`<section class="mt-8" aria-labelledby="cartelas-titulo"><div class="flex flex-wrap items-center justify-between gap-3 print:hidden"><h2 id="cartelas-titulo" class="text-14 uppercase tracking-wide text-vidro"> Cartelas (${ssrInterpolate(ranking.value.length)}) </h2><div class="flex items-center gap-2"><input${ssrRenderAttr("value", buscaCartelas.value)} type="search" placeholder="Buscar por nome" aria-label="Buscar cartela por nome" class="rounded border border-vidro/30 bg-noite px-3 py-1.5 text-14 focus:border-aceso focus:outline-none"><button type="button" class="rounded border border-vidro/40 px-3 py-1.5 text-14 text-vidro hover:text-papel"> Imprimir </button></div></div><ol class="mt-3 space-y-2 print:hidden"><!--[-->`);
+          ssrRenderList(cartelasOrdenadas.value, (item) => {
+            _push(`<li class="${ssrRenderClass([{ "border border-aceso/60": item.hitsCount === 9 }, "rounded-lg bg-noite p-3"])}"><div class="flex flex-wrap items-center gap-3"><span class="text-16">${ssrInterpolate(item.displayName)}</span><span class="font-mono text-12 font-tabular text-vidro">${ssrInterpolate(item.maskedPhone)}</span>`);
             if (item.hitsCount === 9) {
               _push(`<span class="rounded bg-aceso/15 px-2 py-0.5 text-12 font-bold uppercase text-aceso"> um número </span>`);
             } else {
@@ -398,18 +353,13 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             });
             _push(`<!--]--></div></li>`);
           });
-          _push(`</ol></section>`);
-        } else {
-          _push(`<!---->`);
-        }
-        if (ranking.value.length) {
-          _push(`<section class="mt-8" aria-labelledby="cartelas-titulo"><div class="flex flex-wrap items-center justify-between gap-3 print:hidden"><h2 id="cartelas-titulo" class="text-14 uppercase tracking-wide text-vidro"> Todas as cartelas pagas (${ssrInterpolate(ranking.value.length)}) </h2><div class="flex items-center gap-2"><input${ssrRenderAttr("value", buscaCartelas.value)} type="search" placeholder="Buscar" aria-label="Buscar na lista de cartelas" class="rounded border border-vidro/30 bg-noite px-3 py-1.5 text-14 focus:border-aceso focus:outline-none"><button type="button" class="rounded border border-vidro/40 px-3 py-1.5 text-14 text-vidro hover:text-papel"> Imprimir </button></div></div><h2 class="hidden font-display text-20 font-black uppercase print:block"> MegaPalmeira — ${ssrInterpolate(rodada.value.nome)} — cartelas pagas </h2><ul class="mt-3 divide-y divide-vidro/10 rounded-lg bg-noite px-4 font-mono text-14 font-tabular print:divide-black/20 print:bg-papel print:text-black"><!--[-->`);
+          _push(`<!--]--></ol><h2 class="hidden font-display text-20 font-black uppercase print:block"> MegaPalmeira — ${ssrInterpolate(rodada.value.nome)} — cartelas </h2><ul class="hidden divide-y divide-black/20 rounded-lg bg-papel px-4 font-mono text-14 font-tabular text-black print:block"><!--[-->`);
           ssrRenderList(cartelasOrdenadas.value, (item) => {
             _push(`<li class="py-2">${ssrInterpolate(item.displayName)} — ${ssrInterpolate(item.maskedPhone)} — ${ssrInterpolate(item.numbers.map((n) => String(n.number).padStart(2, "0")).join(" "))}</li>`);
           });
           _push(`<!--]--></ul></section>`);
         } else {
-          _push(`<!---->`);
+          _push(`<section class="mt-8 rounded-lg bg-noite p-6 print:hidden"><p class="text-20 text-vidro">Nenhuma cartela ainda. Seja o primeiro.</p></section>`);
         }
         _push(`<footer class="mt-12 border-t border-noite pt-6 text-14 text-vidro print:hidden"><p> Jogo é entretenimento: aposte com responsabilidade e somente se tiver 18 anos ou mais. </p><p class="mt-2">`);
         _push(ssrRenderComponent(unref(Link), {

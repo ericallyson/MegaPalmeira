@@ -41,6 +41,7 @@ class SnapshotService
                 'maxSorteios' => $round->max_draws,
                 'rolloverCents' => $round->rollover_in_cents,
                 'encerradaEm' => $round->closed_at?->toIso8601String(),
+                'whatsappGroupUrl' => $round->whatsapp_group_url,
             ],
             'sorteios' => $round->draws()
                 ->orderByDesc('sequence')

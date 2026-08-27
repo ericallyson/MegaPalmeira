@@ -1,5 +1,5 @@
-import { defineComponent, ref, unref, withCtx, createTextVNode, createVNode, toDisplayString, openBlock, createBlock, createCommentVNode, withDirectives, vModelText, Fragment, renderList, useSSRContext } from "vue";
-import { ssrRenderComponent, ssrInterpolate, ssrRenderAttr, ssrRenderList, ssrIncludeBooleanAttr, ssrRenderClass } from "vue/server-renderer";
+import { defineComponent, ref, unref, withCtx, createTextVNode, createVNode, toDisplayString, openBlock, createBlock, createCommentVNode, withDirectives, vModelText, withModifiers, Fragment, renderList, useSSRContext } from "vue";
+import { ssrRenderComponent, ssrInterpolate, ssrRenderAttr, ssrIncludeBooleanAttr, ssrRenderList, ssrRenderClass } from "vue/server-renderer";
 import { useForm, Head, Link, router } from "@inertiajs/vue3";
 import axios from "axios";
 import { _ as _sfc_main$1 } from "./AdminLayout-Bg8E4WAe.js";
@@ -57,6 +57,12 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     }
     function cancelar() {
       router.post(`/admin/rodadas/${props.rodada.uuid}/cancelar`, { motivo: motivoCancelamento.value });
+    }
+    const whatsappForm = useForm({
+      whatsapp_group_url: props.rodada.whatsappGroupUrl ?? ""
+    });
+    function salvarWhatsapp() {
+      whatsappForm.put(`/admin/rodadas/${props.rodada.uuid}/whatsapp`, { preserveScroll: true });
     }
     const obsPagamento = ref({});
     function registrarPagamento(payoutId) {
@@ -119,7 +125,13 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             } else {
               _push2(`<!---->`);
             }
-            _push2(`</div><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Cartelas</p><p class="mt-1 font-mono text-20 font-tabular"${_scopeId}>${ssrInterpolate(__props.rodada.apostasPagas)} pagas</p><p class="text-12 text-vidro"${_scopeId}>${ssrInterpolate(__props.rodada.apostasPendentes)} pendentes</p></div><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Divisão</p><p class="mt-1 font-mono text-16 font-tabular"${_scopeId}>${ssrInterpolate(__props.rodada.pctMain)}/${ssrInterpolate(__props.rodada.pctSecond)}/${ssrInterpolate(__props.rodada.pctAdmin)}</p><p class="text-12 text-vidro"${_scopeId}>${ssrInterpolate(__props.rodada.maxSorteios === 0 ? "Sorteios até alguém ganhar" : `Até ${__props.rodada.maxSorteios} sorteios · ${__props.rodada.politicaSemVencedor}`)}</p></div><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Valor da cartela</p><p class="mt-1 font-mono text-20 font-tabular"${_scopeId}>${ssrInterpolate(unref(brl)(__props.rodada.valorCents))}</p></div></div>`);
+            _push2(`</div><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Cartelas</p><p class="mt-1 font-mono text-20 font-tabular"${_scopeId}>${ssrInterpolate(__props.rodada.apostasPagas)} pagas</p><p class="text-12 text-vidro"${_scopeId}>${ssrInterpolate(__props.rodada.apostasPendentes)} pendentes</p></div><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Divisão</p><p class="mt-1 font-mono text-16 font-tabular"${_scopeId}>${ssrInterpolate(__props.rodada.pctMain)}/${ssrInterpolate(__props.rodada.pctSecond)}/${ssrInterpolate(__props.rodada.pctAdmin)}</p><p class="text-12 text-vidro"${_scopeId}>${ssrInterpolate(__props.rodada.maxSorteios === 0 ? "Sorteios até alguém ganhar" : `Até ${__props.rodada.maxSorteios} sorteios · ${__props.rodada.politicaSemVencedor}`)}</p></div><div class="rounded-lg bg-noite p-4"${_scopeId}><p class="text-12 uppercase text-vidro"${_scopeId}>Valor da cartela</p><p class="mt-1 font-mono text-20 font-tabular"${_scopeId}>${ssrInterpolate(unref(brl)(__props.rodada.valorCents))}</p></div></div><div class="mt-6 rounded-lg bg-noite p-4"${_scopeId}><h2 class="font-display text-16 font-bold uppercase"${_scopeId}>Grupo do WhatsApp</h2><form class="mt-2 flex flex-wrap items-end gap-2"${_scopeId}><div class="min-w-64 flex-1"${_scopeId}><label class="block text-12 uppercase text-vidro" for="whatsapp_group_url"${_scopeId}> Link do grupo (aparece na página de acompanhamento) </label><input id="whatsapp_group_url"${ssrRenderAttr("value", unref(whatsappForm).whatsapp_group_url)} type="url" placeholder="https://chat.whatsapp.com/..." class="mt-1 w-full rounded border border-vidro/30 bg-tinta px-3 py-2 text-16 focus:border-aceso focus:outline-none"${_scopeId}>`);
+            if (unref(whatsappForm).errors.whatsapp_group_url) {
+              _push2(`<p class="mt-1 text-12 text-erro"${_scopeId}>${ssrInterpolate(unref(whatsappForm).errors.whatsapp_group_url)}</p>`);
+            } else {
+              _push2(`<!---->`);
+            }
+            _push2(`</div><button type="submit"${ssrIncludeBooleanAttr(unref(whatsappForm).processing) ? " disabled" : ""} class="rounded bg-jade px-4 py-2 font-display text-14 font-bold uppercase text-tinta disabled:opacity-50"${_scopeId}> Salvar link </button></form></div>`);
             if (__props.payouts.length) {
               _push2(`<div class="mt-6 rounded-lg bg-noite p-4"${_scopeId}><h2 class="font-display text-16 font-bold uppercase text-jade"${_scopeId}>Prêmios</h2><table class="mt-2 w-full text-left text-14"${_scopeId}><tbody${_scopeId}><!--[-->`);
               ssrRenderList(__props.payouts, (p) => {
@@ -315,6 +327,38 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                   createVNode("p", { class: "text-12 uppercase text-vidro" }, "Valor da cartela"),
                   createVNode("p", { class: "mt-1 font-mono text-20 font-tabular" }, toDisplayString(unref(brl)(__props.rodada.valorCents)), 1)
                 ])
+              ]),
+              createVNode("div", { class: "mt-6 rounded-lg bg-noite p-4" }, [
+                createVNode("h2", { class: "font-display text-16 font-bold uppercase" }, "Grupo do WhatsApp"),
+                createVNode("form", {
+                  class: "mt-2 flex flex-wrap items-end gap-2",
+                  onSubmit: withModifiers(salvarWhatsapp, ["prevent"])
+                }, [
+                  createVNode("div", { class: "min-w-64 flex-1" }, [
+                    createVNode("label", {
+                      class: "block text-12 uppercase text-vidro",
+                      for: "whatsapp_group_url"
+                    }, " Link do grupo (aparece na página de acompanhamento) "),
+                    withDirectives(createVNode("input", {
+                      id: "whatsapp_group_url",
+                      "onUpdate:modelValue": ($event) => unref(whatsappForm).whatsapp_group_url = $event,
+                      type: "url",
+                      placeholder: "https://chat.whatsapp.com/...",
+                      class: "mt-1 w-full rounded border border-vidro/30 bg-tinta px-3 py-2 text-16 focus:border-aceso focus:outline-none"
+                    }, null, 8, ["onUpdate:modelValue"]), [
+                      [vModelText, unref(whatsappForm).whatsapp_group_url]
+                    ]),
+                    unref(whatsappForm).errors.whatsapp_group_url ? (openBlock(), createBlock("p", {
+                      key: 0,
+                      class: "mt-1 text-12 text-erro"
+                    }, toDisplayString(unref(whatsappForm).errors.whatsapp_group_url), 1)) : createCommentVNode("", true)
+                  ]),
+                  createVNode("button", {
+                    type: "submit",
+                    disabled: unref(whatsappForm).processing,
+                    class: "rounded bg-jade px-4 py-2 font-display text-14 font-bold uppercase text-tinta disabled:opacity-50"
+                  }, " Salvar link ", 8, ["disabled"])
+                ], 32)
               ]),
               __props.payouts.length ? (openBlock(), createBlock("div", {
                 key: 1,

@@ -12,7 +12,6 @@ class ApostaData extends Data
     public function __construct(
         public string $bettorName,
         public string $bettorPhone,
-        public string $bettorBirthDate,
         public array $numbers,
         public string $acceptedIp,
         public ?string $bettorEmail = null,

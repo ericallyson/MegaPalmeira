@@ -36,16 +36,9 @@ class RegistrarAposta
                 ['phone' => PhoneNumber::e164($data->bettorPhone)],
                 [
                     'name' => $data->bettorName,
-                    'birth_date' => $data->bettorBirthDate,
                     'email' => $data->bettorEmail,
                 ],
             );
-
-            // Apostador já existente sem data de nascimento: completa agora,
-            // para que ela sirva de senha no portal.
-            if ($bettor->birth_date === null) {
-                $bettor->update(['birth_date' => $data->bettorBirthDate]);
-            }
 
             $activeBets = $round->bets()
                 ->where('bettor_id', $bettor->id)

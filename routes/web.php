@@ -60,6 +60,7 @@ Route::middleware(['auth', 'can:administrar-bolao'])
             Route::get('/rodadas/criar', [RoundController::class, 'create'])->name('rodadas.create');
             Route::post('/rodadas', [RoundController::class, 'store'])->name('rodadas.store');
             Route::get('/rodadas/{round:uuid}', [RoundController::class, 'show'])->name('rodadas.show');
+            Route::put('/rodadas/{round:uuid}/whatsapp', [RoundController::class, 'atualizarWhatsapp'])->name('rodadas.whatsapp');
             Route::post('/rodadas/{round:uuid}/abrir', [RoundController::class, 'abrir'])->name('rodadas.abrir');
             Route::post('/rodadas/{round:uuid}/cancelar', [RoundController::class, 'cancelar'])->name('rodadas.cancelar');
             Route::post('/rodadas/{round:uuid}/encerrar', [RoundController::class, 'encerrar'])->name('rodadas.encerrar');

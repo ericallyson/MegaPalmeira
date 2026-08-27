@@ -6,8 +6,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
   __ssrInlineRender: true,
   setup(__props) {
     const form = useForm({
-      celular: "",
-      data_nascimento: ""
+      celular: ""
     });
     return (_ctx, _push, _parent, _attrs) => {
       _push(`<!--[-->`);
@@ -29,15 +28,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         }),
         _: 1
       }, _parent));
-      _push(`</div></header><main class="mx-auto flex max-w-sm flex-col px-4 pt-16"><h1 class="font-display text-28 font-black uppercase tracking-tight">Minhas apostas</h1><p class="mt-1 text-14 text-vidro"> Entre com o celular e a data de nascimento que você usou para apostar. </p><form class="mt-6"><label class="block text-12 uppercase text-vidro" for="celular">Celular com DDD</label><input id="celular"${ssrRenderAttr("value", unref(form).celular)} type="tel" inputmode="tel" autocomplete="tel" placeholder="(82) 99123-4589" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 text-16 focus:border-aceso focus:outline-none">`);
+      _push(`</div></header><main class="mx-auto flex max-w-sm flex-col px-4 pt-16"><h1 class="font-display text-28 font-black uppercase tracking-tight">Minhas apostas</h1><p class="mt-1 text-14 text-vidro"> Entre com o celular que você usou para apostar. </p><form class="mt-6"><label class="block text-12 uppercase text-vidro" for="celular">Celular com DDD</label><input id="celular"${ssrRenderAttr("value", unref(form).celular)} type="tel" inputmode="tel" autocomplete="tel" placeholder="(82) 99123-4589" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 text-16 focus:border-aceso focus:outline-none">`);
       if (unref(form).errors.celular) {
         _push(`<p class="mt-1 text-12 text-erro">${ssrInterpolate(unref(form).errors.celular)}</p>`);
-      } else {
-        _push(`<!---->`);
-      }
-      _push(`<label class="mt-4 block text-12 uppercase text-vidro" for="data_nascimento">Data de nascimento</label><input id="data_nascimento"${ssrRenderAttr("value", unref(form).data_nascimento)} type="date" autocomplete="bday" class="mt-1 w-full rounded border border-vidro/30 bg-noite px-3 py-2 text-16 focus:border-aceso focus:outline-none">`);
-      if (unref(form).errors.data_nascimento) {
-        _push(`<p class="mt-1 text-12 text-erro">${ssrInterpolate(unref(form).errors.data_nascimento)}</p>`);
       } else {
         _push(`<!---->`);
       }

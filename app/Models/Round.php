@@ -36,6 +36,7 @@ class Round extends Model
         'rollover_in_cents',
         'status',
         'rules_version',
+        'whatsapp_group_url',
         'closed_at',
         'created_by',
     ];

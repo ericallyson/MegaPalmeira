@@ -13,7 +13,6 @@ function registrarAposta(Round $round, array $numeros, string $phone = '82991234
     return app(RegistrarAposta::class)->handle($round, new ApostaData(
         bettorName: $nome,
         bettorPhone: $phone,
-        bettorBirthDate: '1990-05-20',
         numbers: $numeros,
         acceptedIp: '187.10.20.30',
         bettorEmail: null,

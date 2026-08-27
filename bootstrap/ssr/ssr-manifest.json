@@ -7,10 +7,10 @@
     "/build/assets/Ball-Cix1i8dF.js"
   ],
   "resources/js/Components/InstallPrompt.vue": [
-    "/build/assets/Home-D1xxxGa0.js"
+    "/build/assets/Home-BwA0IV29.js"
   ],
   "resources/js/Components/InstallPrompt.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Home-D1xxxGa0.js"
+    "/build/assets/Home-BwA0IV29.js"
   ],
   "resources/js/Layouts/AdminLayout.vue": [
     "/build/assets/AdminLayout-Bg8E4WAe.js"
@@ -19,10 +19,10 @@
     "/build/assets/AdminLayout-Bg8E4WAe.js"
   ],
   "resources/js/Pages/Admin/Bets/Index.vue": [
-    "/build/assets/Index-Zh200uxV.js"
+    "/build/assets/Index-BBnmSuTl.js"
   ],
   "resources/js/Pages/Admin/Bets/Index.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Index-Zh200uxV.js"
+    "/build/assets/Index-BBnmSuTl.js"
   ],
   "resources/js/Pages/Admin/Dashboard.vue": [
     "/build/assets/Dashboard-5o5HQN_k.js"
@@ -31,10 +31,10 @@
     "/build/assets/Dashboard-5o5HQN_k.js"
   ],
   "resources/js/Pages/Admin/Rounds/Create.vue": [
-    "/build/assets/Create-CmNTWS5m.js"
+    "/build/assets/Create-BAv2vtRi.js"
   ],
   "resources/js/Pages/Admin/Rounds/Create.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Create-CmNTWS5m.js"
+    "/build/assets/Create-BAv2vtRi.js"
   ],
   "resources/js/Pages/Admin/Rounds/Index.vue": [
     "/build/assets/Index-CVQare8n.js"
@@ -49,10 +49,10 @@
     "/build/assets/Relatorio-DM5a9_X5.js"
   ],
   "resources/js/Pages/Admin/Rounds/Show.vue": [
-    "/build/assets/Show-25zP1mO2.js"
+    "/build/assets/Show-iRTddkVw.js"
   ],
   "resources/js/Pages/Admin/Rounds/Show.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Show-25zP1mO2.js"
+    "/build/assets/Show-iRTddkVw.js"
   ],
   "resources/js/Pages/Admin/Settings/Index.vue": [
     "/build/assets/Index-vEoZ3qrU.js"
@@ -97,10 +97,10 @@
     "/build/assets/TwoFactorSetup-D3e5P1TS.js"
   ],
   "resources/js/Pages/Public/ApostadorLogin.vue": [
-    "/build/assets/ApostadorLogin-Cyy0j0R3.js"
+    "/build/assets/ApostadorLogin-DkYhScgu.js"
   ],
   "resources/js/Pages/Public/ApostadorLogin.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/ApostadorLogin-Cyy0j0R3.js"
+    "/build/assets/ApostadorLogin-DkYhScgu.js"
   ],
   "resources/js/Pages/Public/ApostadorPortal.vue": [
     "/build/assets/ApostadorPortal-Cbty0Fvf.js"
@@ -109,10 +109,10 @@
     "/build/assets/ApostadorPortal-Cbty0Fvf.js"
   ],
   "resources/js/Pages/Public/Apostar.vue": [
-    "/build/assets/Apostar-Bv2E4fbO.js"
+    "/build/assets/Apostar-zqg---0B.js"
   ],
   "resources/js/Pages/Public/Apostar.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Apostar-Bv2E4fbO.js"
+    "/build/assets/Apostar-zqg---0B.js"
   ],
   "resources/js/Pages/Public/Checkout.vue": [
     "/build/assets/Checkout-CIBWaHK2.js"
@@ -121,10 +121,10 @@
     "/build/assets/Checkout-CIBWaHK2.js"
   ],
   "resources/js/Pages/Public/Home.vue": [
-    "/build/assets/Home-D1xxxGa0.js"
+    "/build/assets/Home-BwA0IV29.js"
   ],
   "resources/js/Pages/Public/Home.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Home-D1xxxGa0.js"
+    "/build/assets/Home-BwA0IV29.js"
   ],
   "resources/js/Pages/Public/MinhasCartelas.vue": [
     "/build/assets/MinhasCartelas-3sceyDq0.js"

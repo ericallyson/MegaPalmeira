@@ -12,7 +12,6 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const form = useForm({
       nome: "",
       celular: "",
-      data_nascimento: "",
       email: "",
       numbers: [],
       aceite_maioridade: false,
@@ -61,13 +60,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       } else {
         _push(`<!---->`);
       }
-      _push(`</div></div><div class="mt-4"><label class="block text-14 text-vidro" for="data_nascimento">Data de nascimento</label><input id="data_nascimento"${ssrRenderAttr("value", unref(form).data_nascimento)} type="date" required autocomplete="bday" class="mt-1 w-full rounded border border-vidro/30 bg-tinta px-3 py-2 text-16 focus:border-aceso focus:outline-none"><p class="mt-1 text-12 text-vidro">Você vai usá-la como senha para acessar suas apostas.</p>`);
-      if (unref(form).errors.data_nascimento) {
-        _push(`<p class="mt-1 text-12 text-erro">${ssrInterpolate(unref(form).errors.data_nascimento)}</p>`);
-      } else {
-        _push(`<!---->`);
-      }
-      _push(`</div><div class="mt-4"><label class="block text-14 text-vidro" for="email">E-mail (opcional, para o comprovante)</label><input id="email"${ssrRenderAttr("value", unref(form).email)} type="email" autocomplete="email" class="mt-1 w-full rounded border border-vidro/30 bg-tinta px-3 py-2 text-16 focus:border-aceso focus:outline-none">`);
+      _push(`</div></div><div class="mt-4"><label class="block text-14 text-vidro" for="email">E-mail (opcional, para o comprovante)</label><input id="email"${ssrRenderAttr("value", unref(form).email)} type="email" autocomplete="email" class="mt-1 w-full rounded border border-vidro/30 bg-tinta px-3 py-2 text-16 focus:border-aceso focus:outline-none">`);
       if (unref(form).errors.email) {
         _push(`<p class="mt-1 text-12 text-erro">${ssrInterpolate(unref(form).errors.email)}</p>`);
       } else {

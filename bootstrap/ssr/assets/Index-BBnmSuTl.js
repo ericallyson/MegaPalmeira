@@ -1,4 +1,4 @@
-import { defineComponent, ref, unref, withCtx, createVNode, withModifiers, withDirectives, openBlock, createBlock, Fragment, renderList, toDisplayString, vModelSelect, vModelText, createCommentVNode, useSSRContext } from "vue";
+import { defineComponent, ref, unref, withCtx, createVNode, withModifiers, withDirectives, openBlock, createBlock, Fragment, renderList, toDisplayString, vModelSelect, vModelText, createTextVNode, createCommentVNode, useSSRContext } from "vue";
 import { ssrRenderComponent, ssrIncludeBooleanAttr, ssrLooseContain, ssrLooseEqual, ssrRenderList, ssrRenderAttr, ssrInterpolate, ssrRenderClass } from "vue/server-renderer";
 import { Head, Link, router } from "@inertiajs/vue3";
 import { _ as _sfc_main$1 } from "./AdminLayout-Bg8E4WAe.js";
@@ -61,7 +61,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             ssrRenderList(__props.statusDisponiveis, (s) => {
               _push2(`<option${ssrRenderAttr("value", s.value)}${ssrIncludeBooleanAttr(Array.isArray(status.value) ? ssrLooseContain(status.value, s.value) : ssrLooseEqual(status.value, s.value)) ? " selected" : ""}${_scopeId}>${ssrInterpolate(s.label)}</option>`);
             });
-            _push2(`<!--]--></select></div><div${_scopeId}><label class="block text-12 uppercase text-vidro" for="filtro-busca"${_scopeId}>Nome ou telefone</label><input id="filtro-busca"${ssrRenderAttr("value", busca.value)} type="search" class="mt-1 rounded border border-vidro/30 bg-noite px-3 py-2 text-14 focus:border-aceso focus:outline-none"${_scopeId}></div><div${_scopeId}><label class="block text-12 uppercase text-vidro" for="filtro-dezena"${_scopeId}>Dezena</label><input id="filtro-dezena"${ssrRenderAttr("value", filtroDezena.value)} type="number" min="1" max="60" class="mt-1 w-20 rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-14 font-tabular focus:border-aceso focus:outline-none"${_scopeId}></div><button type="submit" class="rounded bg-aceso px-4 py-2 font-display text-14 font-bold uppercase text-tinta"${_scopeId}> Filtrar </button></form><div class="mt-4 overflow-x-auto rounded-lg bg-noite"${_scopeId}><table class="w-full text-left text-14"${_scopeId}><thead${_scopeId}><tr class="border-b border-vidro/20 text-12 uppercase text-vidro"${_scopeId}><th class="px-3 py-2"${_scopeId}>Apostador</th><th class="px-3 py-2"${_scopeId}>Dezenas</th><th class="px-3 py-2"${_scopeId}>Valor</th><th class="px-3 py-2"${_scopeId}>Status</th><th class="px-3 py-2"${_scopeId}>Pts</th><th class="px-3 py-2"${_scopeId}>Ações</th></tr></thead><tbody${_scopeId}><!--[-->`);
+            _push2(`<!--]--></select></div><div${_scopeId}><label class="block text-12 uppercase text-vidro" for="filtro-busca"${_scopeId}>Nome ou telefone</label><input id="filtro-busca"${ssrRenderAttr("value", busca.value)} type="search" class="mt-1 rounded border border-vidro/30 bg-noite px-3 py-2 text-14 focus:border-aceso focus:outline-none"${_scopeId}></div><div${_scopeId}><label class="block text-12 uppercase text-vidro" for="filtro-dezena"${_scopeId}>Dezena</label><input id="filtro-dezena"${ssrRenderAttr("value", filtroDezena.value)} type="number" min="1" max="60" class="mt-1 w-20 rounded border border-vidro/30 bg-noite px-3 py-2 font-mono text-14 font-tabular focus:border-aceso focus:outline-none"${_scopeId}></div><button type="submit" aria-label="Filtrar" class="inline-flex items-center gap-2 rounded bg-aceso px-4 py-2 font-display text-14 font-bold uppercase text-tinta"${_scopeId}><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"${_scopeId}><circle cx="11" cy="11" r="7"${_scopeId}></circle><line x1="21" y1="21" x2="16.65" y2="16.65"${_scopeId}></line></svg> Filtrar </button></form><div class="mt-4 overflow-x-auto rounded-lg bg-noite"${_scopeId}><table class="w-full text-left text-14"${_scopeId}><thead${_scopeId}><tr class="border-b border-vidro/20 text-12 uppercase text-vidro"${_scopeId}><th class="px-3 py-2"${_scopeId}>Apostador</th><th class="px-3 py-2"${_scopeId}>Dezenas</th><th class="px-3 py-2"${_scopeId}>Valor</th><th class="px-3 py-2"${_scopeId}>Status</th><th class="px-3 py-2"${_scopeId}>Pts</th><th class="px-3 py-2"${_scopeId}>Ações</th></tr></thead><tbody${_scopeId}><!--[-->`);
             ssrRenderList(__props.apostas.data, (aposta) => {
               _push2(`<!--[--><tr class="${ssrRenderClass([aposta.status === "paid_late" ? "bg-brasa/10" : "", "border-b border-vidro/10"])}"${_scopeId}><td class="px-3 py-2"${_scopeId}><p${_scopeId}>${ssrInterpolate(aposta.nome)}</p><p class="font-mono text-12 font-tabular text-vidro"${_scopeId}>${ssrInterpolate(aposta.telefone)}</p><p class="text-12 text-vidro/70"${_scopeId}>${ssrInterpolate(aposta.rodada)}</p></td><td class="px-3 py-2 font-mono text-12 font-tabular"${_scopeId}>${ssrInterpolate(aposta.dezenas.map(unref(dezena)).join(" "))}</td><td class="px-3 py-2 font-mono font-tabular"${_scopeId}>${ssrInterpolate(unref(brl)(aposta.valorCents))}</td><td class="px-3 py-2"${_scopeId}><span class="${ssrRenderClass(aposta.status === "paid" ? "text-jade" : aposta.status === "paid_late" ? "text-brasa" : "text-vidro")}"${_scopeId}>${ssrInterpolate(aposta.statusLabel)}</span>`);
               if (aposta.pagaEm) {
@@ -201,8 +201,33 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 ]),
                 createVNode("button", {
                   type: "submit",
-                  class: "rounded bg-aceso px-4 py-2 font-display text-14 font-bold uppercase text-tinta"
-                }, " Filtrar ")
+                  "aria-label": "Filtrar",
+                  class: "inline-flex items-center gap-2 rounded bg-aceso px-4 py-2 font-display text-14 font-bold uppercase text-tinta"
+                }, [
+                  (openBlock(), createBlock("svg", {
+                    class: "h-4 w-4",
+                    viewBox: "0 0 24 24",
+                    fill: "none",
+                    stroke: "currentColor",
+                    "stroke-width": "2",
+                    "stroke-linecap": "round",
+                    "stroke-linejoin": "round",
+                    "aria-hidden": "true"
+                  }, [
+                    createVNode("circle", {
+                      cx: "11",
+                      cy: "11",
+                      r: "7"
+                    }),
+                    createVNode("line", {
+                      x1: "21",
+                      y1: "21",
+                      x2: "16.65",
+                      y2: "16.65"
+                    })
+                  ])),
+                  createTextVNode(" Filtrar ")
+                ])
               ], 32),
               createVNode("div", { class: "mt-4 overflow-x-auto rounded-lg bg-noite" }, [
                 createVNode("table", { class: "w-full text-left text-14" }, [

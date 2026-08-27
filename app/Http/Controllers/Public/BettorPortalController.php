@@ -38,27 +38,20 @@ class BettorPortalController extends Controller
         $request->validate(
             [
                 'celular' => ['required', 'string', 'regex:/^\D*(\d\D*){10,13}$/'],
-                'data_nascimento' => ['required', 'date'],
             ],
             [
                 'celular.required' => 'Informe seu celular com DDD para entrar.',
                 'celular.regex' => 'Esse celular não parece válido. Use DDD + número, como (82) 99123-4589.',
-                'data_nascimento.required' => 'Informe sua data de nascimento.',
             ],
         );
 
         $phone = PhoneNumber::e164($request->string('celular')->toString());
-        $birthDate = $request->date('data_nascimento')->format('Y-m-d');
 
-        // Telefone + data de nascimento: a data faz o papel de senha.
-        $bettor = Bettor::query()
-            ->where('phone', $phone)
-            ->whereDate('birth_date', $birthDate)
-            ->first();
+        $bettor = Bettor::query()->where('phone', $phone)->first();
 
         if ($bettor === null) {
             throw ValidationException::withMessages([
-                'celular' => 'Telefone e data de nascimento não conferem.',
+                'celular' => 'Não encontramos apostas com esse celular.',
             ]);
         }
 

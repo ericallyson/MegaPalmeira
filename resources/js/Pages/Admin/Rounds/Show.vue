@@ -23,6 +23,7 @@ const props = defineProps<{
         poteCents: number;
         apostasPagas: number;
         apostasPendentes: number;
+        whatsappGroupUrl: string | null;
     };
     sorteios: Array<{
         id: number;
@@ -109,6 +110,14 @@ function encerrar() {
 
 function cancelar() {
     router.post(`/admin/rodadas/${props.rodada.uuid}/cancelar`, { motivo: motivoCancelamento.value });
+}
+
+const whatsappForm = useForm({
+    whatsapp_group_url: props.rodada.whatsappGroupUrl ?? '',
+});
+
+function salvarWhatsapp() {
+    whatsappForm.put(`/admin/rodadas/${props.rodada.uuid}/whatsapp`, { preserveScroll: true });
 }
 
 const obsPagamento = ref<Record<number, string>>({});
@@ -211,6 +220,34 @@ function registrarPagamento(payoutId: number) {
                 <p class="text-12 uppercase text-vidro">Valor da cartela</p>
                 <p class="mt-1 font-mono text-20 font-tabular">{{ brl(rodada.valorCents) }}</p>
             </div>
+        </div>
+
+        <div class="mt-6 rounded-lg bg-noite p-4">
+            <h2 class="font-display text-16 font-bold uppercase">Grupo do WhatsApp</h2>
+            <form class="mt-2 flex flex-wrap items-end gap-2" @submit.prevent="salvarWhatsapp">
+                <div class="min-w-64 flex-1">
+                    <label class="block text-12 uppercase text-vidro" for="whatsapp_group_url">
+                        Link do grupo (aparece na página de acompanhamento)
+                    </label>
+                    <input
+                        id="whatsapp_group_url"
+                        v-model="whatsappForm.whatsapp_group_url"
+                        type="url"
+                        placeholder="https://chat.whatsapp.com/..."
+                        class="mt-1 w-full rounded border border-vidro/30 bg-tinta px-3 py-2 text-16 focus:border-aceso focus:outline-none"
+                    />
+                    <p v-if="whatsappForm.errors.whatsapp_group_url" class="mt-1 text-12 text-erro">
+                        {{ whatsappForm.errors.whatsapp_group_url }}
+                    </p>
+                </div>
+                <button
+                    type="submit"
+                    :disabled="whatsappForm.processing"
+                    class="rounded bg-jade px-4 py-2 font-display text-14 font-bold uppercase text-tinta disabled:opacity-50"
+                >
+                    Salvar link
+                </button>
+            </form>
         </div>
 
         <div v-if="payouts.length" class="mt-6 rounded-lg bg-noite p-4">
