@@ -6,6 +6,7 @@ use App\Domain\Bolao\Actions\AbrirRodada;
 use App\Domain\Bolao\Actions\CancelarRodada;
 use App\Domain\Bolao\Actions\CriarRodada;
 use App\Domain\Bolao\Actions\EncerrarRodada;
+use App\Domain\Bolao\Actions\IniciarRodada;
 use App\Domain\Bolao\Data\RodadaData;
 use App\Domain\Bolao\Enums\BetStatus;
 use App\Domain\Bolao\Enums\NoWinnerPolicy;
@@ -76,8 +77,10 @@ class RoundController extends Controller
             ->with('sucesso', "Rodada \"{$round->name}\" criada como rascunho.");
     }
 
-    public function show(Round $round, RankingService $ranking, RateioService $rateio): Response
+    public function show(Round $round, RankingService $ranking, RateioService $rateio, IniciarRodada $iniciarRodada): Response
     {
+        $iniciarRodada->handle($round);
+
         return Inertia::render('Admin/Rounds/Show', [
             'rodada' => [
                 'uuid' => $round->uuid,

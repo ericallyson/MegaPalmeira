@@ -19,6 +19,7 @@ class PublicarSorteio
     public function __construct(
         private readonly ApuracaoService $apuracao,
         private readonly EncerrarRodada $encerrarRodada,
+        private readonly IniciarRodada $iniciarRodada,
     ) {}
 
     public function handle(Round $round, SorteioData $data, ?User $actor = null): Draw
@@ -36,6 +37,8 @@ class PublicarSorteio
             if ($existing !== null) {
                 return $existing;
             }
+
+            $this->iniciarRodada->handle($round);
 
             if (! $round->status->acceptsDraws()) {
                 throw RodadaNaoAceitaSorteios::porStatus($round->status);
