@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Domain\Bolao\Enums\BetStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreSellerRequest;
 use App\Http\Requests\Admin\UpdateSellerRequest;
+use App\Models\Round;
 use App\Models\Seller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -42,6 +44,46 @@ class SellerController extends Controller
                 'apostasPagas' => $seller->paid_bets_count,
             ]),
             'filtros' => $request->only(['busca']),
+        ]);
+    }
+
+    /**
+     * Rodadas em que o vendedor tem apostas, com os totais dele em cada uma.
+     * De cada rodada sai o link para a listagem de apostas já filtrada
+     * por rodada + vendedor.
+     */
+    public function rodadas(Seller $seller): Response
+    {
+        $rounds = Round::query()
+            ->whereHas('bets', fn ($query) => $query->where('seller_id', $seller->id))
+            ->withCount([
+                'bets' => fn ($query) => $query->where('seller_id', $seller->id),
+                'bets as paid_bets_count' => fn ($query) => $query
+                    ->where('seller_id', $seller->id)
+                    ->where('status', BetStatus::Paid),
+            ])
+            ->withSum([
+                'bets as paid_amount_cents' => fn ($query) => $query
+                    ->where('seller_id', $seller->id)
+                    ->where('status', BetStatus::Paid),
+            ], 'amount_cents')
+            ->latest('id')
+            ->get();
+
+        return Inertia::render('Admin/Sellers/Rounds', [
+            'vendedor' => [
+                'uuid' => $seller->uuid,
+                'nome' => $seller->name,
+            ],
+            'rodadas' => $rounds->map(fn (Round $round): array => [
+                'uuid' => $round->uuid,
+                'nome' => $round->name,
+                'status' => $round->status->value,
+                'statusLabel' => $round->status->label(),
+                'apostas' => $round->bets_count,
+                'apostasPagas' => $round->paid_bets_count,
+                'valorPagoCents' => (int) ($round->paid_amount_cents ?? 0),
+            ]),
         ]);
     }
 

@@ -20,15 +20,17 @@ const props = defineProps<{
         }>;
         links: Array<{ url: string | null; label: string; active: boolean }>;
     };
-    filtros: { status?: string; busca?: string; dezena?: string; rodada?: string };
+    filtros: { status?: string; busca?: string; dezena?: string; rodada?: string; vendedor?: string };
     statusDisponiveis: Array<{ value: string; label: string }>;
     rodadasDisponiveis: Array<{ value: string; label: string }>;
+    vendedoresDisponiveis: Array<{ value: string; label: string }>;
 }>();
 
 const status = ref(props.filtros.status ?? '');
 const busca = ref(props.filtros.busca ?? '');
 const filtroDezena = ref(props.filtros.dezena ?? '');
 const rodada = ref(props.filtros.rodada ?? '');
+const vendedor = ref(props.filtros.vendedor ?? '');
 const motivos = ref<Record<string, string>>({});
 const abertaParaBaixa = ref<string | null>(null);
 const abertaParaEstorno = ref<string | null>(null);
@@ -41,6 +43,7 @@ function filtrar() {
             busca: busca.value || undefined,
             dezena: filtroDezena.value || undefined,
             rodada: rodada.value || undefined,
+            vendedor: vendedor.value || undefined,
         },
         { preserveState: true, replace: true },
     );
@@ -79,6 +82,18 @@ function marcarEstorno(uuid: string) {
                 >
                     <option value="">Todas</option>
                     <option v-for="r in rodadasDisponiveis" :key="r.value" :value="r.value">{{ r.label }}</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-12 uppercase text-vidro" for="filtro-vendedor">Vendedor</label>
+                <select
+                    id="filtro-vendedor"
+                    v-model="vendedor"
+                    class="mt-1 rounded border border-vidro/30 bg-noite px-3 py-2 text-14 focus:border-aceso focus:outline-none"
+                    @change="filtrar"
+                >
+                    <option value="">Todos</option>
+                    <option v-for="v in vendedoresDisponiveis" :key="v.value" :value="v.value">{{ v.label }}</option>
                 </select>
             </div>
             <div>

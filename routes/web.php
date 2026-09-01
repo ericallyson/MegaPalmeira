@@ -15,6 +15,7 @@ use App\Http\Controllers\Public\BettorPortalController;
 use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\RankingApiController;
 use App\Http\Controllers\Public\RegulamentoController;
+use App\Http\Controllers\Public\SellerLinkController;
 use App\Http\Controllers\Public\SellerPortalController;
 use App\Http\Controllers\Webhooks\MercadoPagoWebhookController;
 use App\Http\Middleware\EnsureTwoFactorIsEnabled;
@@ -25,7 +26,7 @@ Route::get('/', HomeController::class)->name('home');
 Route::post('/webhooks/mercadopago', MercadoPagoWebhookController::class)
     ->name('webhooks.mercadopago');
 
-Route::get('/v/{seller:slug}', App\Http\Controllers\Public\SellerLinkController::class)->name('vendedor.link');
+Route::get('/v/{seller:slug}', SellerLinkController::class)->name('vendedor.link');
 
 Route::get('/apostar', [App\Http\Controllers\Public\BetController::class, 'create'])->name('apostas.create');
 Route::post('/apostas', [App\Http\Controllers\Public\BetController::class, 'store'])
@@ -93,6 +94,7 @@ Route::middleware(['auth', 'can:administrar-bolao'])
             Route::get('/vendedores', [SellerController::class, 'index'])->name('vendedores.index');
             Route::get('/vendedores/criar', [SellerController::class, 'create'])->name('vendedores.create');
             Route::post('/vendedores', [SellerController::class, 'store'])->name('vendedores.store');
+            Route::get('/vendedores/{seller:uuid}/rodadas', [SellerController::class, 'rodadas'])->name('vendedores.rodadas');
             Route::get('/vendedores/{seller:uuid}/editar', [SellerController::class, 'edit'])->name('vendedores.edit');
             Route::put('/vendedores/{seller:uuid}', [SellerController::class, 'update'])->name('vendedores.update');
             Route::delete('/vendedores/{seller:uuid}', [SellerController::class, 'destroy'])->name('vendedores.destroy');

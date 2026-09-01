@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\MotivoRequest;
 use App\Models\Bet;
 use App\Models\Round;
+use App\Models\Seller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -35,6 +36,9 @@ class BetController extends Controller
             ->when($request->filled('rodada'), function ($query) use ($request): void {
                 $query->whereHas('round', fn ($sub) => $sub->where('uuid', $request->string('rodada')->toString()));
             })
+            ->when($request->filled('vendedor'), function ($query) use ($request): void {
+                $query->whereHas('seller', fn ($sub) => $sub->where('uuid', $request->string('vendedor')->toString()));
+            })
             ->join('bettors', 'bettors.id', '=', 'bets.bettor_id')
             ->orderBy('bettors.name')
             ->orderBy('bets.id')
@@ -55,7 +59,7 @@ class BetController extends Controller
                 'pontos' => $bet->hits_count,
                 'pagaEm' => $bet->paid_at?->toIso8601String(),
             ]),
-            'filtros' => $request->only(['status', 'busca', 'dezena', 'rodada']),
+            'filtros' => $request->only(['status', 'busca', 'dezena', 'rodada', 'vendedor']),
             'statusDisponiveis' => collect(BetStatus::cases())
                 ->map(fn (BetStatus $status): array => [
                     'value' => $status->value,
@@ -67,6 +71,13 @@ class BetController extends Controller
                 ->map(fn (Round $round): array => [
                     'value' => $round->uuid,
                     'label' => $round->name,
+                ]),
+            'vendedoresDisponiveis' => Seller::query()
+                ->orderBy('name')
+                ->get(['uuid', 'name'])
+                ->map(fn (Seller $seller): array => [
+                    'value' => $seller->uuid,
+                    'label' => $seller->name,
                 ]),
         ]);
     }

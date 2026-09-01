@@ -62,6 +62,21 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               }
               _push2(`</td><td class="px-3 py-2 font-mono text-12 font-tabular text-vidro"${_scopeId}>${ssrInterpolate(v.telefone ?? "—")}</td><td class="px-3 py-2 font-mono font-tabular"${_scopeId}>${ssrInterpolate(v.comissaoPct)}%</td><td class="px-3 py-2 font-mono text-12 font-tabular"${_scopeId}>${ssrInterpolate(v.apostasPagas)} pagas <span class="text-vidro"${_scopeId}>/ ${ssrInterpolate(v.apostas)} total</span></td><td class="px-3 py-2"${_scopeId}><div class="flex flex-wrap gap-3"${_scopeId}>`);
               _push2(ssrRenderComponent(unref(Link), {
+                href: `/admin/vendedores/${v.uuid}/rodadas`,
+                class: "text-aceso underline"
+              }, {
+                default: withCtx((_2, _push3, _parent3, _scopeId2) => {
+                  if (_push3) {
+                    _push3(`Rodadas`);
+                  } else {
+                    return [
+                      createTextVNode("Rodadas")
+                    ];
+                  }
+                }),
+                _: 2
+              }, _parent2, _scopeId));
+              _push2(ssrRenderComponent(unref(Link), {
                 href: `/admin/vendedores/${v.uuid}/editar`,
                 class: "text-aceso underline"
               }, {
@@ -209,6 +224,15 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                         ]),
                         createVNode("td", { class: "px-3 py-2" }, [
                           createVNode("div", { class: "flex flex-wrap gap-3" }, [
+                            createVNode(unref(Link), {
+                              href: `/admin/vendedores/${v.uuid}/rodadas`,
+                              class: "text-aceso underline"
+                            }, {
+                              default: withCtx(() => [
+                                createTextVNode("Rodadas")
+                              ]),
+                              _: 1
+                            }, 8, ["href"]),
                             createVNode(unref(Link), {
                               href: `/admin/vendedores/${v.uuid}/editar`,
                               class: "text-aceso underline"

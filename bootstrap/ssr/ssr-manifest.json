@@ -19,10 +19,10 @@
     "/build/assets/AdminLayout-DY_Q8-70.js"
   ],
   "resources/js/Pages/Admin/Bets/Index.vue": [
-    "/build/assets/Index-CvB1rhvz.js"
+    "/build/assets/Index-CAti9aD8.js"
   ],
   "resources/js/Pages/Admin/Bets/Index.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Index-CvB1rhvz.js"
+    "/build/assets/Index-CAti9aD8.js"
   ],
   "resources/js/Pages/Admin/Dashboard.vue": [
     "/build/assets/Dashboard-Z2ch4_ko.js"
@@ -61,10 +61,16 @@
     "/build/assets/Form-CQg-vAPe.js"
   ],
   "resources/js/Pages/Admin/Sellers/Index.vue": [
-    "/build/assets/Index-C4FjdLV-.js"
+    "/build/assets/Index-CLuFyWmc.js"
   ],
   "resources/js/Pages/Admin/Sellers/Index.vue?vue&type=script&setup=true&lang.ts": [
-    "/build/assets/Index-C4FjdLV-.js"
+    "/build/assets/Index-CLuFyWmc.js"
+  ],
+  "resources/js/Pages/Admin/Sellers/Rounds.vue": [
+    "/build/assets/Rounds-DasFpJN6.js"
+  ],
+  "resources/js/Pages/Admin/Sellers/Rounds.vue?vue&type=script&setup=true&lang.ts": [
+    "/build/assets/Rounds-DasFpJN6.js"
   ],
   "resources/js/Pages/Admin/Settings/Index.vue": [
     "/build/assets/Index-DPChGe89.js"

@@ -125,6 +125,7 @@ function excluir(uuid: string, nome: string) {
                         </td>
                         <td class="px-3 py-2">
                             <div class="flex flex-wrap gap-3">
+                                <Link :href="`/admin/vendedores/${v.uuid}/rodadas`" class="text-aceso underline">Rodadas</Link>
                                 <Link :href="`/admin/vendedores/${v.uuid}/editar`" class="text-aceso underline">Editar</Link>
                                 <button type="button" class="text-erro underline" @click="excluir(v.uuid, v.nome)">
                                     Excluir

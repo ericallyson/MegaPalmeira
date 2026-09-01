@@ -10,7 +10,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     apostas: {},
     filtros: {},
     statusDisponiveis: {},
-    rodadasDisponiveis: {}
+    rodadasDisponiveis: {},
+    vendedoresDisponiveis: {}
   },
   setup(__props) {
     const props = __props;
@@ -18,6 +19,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const busca = ref(props.filtros.busca ?? "");
     const filtroDezena = ref(props.filtros.dezena ?? "");
     const rodada = ref(props.filtros.rodada ?? "");
+    const vendedor = ref(props.filtros.vendedor ?? "");
     const motivos = ref({});
     const abertaParaBaixa = ref(null);
     const abertaParaEstorno = ref(null);
@@ -28,7 +30,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           status: status.value || void 0,
           busca: busca.value || void 0,
           dezena: filtroDezena.value || void 0,
-          rodada: rodada.value || void 0
+          rodada: rodada.value || void 0,
+          vendedor: vendedor.value || void 0
         },
         { preserveState: true, replace: true }
       );
@@ -56,6 +59,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             _push2(`<h1 class="font-display text-28 font-black uppercase tracking-tight"${_scopeId}>Apostas</h1><form class="mt-4 flex flex-wrap items-end gap-3"${_scopeId}><div${_scopeId}><label class="block text-12 uppercase text-vidro" for="filtro-rodada"${_scopeId}>Rodada</label><select id="filtro-rodada" class="mt-1 rounded border border-vidro/30 bg-noite px-3 py-2 text-14 focus:border-aceso focus:outline-none"${_scopeId}><option value=""${ssrIncludeBooleanAttr(Array.isArray(rodada.value) ? ssrLooseContain(rodada.value, "") : ssrLooseEqual(rodada.value, "")) ? " selected" : ""}${_scopeId}>Todas</option><!--[-->`);
             ssrRenderList(__props.rodadasDisponiveis, (r) => {
               _push2(`<option${ssrRenderAttr("value", r.value)}${ssrIncludeBooleanAttr(Array.isArray(rodada.value) ? ssrLooseContain(rodada.value, r.value) : ssrLooseEqual(rodada.value, r.value)) ? " selected" : ""}${_scopeId}>${ssrInterpolate(r.label)}</option>`);
+            });
+            _push2(`<!--]--></select></div><div${_scopeId}><label class="block text-12 uppercase text-vidro" for="filtro-vendedor"${_scopeId}>Vendedor</label><select id="filtro-vendedor" class="mt-1 rounded border border-vidro/30 bg-noite px-3 py-2 text-14 focus:border-aceso focus:outline-none"${_scopeId}><option value=""${ssrIncludeBooleanAttr(Array.isArray(vendedor.value) ? ssrLooseContain(vendedor.value, "") : ssrLooseEqual(vendedor.value, "")) ? " selected" : ""}${_scopeId}>Todos</option><!--[-->`);
+            ssrRenderList(__props.vendedoresDisponiveis, (v) => {
+              _push2(`<option${ssrRenderAttr("value", v.value)}${ssrIncludeBooleanAttr(Array.isArray(vendedor.value) ? ssrLooseContain(vendedor.value, v.value) : ssrLooseEqual(vendedor.value, v.value)) ? " selected" : ""}${_scopeId}>${ssrInterpolate(v.label)}</option>`);
             });
             _push2(`<!--]--></select></div><div${_scopeId}><label class="block text-12 uppercase text-vidro" for="filtro-status"${_scopeId}>Status</label><select id="filtro-status" class="mt-1 rounded border border-vidro/30 bg-noite px-3 py-2 text-14 focus:border-aceso focus:outline-none"${_scopeId}><option value=""${ssrIncludeBooleanAttr(Array.isArray(status.value) ? ssrLooseContain(status.value, "") : ssrLooseEqual(status.value, "")) ? " selected" : ""}${_scopeId}>Todos</option><!--[-->`);
             ssrRenderList(__props.statusDisponiveis, (s) => {
@@ -145,6 +152,28 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                     }), 128))
                   ], 40, ["onUpdate:modelValue"]), [
                     [vModelSelect, rodada.value]
+                  ])
+                ]),
+                createVNode("div", null, [
+                  createVNode("label", {
+                    class: "block text-12 uppercase text-vidro",
+                    for: "filtro-vendedor"
+                  }, "Vendedor"),
+                  withDirectives(createVNode("select", {
+                    id: "filtro-vendedor",
+                    "onUpdate:modelValue": ($event) => vendedor.value = $event,
+                    class: "mt-1 rounded border border-vidro/30 bg-noite px-3 py-2 text-14 focus:border-aceso focus:outline-none",
+                    onChange: filtrar
+                  }, [
+                    createVNode("option", { value: "" }, "Todos"),
+                    (openBlock(true), createBlock(Fragment, null, renderList(__props.vendedoresDisponiveis, (v) => {
+                      return openBlock(), createBlock("option", {
+                        key: v.value,
+                        value: v.value
+                      }, toDisplayString(v.label), 9, ["value"]);
+                    }), 128))
+                  ], 40, ["onUpdate:modelValue"]), [
+                    [vModelSelect, vendedor.value]
                   ])
                 ]),
                 createVNode("div", null, [
