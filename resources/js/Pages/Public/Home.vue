@@ -188,13 +188,28 @@ onUnmounted(() => {
 });
 
 // ---- derivados de exibição ----
-const cartelasOrdenadas = computed(() =>
-    [...ranking.value]
-        .sort((a, b) => a.displayName.localeCompare(b.displayName, 'pt-BR'))
-        .filter((item) =>
-            item.displayName.toLowerCase().includes(buscaCartelas.value.toLowerCase()),
-        ),
-);
+// Cartelas agrupadas por pontuação (maior primeiro); dentro do grupo,
+// ordem alfabética. É a ordem de exibição pública — a classificação
+// oficial com desempates vive no RankingService.
+const gruposPorPontos = computed(() => {
+    const filtradas = ranking.value.filter((item) =>
+        item.displayName.toLowerCase().includes(buscaCartelas.value.toLowerCase()),
+    );
+
+    const porPontos = new Map<number, RankingItem[]>();
+    for (const item of filtradas) {
+        const grupo = porPontos.get(item.hitsCount) ?? [];
+        grupo.push(item);
+        porPontos.set(item.hitsCount, grupo);
+    }
+
+    return [...porPontos.entries()]
+        .sort(([a], [b]) => b - a)
+        .map(([pontos, itens]) => ({
+            pontos,
+            itens: itens.sort((a, b) => a.displayName.localeCompare(b.displayName, 'pt-BR')),
+        }));
+});
 
 const ultimoSorteio = computed(() => sorteios.value[0] ?? null);
 const sorteiosAnteriores = computed(() => sorteios.value.slice(1));
@@ -423,7 +438,7 @@ const contagem = computed(() => {
                 </div>
             </section>
 
-            <!-- cartelas: todas, em ordem alfabética -->
+            <!-- cartelas: por pontuação (maior primeiro), alfabéticas dentro do grupo -->
             <section v-if="ranking.length" class="mt-8" aria-labelledby="cartelas-titulo">
                 <div class="flex flex-wrap items-center justify-between gap-3 print:hidden">
                     <h2 id="cartelas-titulo" class="text-14 uppercase tracking-wide text-vidro">
@@ -450,10 +465,15 @@ const contagem = computed(() => {
                     </div>
                 </div>
 
-                <!-- tela: cartelas com as bolas -->
-                <ol class="mt-3 space-y-2 print:hidden">
+                <!-- tela: cartelas com as bolas, separadas por pontuação -->
+                <div v-for="grupo in gruposPorPontos" :key="grupo.pontos" class="mt-5 print:hidden">
+                    <h3 class="text-14 font-bold uppercase tracking-wide" :class="grupo.pontos >= 9 ? 'text-aceso' : 'text-vidro'">
+                        {{ grupo.pontos }} {{ grupo.pontos === 1 ? 'ponto' : 'pontos' }} —
+                        {{ grupo.itens.length }} {{ grupo.itens.length === 1 ? 'aposta' : 'apostas' }}
+                    </h3>
+                    <ol class="mt-2 space-y-2">
                     <li
-                        v-for="item in cartelasOrdenadas"
+                        v-for="item in grupo.itens"
                         :key="item.betUuid"
                         class="rounded-lg bg-noite p-3"
                         :class="{ 'border border-aceso/60': item.hitsCount === 9 }"
@@ -482,18 +502,25 @@ const contagem = computed(() => {
                             />
                         </div>
                     </li>
-                </ol>
+                    </ol>
+                </div>
 
                 <!-- impressão: lista densa -->
                 <h2 class="hidden font-display text-20 font-black uppercase print:block">
                     MegaPalmeira — {{ rodada.nome }} — cartelas
                 </h2>
-                <ul class="hidden divide-y divide-black/20 rounded-lg bg-papel px-4 font-mono text-14 font-tabular text-black print:block">
-                    <li v-for="item in cartelasOrdenadas" :key="`lista-${item.betUuid}`" class="py-2">
-                        {{ item.displayName }} — {{ item.maskedPhone }} —
-                        {{ item.numbers.map((n) => String(n.number).padStart(2, '0')).join(' ') }}
-                    </li>
-                </ul>
+                <template v-for="grupo in gruposPorPontos" :key="`print-${grupo.pontos}`">
+                    <h3 class="hidden font-mono text-14 font-bold uppercase text-black print:block">
+                        {{ grupo.pontos }} {{ grupo.pontos === 1 ? 'ponto' : 'pontos' }} —
+                        {{ grupo.itens.length }} {{ grupo.itens.length === 1 ? 'aposta' : 'apostas' }}
+                    </h3>
+                    <ul class="hidden divide-y divide-black/20 rounded-lg bg-papel px-4 font-mono text-14 font-tabular text-black print:block">
+                        <li v-for="item in grupo.itens" :key="`lista-${item.betUuid}`" class="py-2">
+                            {{ item.displayName }} — {{ item.maskedPhone }} —
+                            {{ item.numbers.map((n) => String(n.number).padStart(2, '0')).join(' ') }}
+                        </li>
+                    </ul>
+                </template>
             </section>
 
             <section v-else class="mt-8 rounded-lg bg-noite p-6 print:hidden">

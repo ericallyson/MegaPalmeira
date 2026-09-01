@@ -147,11 +147,21 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       } catch {
       }
     });
-    const cartelasOrdenadas = computed(
-      () => [...ranking.value].sort((a, b) => a.displayName.localeCompare(b.displayName, "pt-BR")).filter(
+    const gruposPorPontos = computed(() => {
+      const filtradas = ranking.value.filter(
         (item) => item.displayName.toLowerCase().includes(buscaCartelas.value.toLowerCase())
-      )
-    );
+      );
+      const porPontos = /* @__PURE__ */ new Map();
+      for (const item of filtradas) {
+        const grupo = porPontos.get(item.hitsCount) ?? [];
+        grupo.push(item);
+        porPontos.set(item.hitsCount, grupo);
+      }
+      return [...porPontos.entries()].sort(([a], [b]) => b - a).map(([pontos, itens]) => ({
+        pontos,
+        itens: itens.sort((a, b) => a.displayName.localeCompare(b.displayName, "pt-BR"))
+      }));
+    });
     const ultimoSorteio = computed(() => sorteios.value[0] ?? null);
     const sorteiosAnteriores = computed(() => sorteios.value.slice(1));
     const correcoes = computed(() => sorteios.value.filter((s) => s.corrigidoEm));
@@ -339,31 +349,39 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           _push(`<!---->`);
         }
         if (ranking.value.length) {
-          _push(`<section class="mt-8" aria-labelledby="cartelas-titulo"><div class="flex flex-wrap items-center justify-between gap-3 print:hidden"><h2 id="cartelas-titulo" class="text-14 uppercase tracking-wide text-vidro"> Cartelas (${ssrInterpolate(ranking.value.length)}) </h2><div class="flex items-center gap-2"><input${ssrRenderAttr("value", buscaCartelas.value)} type="search" placeholder="Buscar por nome" aria-label="Buscar cartela por nome" class="rounded border border-vidro/30 bg-noite px-3 py-1.5 text-14 focus:border-aceso focus:outline-none"><button type="button" aria-label="Buscar" class="inline-flex items-center justify-center rounded border border-vidro/40 px-3 py-1.5 text-vidro hover:text-papel"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button></div></div><ol class="mt-3 space-y-2 print:hidden"><!--[-->`);
-          ssrRenderList(cartelasOrdenadas.value, (item) => {
-            _push(`<li class="${ssrRenderClass([{ "border border-aceso/60": item.hitsCount === 9 }, "rounded-lg bg-noite p-3"])}"><div class="flex flex-wrap items-center gap-3"><span class="text-16">${ssrInterpolate(item.displayName)}</span><span class="font-mono text-12 font-tabular text-vidro">${ssrInterpolate(item.maskedPhone)}</span>`);
-            if (item.hitsCount === 9) {
-              _push(`<span class="rounded bg-aceso/15 px-2 py-0.5 text-12 font-bold uppercase text-aceso"> um número </span>`);
-            } else {
-              _push(`<!---->`);
-            }
-            _push(`<span class="${ssrRenderClass([item.hitsCount >= 9 ? "text-aceso" : "", "ml-auto font-mono text-16 font-tabular"])}">${ssrInterpolate(item.hitsCount)} pts </span></div><div class="mt-2 flex flex-wrap gap-1.5"><!--[-->`);
-            ssrRenderList(item.numbers, (n) => {
-              _push(ssrRenderComponent(_sfc_main$2, {
-                key: n.number,
-                n: n.number,
-                lit: n.matchedDrawId !== null,
-                "just-lit": recemAcesas.value.has(`${item.betUuid}:${n.number}`),
-                size: "md"
-              }, null, _parent));
+          _push(`<section class="mt-8" aria-labelledby="cartelas-titulo"><div class="flex flex-wrap items-center justify-between gap-3 print:hidden"><h2 id="cartelas-titulo" class="text-14 uppercase tracking-wide text-vidro"> Cartelas (${ssrInterpolate(ranking.value.length)}) </h2><div class="flex items-center gap-2"><input${ssrRenderAttr("value", buscaCartelas.value)} type="search" placeholder="Buscar por nome" aria-label="Buscar cartela por nome" class="rounded border border-vidro/30 bg-noite px-3 py-1.5 text-14 focus:border-aceso focus:outline-none"><button type="button" aria-label="Buscar" class="inline-flex items-center justify-center rounded border border-vidro/40 px-3 py-1.5 text-vidro hover:text-papel"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button></div></div><!--[-->`);
+          ssrRenderList(gruposPorPontos.value, (grupo) => {
+            _push(`<div class="mt-5 print:hidden"><h3 class="${ssrRenderClass([grupo.pontos >= 9 ? "text-aceso" : "text-vidro", "text-14 font-bold uppercase tracking-wide"])}">${ssrInterpolate(grupo.pontos)} ${ssrInterpolate(grupo.pontos === 1 ? "ponto" : "pontos")} — ${ssrInterpolate(grupo.itens.length)} ${ssrInterpolate(grupo.itens.length === 1 ? "aposta" : "apostas")}</h3><ol class="mt-2 space-y-2"><!--[-->`);
+            ssrRenderList(grupo.itens, (item) => {
+              _push(`<li class="${ssrRenderClass([{ "border border-aceso/60": item.hitsCount === 9 }, "rounded-lg bg-noite p-3"])}"><div class="flex flex-wrap items-center gap-3"><span class="text-16">${ssrInterpolate(item.displayName)}</span><span class="font-mono text-12 font-tabular text-vidro">${ssrInterpolate(item.maskedPhone)}</span>`);
+              if (item.hitsCount === 9) {
+                _push(`<span class="rounded bg-aceso/15 px-2 py-0.5 text-12 font-bold uppercase text-aceso"> um número </span>`);
+              } else {
+                _push(`<!---->`);
+              }
+              _push(`<span class="${ssrRenderClass([item.hitsCount >= 9 ? "text-aceso" : "", "ml-auto font-mono text-16 font-tabular"])}">${ssrInterpolate(item.hitsCount)} pts </span></div><div class="mt-2 flex flex-wrap gap-1.5"><!--[-->`);
+              ssrRenderList(item.numbers, (n) => {
+                _push(ssrRenderComponent(_sfc_main$2, {
+                  key: n.number,
+                  n: n.number,
+                  lit: n.matchedDrawId !== null,
+                  "just-lit": recemAcesas.value.has(`${item.betUuid}:${n.number}`),
+                  size: "md"
+                }, null, _parent));
+              });
+              _push(`<!--]--></div></li>`);
             });
-            _push(`<!--]--></div></li>`);
+            _push(`<!--]--></ol></div>`);
           });
-          _push(`<!--]--></ol><h2 class="hidden font-display text-20 font-black uppercase print:block"> MegaPalmeira — ${ssrInterpolate(rodada.value.nome)} — cartelas </h2><ul class="hidden divide-y divide-black/20 rounded-lg bg-papel px-4 font-mono text-14 font-tabular text-black print:block"><!--[-->`);
-          ssrRenderList(cartelasOrdenadas.value, (item) => {
-            _push(`<li class="py-2">${ssrInterpolate(item.displayName)} — ${ssrInterpolate(item.maskedPhone)} — ${ssrInterpolate(item.numbers.map((n) => String(n.number).padStart(2, "0")).join(" "))}</li>`);
+          _push(`<!--]--><h2 class="hidden font-display text-20 font-black uppercase print:block"> MegaPalmeira — ${ssrInterpolate(rodada.value.nome)} — cartelas </h2><!--[-->`);
+          ssrRenderList(gruposPorPontos.value, (grupo) => {
+            _push(`<!--[--><h3 class="hidden font-mono text-14 font-bold uppercase text-black print:block">${ssrInterpolate(grupo.pontos)} ${ssrInterpolate(grupo.pontos === 1 ? "ponto" : "pontos")} — ${ssrInterpolate(grupo.itens.length)} ${ssrInterpolate(grupo.itens.length === 1 ? "aposta" : "apostas")}</h3><ul class="hidden divide-y divide-black/20 rounded-lg bg-papel px-4 font-mono text-14 font-tabular text-black print:block"><!--[-->`);
+            ssrRenderList(grupo.itens, (item) => {
+              _push(`<li class="py-2">${ssrInterpolate(item.displayName)} — ${ssrInterpolate(item.maskedPhone)} — ${ssrInterpolate(item.numbers.map((n) => String(n.number).padStart(2, "0")).join(" "))}</li>`);
+            });
+            _push(`<!--]--></ul><!--]-->`);
           });
-          _push(`<!--]--></ul></section>`);
+          _push(`<!--]--></section>`);
         } else {
           _push(`<section class="mt-8 rounded-lg bg-noite p-6 print:hidden"><p class="text-20 text-vidro">Nenhuma cartela ainda. Seja o primeiro.</p></section>`);
         }
